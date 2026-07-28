@@ -1,0 +1,83 @@
+<div class="health-card">
+
+    <div class="health-card-header">
+
+        <div>
+
+            <h5>Overall Health</h5>
+
+            <small>Based on latest AI predictions</small>
+
+        </div>
+
+        <div class="health-icon">
+
+            <i class="bi bi-heart-pulse-fill"></i>
+
+        </div>
+
+    </div>
+
+    <div class="health-score">
+
+        {{ health_percentage }}%
+
+    </div>
+
+    <div class="health-status">
+
+        <span class="badge bg-{{ status_color }}">
+
+            {{ health_status }}
+
+        </span>
+
+    </div>
+
+    <div class="health-progress">
+
+        <div class="progress">
+
+            <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: {{ health_percentage }}%;"
+                aria-valuenow="{{ health_percentage }}"
+                aria-valuemin="0"
+                aria-valuemax="100">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="health-footer">
+
+        <div class="metric">
+
+            <h6>{{ green_count }}</h6>
+
+            <small>Healthy</small>
+
+        </div>
+
+        <div class="metric">
+
+            <h6>{{ yellow_count }}</h6>
+
+            <small>Warning</small>
+
+        </div>
+
+        <div class="metric">
+
+            <h6>{{ red_count }}</h6>
+
+            <small>High Risk</small>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Login | IntelliCareAI
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pages/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="login-section">
+
+    <div class="container">
+
+        <div class="row login-wrapper shadow-lg">
+
+            <!-- Left Panel -->
+
+            <div class="col-lg-6 login-left">
+
+                <span class="hero-badge">
+
+                    <i class="bi bi-heart-pulse-fill"></i>
+
+                    IntelliCareAI
+
+                </span>
+
+                <h1>
+
+                    AI-Powered
+
+                    <br>
+
+                    Healthcare Analytics
+
+                </h1>
+
+                <p>
+
+                    Predict diseases using Artificial Intelligence,
+                    Machine Learning and Clinical Decision Support.
+
+                </p>
+
+                <img src="{% static 'images/hero.png' %}"
+                     class="img-fluid mt-4"
+                     alt="Healthcare AI">
+
+            </div>
+
+            <!-- Right Panel -->
+
+            <div class="col-lg-6 login-right">
+
+                <h2>Welcome Back</h2>
+
+                <p class="text-muted">
+
+                    Sign in to continue to IntelliCareAI
+
+                </p>
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Username
+
+                        </label>
+
+                        {{ form.username }}
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+
+                            Password
+
+                        </label>
+
+                        {{ form.password }}
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+
+                        Sign In
+
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-4">
+
+                    Don't have an account?
+
+                    <a href="{% url 'main_page:register' %}">
+
+                        Register
+
+                    </a>
+
+                </div>
+
+                {% if messages %}
+
+                    <div class="mt-4">
+
+                        {% for message in messages %}
+
+                            <div class="alert alert-info">
+
+                                {{ message }}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

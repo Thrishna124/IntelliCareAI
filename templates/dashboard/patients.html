@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Patient Management | IntelliCareAI{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/pages/dashboard.css' %}">{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    {% include "dashboard/components/sidebar.html" %}
+    <main class="dashboard-main">
+        {% include "dashboard/components/topbar.html" %}
+        <section class="workspace-header">
+            <div>
+                <span class="workspace-eyebrow">Clinical workspace</span>
+                <h1>Patient Management</h1>
+                <p>Select a patient to review their clinical record, history, and AI predictions.</p>
+            </div>
+            <a class="button button--primary" href="{% url 'main_page:enter_patient_data' %}"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Add patient</a>
+        </section>
+
+        <section class="patient-directory" aria-label="Patient directory">
+            {% for patient in patients %}
+                <article class="patient-directory__row{% if active_patient and patient.id == active_patient.id %} patient-directory__row--active{% endif %}">
+                    <div class="patient-avatar" aria-hidden="true">{{ patient.fname|first }}{{ patient.lname|first }}</div>
+                    <div><h2>{{ patient.fname }} {{ patient.lname }}</h2><p>Patient ID: {{ patient.pid|default:"Not assigned" }}</p></div>
+                    <dl><div><dt>Age</dt><dd>{{ patient.age }}</dd></div><div><dt>Gender</dt><dd>{{ patient.sex }}</dd></div><div><dt>Lifestyle</dt><dd>{{ patient.get_lifestyle_display }}</dd></div></dl>
+                    <a class="button button--secondary" href="{% url 'main_page:select_patient' patient.id %}">{% if active_patient and patient.id == active_patient.id %}Selected{% else %}Open workspace{% endif %}</a>
+                </article>
+            {% empty %}
+                <div class="workspace-empty-state"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><h2>No patient records yet</h2><p>Create the first patient record to begin the clinical workflow.</p><a class="button button--primary" href="{% url 'main_page:enter_patient_data' %}">Add patient</a></div>
+            {% endfor %}
+        </section>
+    </main>
+</div>
+{% endblock %}

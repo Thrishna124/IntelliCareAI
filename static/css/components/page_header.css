@@ -1,0 +1,62 @@
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.page-header h1{
+
+    font-size:32px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.page-header p{
+
+    color:#64748B;
+
+    margin:0;
+
+}
+
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.section-header h3{
+
+    font-size:1.55rem;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:5px;
+
+}
+
+.section-header p{
+
+    color:#64748b;
+
+    margin:0;
+
+}

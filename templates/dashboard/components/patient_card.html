@@ -1,0 +1,81 @@
+<div class="patient-card">
+
+    <div class="patient-header">
+
+        <div class="patient-avatar">
+
+            {{ patient.fname|first }}{{ patient.lname|first }}
+
+        </div>
+
+        <div>
+
+            <h4>
+
+                {{ patient.fname }} {{ patient.lname }}
+
+            </h4>
+
+            <span class="text-muted">
+
+                Patient ID #{{ patient.pid }}
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="patient-body">
+
+        <div class="patient-row">
+
+            <span>Age</span>
+
+            <strong>{{ patient.age }}</strong>
+
+        </div>
+
+        <div class="patient-row">
+
+            <span>Gender</span>
+
+            <strong>{{ patient.sex }}</strong>
+
+        </div>
+
+        <div class="patient-row">
+
+            <span>Date of Birth</span>
+
+            <strong>{{ patient.DOB }}</strong>
+
+        </div>
+
+        <div class="patient-row">
+
+            <span>Phone</span>
+
+            <strong>{{ patient.phone_cell }}</strong>
+
+        </div>
+
+        <div class="patient-row">
+
+            <span>City</span>
+
+            <strong>{{ patient.city }}</strong>
+
+        </div>
+
+        <div class="patient-row">
+
+            <span>Lifestyle</span>
+
+            <strong>{{ patient.lifestyle }}</strong>
+
+        </div>
+
+    </div>
+
+</div>

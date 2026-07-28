@@ -1,0 +1,19 @@
+<section class="analytics-section">
+
+    <div class="analytics-grid analytics-grid-3">
+
+        {% include "dashboard/components/stat_card.html" with title="Total Patients" value=total_patients %}
+
+        {% include "dashboard/components/stat_card.html" with title="Total Predictions" value=total_predictions %}
+
+        {% include "dashboard/components/stat_card.html" with title="Positive Cases" value=positive_predictions %}
+
+        {% include "dashboard/components/stat_card.html" with title="Negative Cases" value=negative_predictions %}
+
+        {% include "dashboard/components/stat_card.html" with title="Average Age" value=average_age %}
+
+        {% include "dashboard/components/stat_card.html" with title="New Patients (30 Days)" value=new_patients %}
+
+    </div>
+
+</section>

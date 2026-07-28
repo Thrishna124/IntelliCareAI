@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.4
+    #container_name: doctorspot_db
+
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: medicalDB
+      MYSQL_ROOT_PASSWORD: password123
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  web:
+    build: .
+
+    #container_name: doctorspot_web
+
+    command: python manage.py runserver 0.0.0.0:8000 
+
+    volumes:
+      - .:/app
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - db
+
+    env_file:
+      - .env
+
+volumes:
+  mysql_data:

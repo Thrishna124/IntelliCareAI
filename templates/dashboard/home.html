@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Dashboard | IntelliCareAI
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout clinical-record-dashboard">
+
+    <!-- Sidebar -->
+    {% include "dashboard/components/sidebar.html" %}
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+
+        <!-- Top Navigation -->
+        {% include "dashboard/components/topbar.html" %}
+
+        <section class="record-banner" aria-label="Personal medical record">
+            <div class="record-banner__title">
+                <div><span class="record-banner__eyebrow">Clinical summary</span><h1>Personal Medical Record</h1><p>Current patient profile and AI-assisted health overview.</p></div>
+                <span class="record-banner__date"><i class="bi bi-calendar3"></i> Updated today</span>
+            </div>
+            <div class="record-banner__grid">
+                <div class="record-banner__person"><div class="record-banner__avatar">{{ patient.fname|first }}{{ patient.lname|first }}</div><div><span>Patient</span><strong>{{ patient.fname }} {{ patient.lname }}</strong><small>ID #{{ patient.pid|default:"Not assigned" }}</small></div></div>
+                <div><span>Age</span><strong>{{ patient.age|default:"-" }}</strong></div>
+                <div><span>Gender</span><strong>{{ patient.sex|default:"-" }}</strong></div>
+                <div><span>Location</span><strong>{{ patient.city|default:"Not recorded" }}</strong></div>
+                <div><span>Lifestyle</span><strong>{{ patient.get_lifestyle_display|default:patient.lifestyle|default:"Not recorded" }}</strong></div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             Top Row
+        =========================================== -->
+
+        <div class="dashboard-grid">
+
+            {% include "dashboard/components/health_card.html" %}
+
+            {% include "dashboard/components/patient_card.html" %}
+
+        </div>
+
+        <!-- ==========================================
+             KPI Cards
+        =========================================== -->
+
+        <div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-title">Predictions</div>
+        <div class="stat-value">{{ prediction_count }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">Healthy</div>
+        <div class="stat-value">{{ green_count }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">Warning</div>
+        <div class="stat-value">{{ yellow_count }}</div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">High Risk</div>
+        <div class="stat-value">{{ red_count }}</div>
+    </div>
+
+</div>
+
+        <!-- ==========================================
+             Prediction Modules
+        =========================================== -->
+
+        {% include "dashboard/components/prediction_modules.html" %}
+
+        <!-- ==========================================
+             Analytics
+        =========================================== -->
+
+        {% include "dashboard/components/analytics.html" %}
+
+        <!-- ==========================================
+             Recent Predictions
+        =========================================== -->
+
+        {% include "dashboard/components/recent_predictions.html" %}
+
+        <!-- ==========================================
+             Recommendation
+        =========================================== -->
+
+        {% include "dashboard/components/recommendation.html" %}
+
+        <!-- ==========================================
+             Quick Actions
+        =========================================== -->
+
+        {% include "dashboard/components/quick_actions.html" %}
+
+        <!-- ==========================================
+             System Status
+        =========================================== -->
+
+        {% include "dashboard/components/system_status.html" %}
+
+    </main>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById('healthChart');
+
+if(ctx){
+
+new Chart(ctx,{
+
+type:'doughnut',
+
+data:{
+
+labels:['Healthy','Warning','High Risk'],
+
+datasets:[{
+
+data:[
+
+{{ green_count }},
+
+{{ yellow_count }},
+
+{{ red_count }}
+
+],
+
+backgroundColor:[
+
+'#22C55E',
+
+'#F59E0B',
+
+'#EF4444'
+
+],
+
+borderWidth:0
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+
+position:'bottom'
+
+}
+
+}
+
+}
+
+});
+
+}
+
+</script>
+
+{% endblock %}

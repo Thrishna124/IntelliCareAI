@@ -1,0 +1,487 @@
+/* ======================================================
+   Analytics Page
+====================================================== */
+
+.analytics-header{
+    margin-bottom:2rem;
+}
+
+.analytics-header h1{
+    font-size:2.2rem;
+    font-weight:700;
+    color:var(--text-primary,#0f172a);
+}
+
+.analytics-header p{
+    margin-top:.5rem;
+    color:var(--text-secondary,#64748b);
+}
+
+
+/* ======================================================
+   Sections
+====================================================== */
+
+.analytics-section{
+    margin-bottom:2rem;
+}
+
+
+/* ======================================================
+   Grid
+====================================================== */
+
+.analytics-grid{
+    display:grid;
+    gap:1.5rem;
+}
+
+.analytics-grid-2{
+    grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+}
+
+.analytics-grid-3{
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+
+.analytics-grid-4{
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+}
+
+/* ======================================================
+   Enterprise Header
+====================================================== */
+
+.analytics-header{
+
+    margin-bottom:2rem;
+}
+
+.analytics-header-content{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:2rem;
+
+    flex-wrap:wrap;
+}
+
+.analytics-badge{
+
+    display:inline-block;
+
+    padding:.45rem .9rem;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    border:1px solid #bfdbfe;
+
+    border-radius:999px;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+    margin-bottom:1rem;
+}
+
+.analytics-header h1{
+
+    font-size:2.6rem;
+
+    font-weight:800;
+
+    margin-bottom:.75rem;
+
+    color:#0f172a;
+}
+
+.analytics-header p{
+
+    max-width:700px;
+
+    font-size:1rem;
+
+    line-height:1.7;
+
+    color:#64748b;
+}
+
+.export-btn i{
+    font-size:.9rem;
+}
+
+/* ======================================================
+   AI Executive Intelligence
+====================================================== */
+
+.executive-intelligence{
+    margin-top:.25rem;
+}
+
+.section-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:1.5rem;
+    margin-bottom:1.25rem;
+}
+
+.section-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:.45rem;
+    color:var(--primary);
+    font-size:.78rem;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.section-heading h2{
+    margin:.45rem 0;
+    color:var(--heading);
+    font-size:1.5rem;
+    font-weight:800;
+}
+
+.section-heading p{
+    margin:0;
+    color:var(--text);
+}
+
+.ai-status{
+    display:inline-flex;
+    align-items:center;
+    gap:.55rem;
+    padding:.55rem .8rem;
+    border:1px solid #bbf7d0;
+    border-radius:999px;
+    background:#f0fdf4;
+    color:#15803d;
+    font-size:.8rem;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.ai-status span{
+    width:.5rem;
+    height:.5rem;
+    border-radius:50%;
+    background:var(--success);
+    box-shadow:0 0 0 4px rgba(34,197,94,.14);
+}
+
+.intelligence-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:1rem;
+}
+
+.intelligence-card{
+    position:relative;
+    display:grid;
+    grid-template-columns:3rem minmax(0, 1fr);
+    gap:1rem;
+    min-height:205px;
+    padding:1.35rem;
+    overflow:hidden;
+    border:1px solid #e5e7eb;
+    border-radius:var(--radius);
+    background:var(--surface);
+    box-shadow:var(--shadow-sm);
+}
+
+.intelligence-card::after{
+    position:absolute;
+    top:0;
+    right:0;
+    width:5rem;
+    height:5rem;
+    border-radius:0 0 0 100%;
+    background:var(--intelligence-accent);
+    content:"";
+    opacity:.08;
+}
+
+.intelligence-card__icon{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:3rem;
+    height:3rem;
+    border-radius:12px;
+    background:var(--intelligence-soft);
+    color:var(--intelligence-accent);
+    font-size:1.15rem;
+}
+
+.intelligence-card__label{
+    margin:0 0 .35rem;
+    color:var(--intelligence-accent);
+    font-size:.73rem;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.intelligence-card h3{
+    margin:0 0 .45rem;
+    color:var(--heading);
+    font-size:1.05rem;
+    font-weight:750;
+}
+
+.intelligence-card p:not(.intelligence-card__label){
+    margin:0;
+    color:var(--text);
+    font-size:.88rem;
+    line-height:1.55;
+}
+
+.intelligence-card__signal{
+    display:block;
+    margin-top:.85rem;
+    color:#334155;
+    font-size:.8rem;
+    font-weight:600;
+    line-height:1.45;
+}
+
+.intelligence-card--alert{--intelligence-accent:#dc2626;--intelligence-soft:#fef2f2;}
+.intelligence-card--trend{--intelligence-accent:#7c3aed;--intelligence-soft:#f5f3ff;}
+.intelligence-card--recommendation{--intelligence-accent:#0f766e;--intelligence-soft:#f0fdfa;}
+.intelligence-card--summary{--intelligence-accent:#2563eb;--intelligence-soft:#eff6ff;}
+
+/* ======================================================
+   Responsive
+====================================================== */
+
+@media (max-width:992px){
+
+    .analytics-header-content{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .overview-card{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .overview-stats{
+
+        width:100%;
+
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .analytics-grid-2{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .section-heading{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .intelligence-grid{
+        grid-template-columns:1fr;
+    }
+
+    .overview-stats{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* ======================================================
+   Executive Overview
+====================================================== */
+
+.analytics-overview{
+
+    margin-bottom:2rem;
+}
+
+.overview-card{
+
+    background:#fff;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:20px;
+
+    padding:2rem;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:2rem;
+
+    flex-wrap:wrap;
+
+    box-shadow:var(--shadow-sm);
+}
+
+.overview-card h2{
+
+    margin-bottom:.5rem;
+
+    font-size:1.5rem;
+
+    color:#0f172a;
+}
+
+.overview-card p{
+
+    color:#64748b;
+
+    max-width:600px;
+}
+
+.overview-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:1rem;
+}
+
+.overview-stat{
+
+    background:#f8fafc;
+
+    padding:1rem;
+
+    border-radius:14px;
+
+    min-width:140px;
+
+    text-align:center;
+    border:1px solid #eef2f7;
+}
+
+.overview-stat span{
+
+    display:block;
+
+    font-size:.8rem;
+
+    color:#94a3b8;
+
+    margin-bottom:.4rem;
+}
+
+.overview-stat strong{
+
+    font-size:1.1rem;
+
+    color:#0f172a;
+}
+
+/* ===========================================================
+   ANALYTICS
+=========================================================== */
+
+.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:24px;
+
+}
+
+.analytics-card{
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    box-shadow:0 12px 30px rgba(15,23,42,.08);
+
+    border:1px solid #edf2f7;
+
+}
+
+.analytics-card h5{
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+.analytics-card canvas{
+
+    max-height:320px;
+
+}
+
+.summary-list{
+
+    list-style:none;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+.summary-list li{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 0;
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+.summary-list li:last-child{
+
+    border:none;
+
+}
+
+.summary-list span{
+
+    color:#64748b;
+
+}
+
+.summary-list strong{
+
+    color:#2563eb;
+
+    font-size:1.05rem;
+
+}

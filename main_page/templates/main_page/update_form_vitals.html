@@ -1,0 +1,35 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Details</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main_page_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Update Your Vital Details</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <h3>vitals Data</h3>
+            {{ form.as_p }}
+            <button type="submit">Update</button>
+        </form>
+        <p><a href = "{% url 'main_page:view_vital_info'%}">View Vital information</a></p>
+        <p><a href="{% url 'main_page:home' %}">Health Prediction Dashboard</a></p> 
+        <p><a href="{% url 'main_page:logout_view' %}">Logout</a></p>
+      
+    </div>
+</body>
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</html>

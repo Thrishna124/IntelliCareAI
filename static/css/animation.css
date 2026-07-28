@@ -1,0 +1,43 @@
+/* ===========================================================
+   SMOOTH ANIMATIONS
+=========================================================== */
+
+*{
+
+    scroll-behavior:smooth;
+
+}
+
+.module-card,
+.analytics-card,
+.patient-card,
+.health-card,
+.stat-card,
+.prediction-table,
+.quick-actions,
+.system-status,
+.recommendation-card{
+
+    animation:fadeUp .45s ease;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(18px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}

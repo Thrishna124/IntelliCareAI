@@ -1,0 +1,61 @@
+<div class="prediction-card">
+
+    <div class="card-header">
+
+        <h4>
+
+            <i class="bi {{ prediction_metadata.model_info.icon }}"></i>
+
+            AI Model Information
+
+        </h4>
+
+    </div>
+
+    <div class="model-info-grid">
+
+        <div class="info-row">
+
+            <span class="label">Model</span>
+
+            <span class="value">{{ prediction_metadata.model_info.model_name }}</span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="label">Version</span>
+
+            <span class="value">{{ prediction_metadata.model_info.version }}</span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="label">Prediction Type</span>
+
+            <span class="value">{{ prediction_metadata.model_info.prediction_type }}</span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="label">Output</span>
+
+            <span class="value">{{ prediction_metadata.model_info.output }}</span>
+
+        </div>
+
+        <div class="info-row">
+
+            <span class="label">Framework</span>
+
+            <span class="value">{{ prediction_metadata.model_info.framework }}</span>
+
+        </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,191 @@
+<section class="dashboard-section">
+
+    <div class="section-header">
+
+        <div>
+            <h3>Healthcare Prediction Modules</h3>
+            <p>Choose an AI model to begin a healthcare prediction.</p>
+        </div>
+
+    </div>
+
+    <div class="modules-grid">
+
+        <!-- Heart Disease -->
+
+        <div class="module-card">
+
+            <div class="module-icon heart">
+
+                <i class="bi bi-heart-pulse-fill"></i>
+
+            </div>
+
+            <h4>Heart Disease</h4>
+
+            <p>
+                Predict cardiovascular disease risk using machine learning.
+            </p>
+
+            <a href="{% url 'heart:predict_heart_disease' %}"
+               class="btn btn-primary">
+
+                Open Module
+
+            </a>
+
+        </div>
+
+        <!-- Lung Disease -->
+
+        <div class="module-card">
+
+            <div class="module-icon lungs">
+
+                <i class="bi bi-lungs-fill"></i>
+
+            </div>
+
+            <h4>Lung Disease</h4>
+
+            <p>
+                AI-powered respiratory disease prediction and assessment.
+            </p>
+
+            <a href="{% url 'lungs:lungs_predict' %}"
+               class="btn btn-primary">
+
+                Open Module
+
+            </a>
+
+        </div>
+
+        <!-- Kidney -->
+
+        <div class="module-card">
+
+            <div class="module-icon kidney">
+
+                <i class="bi bi-droplet-half"></i>
+
+            </div>
+
+            <h4>Kidney Disease</h4>
+
+            <p>
+                Detect chronic kidney disease using clinical parameters.
+            </p>
+
+            <a href="{% url 'kidney:kidney_predict' %}"
+               class="btn btn-primary">
+
+                Open Module
+
+            </a>
+
+        </div>
+
+        <!-- Liver -->
+
+        <div class="module-card">
+
+            <div class="module-icon liver">
+
+                <i class="bi bi-capsule"></i>
+
+            </div>
+
+            <h4>Liver Disease</h4>
+
+            <p>
+                Assess liver health using biochemical and patient data.
+            </p>
+
+            <a href="{% url 'liver:liver_predict' %}"
+               class="btn btn-primary">
+
+                Open Module
+
+            </a>
+
+        </div>
+
+        <!-- Diabetes -->
+
+        <div class="module-card">
+
+            <div class="module-icon diabetes">
+
+                <i class="bi bi-activity"></i>
+
+            </div>
+
+            <h4>Diabetes</h4>
+
+            <p>
+                Early diabetes risk prediction using AI algorithms.
+            </p>
+
+            <a href="{% url 'pancreas:diabetes_predict' %}"
+               class="btn btn-primary">
+
+                Open Module
+
+            </a>
+
+        </div>
+
+        <!-- Fitness -->
+
+        <div class="module-card">
+
+            <div class="module-icon fitness">
+
+                <i class="bi bi-person-walking"></i>
+
+            </div>
+
+            <h4>Fitness Assessment</h4>
+
+            <p>
+                Evaluate overall fitness and wellness using health metrics.
+            </p>
+
+            <a href="{% url 'fitness:fitness_predict' %}"
+               class="btn btn-primary">
+
+                Open Module
+
+            </a>
+
+        </div>
+
+        <!-- Lung Cancer -->
+
+        <div class="module-card">
+
+            <div class="module-icon cancer">
+
+                <i class="bi bi-shield-plus"></i>
+
+            </div>
+
+            <h4>Lung Cancer</h4>
+
+            <p>
+                AI-assisted lung cancer screening using patient information.
+            </p>
+
+            <a href="{% url 'lung_cancer:lung_cancer_predict' %}"
+               class="btn btn-primary">
+
+                Open Module
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>

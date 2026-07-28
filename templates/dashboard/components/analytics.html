@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Enterprise Analytics{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pages/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages/analytics.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "dashboard/components/sidebar.html" %}
+
+    <main class="dashboard-main">
+
+        {% include "dashboard/components/topbar.html" %}
+
+        <!-- ==========================
+             Enterprise Header
+        =========================== -->
+
+        <section class="analytics-header">
+
+            <div class="analytics-header-content">
+
+                <div>
+
+                    <span class="analytics-badge">
+                        Enterprise BI Dashboard
+                    </span>
+
+                    <h1>Enterprise Analytics</h1>
+
+                    <p>
+                        Monitor patient populations, prediction trends and AI-powered
+                        healthcare insights through a unified analytics platform.
+                    </p>
+
+                </div>
+
+                <a class="button button--primary export-btn"
+                   href="{% url 'main_page:analytics_export' %}">
+
+                    <i class="fas fa-download"></i>
+
+                    Export Report
+
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================
+             Overview
+        =========================== -->
+
+        <section class="analytics-overview">
+
+            <div class="overview-card">
+
+                <div>
+
+                    <h2>Population Health Overview</h2>
+
+                    <p>
+                        Real-time analytics across patients, prediction models and
+                        AI-generated healthcare insights.
+                    </p>
+
+                </div>
+
+                <div class="overview-stats">
+
+                    <div class="overview-stat">
+                        <span>Last Updated</span>
+                        <strong>Today</strong>
+                    </div>
+
+                    <div class="overview-stat">
+                        <span>Prediction Models</span>
+                        <strong>7 Active</strong>
+                    </div>
+
+                    <div class="overview-stat">
+                        <span>Analytics</span>
+                        <strong>Live</strong>
+                    </div>
+
+                    <div class="overview-stat">
+                        <span>AI Engine</span>
+                        <strong>Online</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% include "dashboard/components/analytics/kpis.html" %}
+
+        {% include "dashboard/components/analytics/charts.html" %}
+
+        {% include "dashboard/components/analytics/ai_insights.html" %}
+
+    </main>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{ prediction_trend|json_script:"prediction-trend-data" }}
+{{ disease_distribution|json_script:"disease-distribution-data" }}
+{{ module_distribution|json_script:"module-distribution-data" }}
+{{ age_distribution|json_script:"age-distribution-data" }}
+{{ gender_distribution|json_script:"gender-distribution-data" }}
+{{ lifestyle_distribution|json_script:"lifestyle-distribution-data" }}
+
+<script src="{% static 'js/analytics.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pages/prediction.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages/result.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="prediction-page clinical-report-page">
+
+    <div class="clinical-shell">
+        <header class="clinical-nav">
+            <a href="{% url 'main_page:home' %}" class="clinical-brand"><span><i class="bi bi-heart-pulse-fill"></i></span> IntelliCareAI</a>
+            <div class="clinical-nav__meta"><span><i class="bi bi-shield-check"></i> Secure clinical workspace</span><a href="{% url 'main_page:home' %}"><i class="bi bi-grid-1x2"></i> Dashboard</a></div>
+        </header>
+
+        {% include "prediction/components/result_header.html" %}
+
+        <div class="results-grid">
+
+        {% include "prediction/components/patient_summary.html" %}
+
+        {% include "prediction/components/risk_card.html" %}
+
+        {% include "prediction/components/diagnosis_card.html" %}
+
+        {% include "prediction/components/recommendation_card.html" %}
+
+        {% include "prediction/components/model_information.html" %}
+
+        {% include "prediction/components/data_quality_card.html" %}
+
+        {% include "prediction/components/prediction_metadata.html" %}
+
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
