@@ -1,0 +1,33 @@
+{% extends "prediction/base_prediction.html" %}
+
+{% block page_title %}
+Lung Cancer Prediction
+{% endblock %}
+
+{% block page_subtitle %}
+Predict the likelihood of lung cancer using AI-powered clinical analysis.
+{% endblock %}
+
+{% block form_title %}
+Lung Cancer Risk Assessment
+{% endblock %}
+
+{% block model_description %}
+This machine learning model estimates the probability of lung cancer using patient demographics, smoking history, symptoms, and other clinical risk factors. The prediction is intended to support early screening and clinical decision-making and should not replace professional medical diagnosis.
+{% endblock %}
+
+{% block prediction_form %}
+
+<div class="row">
+
+    {% for field in form %}
+
+        <div class="col-md-6 mb-3">
+            {% include "prediction/components/prediction_field.html" with field=field %}
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}  

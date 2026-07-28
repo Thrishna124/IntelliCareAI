@@ -1,0 +1,177 @@
+/* Shared production UI foundation for every IntelliCareAI screen. */
+:root {
+    --brand-600: #2563eb;
+    --brand-700: #1d4ed8;
+    --ink-950: #0f172a;
+    --ink-700: #334155;
+    --ink-500: #64748b;
+    --line: #e2e8f0;
+    --canvas: #f6f8fc;
+    --panel: #ffffff;
+    --positive: #15803d;
+    --caution: #b45309;
+    --critical: #b91c1c;
+}
+
+* { box-sizing: border-box; }
+
+html { min-height: 100%; }
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink-700);
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--brand-600); }
+a:hover { color: var(--brand-700); }
+
+button, input, select, textarea { font: inherit; }
+
+:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, .35);
+    outline-offset: 2px;
+}
+
+/* Standalone clinical and account pages retained for backward-compatible routes. */
+body .form-container {
+    width: min(100% - 2rem, 760px);
+    margin: clamp(2rem, 6vw, 5rem) auto;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, .08);
+}
+
+body > h1 {
+    width: min(100% - 2rem, 760px);
+    margin: clamp(2rem, 6vw, 5rem) auto -1.25rem;
+    color: var(--ink-950);
+    font-size: clamp(1.65rem, 3vw, 2.25rem);
+    font-weight: 750;
+    letter-spacing: -.03em;
+}
+
+.form-container h1, .form-container h2, .form-container h3, .form-container h4 {
+    margin: 0 0 1rem;
+    color: var(--ink-950);
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+.form-container h3 { margin-top: 1.75rem; font-size: 1rem; color: var(--ink-700); }
+.form-container p { line-height: 1.65; }
+
+.form-container form p { display: grid; gap: .45rem; margin: 0 0 1rem; }
+.form-container label { color: var(--ink-700); font-size: .9rem; font-weight: 650; }
+.form-container input:not([type="checkbox"]):not([type="radio"]),
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    min-height: 46px;
+    padding: .7rem .8rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--ink-950);
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+.form-container textarea { min-height: 112px; resize: vertical; }
+.form-container input:focus, .form-container select:focus, .form-container textarea:focus {
+    border-color: var(--brand-600);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .13);
+    outline: 0;
+}
+
+.form-container button, .logout-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: .7rem 1.1rem;
+    border: 0;
+    border-radius: 10px;
+    background: var(--brand-600);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, .2);
+    transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.form-container button:hover, .logout-button:hover { background: var(--brand-700); transform: translateY(-1px); box-shadow: 0 7px 16px rgba(37, 99, 235, .25); }
+.form-container a { display: inline-block; margin: .35rem .85rem .35rem 0; font-weight: 650; text-decoration: none; }
+.form-container a:hover { text-decoration: underline; }
+
+.form-container table { width: 100%; border-collapse: collapse; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; }
+.form-container th { background: #eff6ff; color: var(--ink-700); font-size: .75rem; letter-spacing: .05em; text-align: left; text-transform: uppercase; }
+.form-container th, .form-container td { padding: .85rem 1rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.form-container tr:last-child td { border-bottom: 0; }
+.form-container ul { padding-left: 1.25rem; }
+.form-container li { margin: .4rem 0; }
+
+.green, .normal-weight { color: var(--positive); }
+.yellow-orange, .underweight, .overweight { color: var(--caution); }
+.red, .obese { color: var(--critical); }
+.bmi-category { font-weight: 750; }
+.error, .form-container .errorlist { color: var(--critical); }
+.form-container .errorlist { margin: .2rem 0; padding-left: 1.15rem; font-size: .85rem; }
+
+@media (max-width: 640px) {
+    body .form-container { width: min(100% - 1.25rem, 760px); border-radius: 16px; }
+    .form-container th, .form-container td { padding: .7rem; font-size: .85rem; }
+    .form-container table { display: block; overflow-x: auto; }
+}
+
+/* Application shell — used by prediction and clinical-result workflows. */
+.clinical-shell { width: min(1440px, calc(100% - 3rem)); margin: 0 auto; }
+.clinical-nav {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.25rem;
+    padding: 0 1.15rem 0 1.35rem;
+    background: rgba(255,255,255,.88);
+    border: 1px solid rgba(226,232,240,.85);
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(15,23,42,.06);
+    backdrop-filter: blur(16px);
+}
+.clinical-brand { display:flex; align-items:center; gap:.7rem; color:var(--ink-950); font-weight:800; letter-spacing:-.03em; text-decoration:none; }
+.clinical-brand:hover { color:var(--ink-950); }
+.clinical-brand span { display:grid; place-items:center; width:36px; height:36px; border-radius:11px; color:#fff; background:linear-gradient(135deg,#2563eb,#38bdf8); box-shadow:0 8px 16px rgba(37,99,235,.2); }
+.clinical-nav__meta { display:flex; align-items:center; gap:1.25rem; color:var(--ink-500); font-size:.82rem; font-weight:650; }
+.clinical-nav__meta > span { display:flex; gap:.4rem; align-items:center; }
+.clinical-nav__meta > span i { color:var(--brand-600); }
+.clinical-nav__meta a { padding:.62rem .85rem; border-radius:9px; background:#f1f5f9; color:var(--ink-700); text-decoration:none; }
+.clinical-nav__meta a:hover { color:var(--brand-700); background:#e8f0ff; }
+.prediction-page { padding:1.5rem 0 3rem; }
+.prediction-container { padding:0; }
+.prediction-header { margin-bottom:1.5rem; }
+.prediction-header h1 { font-size:clamp(1.75rem, 3vw, 2.35rem); letter-spacing:-.04em; color:var(--ink-950); }
+.prediction-header p { max-width:620px; font-size:.98rem; }
+.prediction-progress { margin-bottom:1.5rem; }
+.prediction-progress .progress { height:5px; background:#e7edf6; }
+.prediction-progress .progress-bar { background:linear-gradient(90deg,#2563eb,#38bdf8); }
+.prediction-card, .info-card { border-radius:18px; box-shadow:0 12px 28px rgba(15,23,42,.06); }
+.card-header-custom { padding:1.45rem 1.6rem; background:linear-gradient(180deg,#fff,#fbfdff); }
+.card-body-custom { padding:1.6rem; }
+.btn-predict { background:linear-gradient(135deg,#2563eb,#1d4ed8); border-radius:11px; box-shadow:0 8px 18px rgba(37,99,235,.18); }
+.btn-predict:hover { background:linear-gradient(135deg,#1d4ed8,#1e40af); box-shadow:0 12px 22px rgba(37,99,235,.25); }
+
+/* Elevate the legacy, route-compatible screens into a clinical product surface. */
+body:has(.form-container) { background:radial-gradient(circle at 12% -5%, #dbeafe 0, transparent 31rem), radial-gradient(circle at 100% 0, #e0edff 0, transparent 34rem), #f7fafc; }
+body .form-container { position:relative; overflow:hidden; border-color:rgba(203,213,225,.8); box-shadow:0 24px 60px rgba(15,23,42,.10); }
+body .form-container::before { content:"INTELLICARE AI  /  CLINICAL INTELLIGENCE"; display:block; margin:-.25rem 0 1.45rem; color:#2563eb; font-size:.69rem; font-weight:800; letter-spacing:.12em; }
+body .form-container h1, body .form-container h2 { font-size:1.65rem; }
+
+@media (max-width: 760px) {
+    .clinical-shell { width:min(100% - 1.25rem, 1440px); }
+    .clinical-nav { height:auto; min-height:64px; padding:.8rem 1rem; margin-bottom:1.25rem; }
+    .clinical-nav__meta > span { display:none; }
+    .clinical-nav__meta { gap:.5rem; }
+    .prediction-page { padding-top:.6rem; }
+}

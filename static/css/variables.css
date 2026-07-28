@@ -1,0 +1,57 @@
+/* ==============================
+   IntelliCareAI Design System
+==============================*/
+
+:root{
+
+    /* Brand */
+
+    --primary:#2563EB;
+    --primary-dark:#1D4ED8;
+
+    --secondary:#14B8A6;
+
+    --accent:#38BDF8;
+
+    /* Background */
+
+    --background:#F8FAFC;
+
+    --surface:#FFFFFF;
+
+    /* Text */
+
+    --heading:#0F172A;
+
+    --text:#475569;
+
+    --muted:#94A3B8;
+
+    /* Status */
+
+    --success:#22C55E;
+
+    --warning:#F59E0B;
+
+    --danger:#EF4444;
+
+    /* Radius */
+
+    --radius-sm:10px;
+
+    --radius:18px;
+
+    --radius-lg:28px;
+
+    /* Shadow */
+
+    --shadow-sm:
+    0 4px 12px rgba(0,0,0,.05);
+
+    --shadow:
+    0 12px 32px rgba(0,0,0,.08);
+
+    --shadow-lg:
+    0 24px 48px rgba(0,0,0,.12);
+
+}

@@ -1,0 +1,61 @@
+<div class="prediction-card">
+
+    <div class="card-header-custom">
+
+        
+            <i class="bi bi-person-circle"></i>
+        <h3>
+            Patient Summary
+        </h3>
+
+    </div>
+
+    <div class="card-body-custom">
+
+        <div class="record-person">
+            <div class="patient-avatar">{{ patient.fname|first }}{{ patient.lname|first }}</div>
+            <div><h5>{{ patient.fname }} {{ patient.lname }}</h5><p>Patient ID #{{ patient.pid }}</p></div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="info-grid">
+
+    <div class="info-item">
+        <span class="info-label">Age</span>
+        <span class="info-value">{{ patient.age }}</span>
+    </div>
+
+    <div class="info-item">
+        <span class="info-label">Gender</span>
+        <span class="info-value">{{ patient.sex }}</span>
+    </div>
+
+    <div class="info-item">
+        <span class="info-label">City</span>
+        <span class="info-value">
+            {{ patient.city|default:"Not Available" }}
+        </span>
+    </div>
+
+    <div class="info-item">
+        <span class="info-label">Lifestyle</span>
+        <span class="info-value">
+            {{ patient.lifestyle|default:"Not Available" }}
+        </span>
+    </div>
+
+    {% if health_percentage %}
+    <div class="info-item">
+        <span class="info-label">Health Score</span>
+        <span class="info-value">
+            {{ health_percentage }}%
+        </span>
+    </div>
+    {% endif %}
+
+</div>
+
+</div>
+
+</div>

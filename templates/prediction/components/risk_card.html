@@ -1,0 +1,86 @@
+<div class="prediction-card risk-card">
+
+    <div class="card-header">
+
+        <h4>
+            <i class="bi bi-activity"></i>
+            AI Risk Assessment
+        </h4>
+
+    </div>
+
+    <div class="risk-content">
+
+        <div class="risk-level">
+
+            <span class="label">Risk Level</span>
+
+            {% if prediction_result.risk_level == "Very Low" %}
+            <span class="badge bg-success">
+                {{ prediction_result.risk_level }}
+            </span>
+
+            {% elif prediction_result.risk_level == "Low" %}
+            <span class="badge bg-success">
+                {{ prediction_result.risk_level }}
+            </span>
+
+            {% elif prediction_result.risk_level == "Borderline" %}
+            <span class="badge bg-warning text-dark">
+                {{ prediction_result.risk_level }}
+            </span>
+
+            {% elif prediction_result.risk_level == "Moderate" %}
+            <span class="badge bg-warning">
+                {{ prediction_result.risk_level }}
+            </span>
+
+            {% else %}
+            <span class="badge bg-danger">
+                {{ prediction_result.risk_level }}
+            </span>
+        {% endif %}
+
+        </div>
+
+        <div class="probability-section">
+
+            <div class="probability-header">
+
+                <span>Disease Probability</span>
+
+                <strong>{{ prediction_result.risk_percentage }}%</strong>
+
+            </div>
+
+            <div class="progress">
+
+                <div class="progress-bar"
+
+                     role="progressbar"
+
+                     style="width: {{ prediction_result.risk_percentage }}%;"
+
+                     aria-valuenow="{{ prediction_result.risk_percentage }}"
+
+                     aria-valuemin="0"
+
+                     aria-valuemax="100">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="prediction-message">
+
+            <i class="bi bi-info-circle-fill"></i>
+
+            {{ prediction_result.prediction }}
+
+        </div>
+
+    </div>
+
+</div>

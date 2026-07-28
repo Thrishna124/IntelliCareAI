@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title align='center'>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main_page_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        {% if patient %}
+            <h4>Name: {{ patient.fname|capfirst }} {{ patient.lname|capfirst }}</h4>  <!-- Display the username -->
+            <h4>Patient ID: {{ patient.pid }}</h4>
+        {% else %}
+            <h4>No patient data available.</h4>
+        {% endif %}
+
+        <h4>Health Score</h4>        
+        <!-- Display health score results -->
+        <ul>
+            {% for result in latest_results %}
+            Number of Tests done: <strong>{{ result.total_predictions }}</strong>
+            <br><br>
+                <li>
+                    <div class="color-square sq-green">{{ result.count_green }}</div>
+                    <div class="color-square sq-yellow">{{ result.count_yellow }}</div>
+                    <div class="color-square sq-red">{{ result.count_red }}</div><br><br>
+                    <strong>Health Score: {{ result.health_score }} </strong><br>
+                </li>
+            {% empty %}
+                <li>No health score data available.</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Index:</h3>
+        <p><a href="{% url 'main_page:view_vital_info' %}"><em>View Vitals</em></a></p>
+        <p><a href="{% url 'main_page:update_patient_data' %}"><em>Update your account Information</em></a></p>
+        <p><a href="{% url 'main_page:update_form_vitals' %}"><em>Update your vitals Information</em></a></p>
+        <p><a href="{% url 'main_page:view_prediction_data' %}"><em>View your Prediction Results</em></a></p>
+
+        <h4>Please enter lab result for Prediction</h4>
+        <li><a href="{% url 'pancreas:diabetes_predict' %}">Diabetes</a></li>
+        <li><a href="{% url 'heart:predict_heart_disease' %}">Heart</a></li>
+        <li><a href="{% url 'kidney:kidney_predict' %}">Kidney</a></li>
+        <li><a href="{% url 'liver:liver_predict' %}">Liver</a></li>
+        <li><a href="{% url 'lungs:lungs_predict' %}">Lungs</a></li>
+        <li><a href="{% url 'fitness:fitness_predict' %}">Fitness Calculator</a></li>
+        <li><a href="{% url 'lung_cancer:lung_cancer_predict' %}">Lung Cancer</a></li><br>
+
+        <!-- Logout Button -->
+        <form action="{% url 'main_page:logout_view' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+    
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

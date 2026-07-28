@@ -1,0 +1,25 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fitness Score</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'fitness_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+
+</head>
+<body>
+    <h1 align="center">Fitness Calculator</h1>
+    <div class="form-container">
+    <form method="post" action="{% url 'fitness:fitness_predict' %}"> <!-- action to render the values to result-->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div> 
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'heart_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Heart Prediction Result</h1>
+        {{ patient }}<br>
+        {% if prediction == "Does Not Have heart problem" and diagnosis == 'Normal' %}
+        <p >Prediction: <span class="green"><strong>{{ prediction }}</strong></span></p>
+        <p >Diagnosis: <span class="green"><strong>{{ diagnosis }}</strong></span></p>
+        {% elif prediction == "Does Not Have heart problem" and diagnosis != 'Normal' %}
+        <p >Prediction: <span class="yellow-orange"><strong>{{ prediction }}</strong></span></p>
+        <p >Diagnosis: <span class="yellow-orange"><strong>{{ diagnosis }}</strong></span></p>
+        {% elif prediction == "Might have heart problem" and diagnosis != 'Normal' %}
+        <p>Prediction: <span class="red"><strong>{{ prediction }}</strong></span></p>
+        <p>Diagnosis: <span class="red"><strong>{{ diagnosis }}</strong></span></p>
+        {% else %}
+        <p >Prediction: <span class="yellow-orange"><strong> {{ prediction }}</strong></span></p>
+        <p >Diagnosis: <span class="yellow-orange"> <strong> {{ diagnosis }}</strong></span></p>
+        {% endif %}
+        <p>Quality of Data: {{ data_quality_report }}%</p>
+
+        <p><em>Features not entered for prediction:</em></p>
+        {% if missing_columns %}
+            <ul>
+                {% for column in missing_columns %}
+                    <li>{{ column|capfirst }}</li>
+                {% endfor %}
+            </ul>
+            <em> <span class="red">Missing values will affect prediction result.</span> </em>
+        {% else %}
+            <p><strong>All fields were entered.</strong></p>
+        {% endif %}
+        <br>
+        <br>
+        <a href="{% url 'main_page:home' %}">Make another prediction</a>
+<!-- Logout Button -->
+<form action="{% url 'main_page:logout_view' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="logout-button">Logout</button>
+</form>
+</div>
+</body>
+</html>

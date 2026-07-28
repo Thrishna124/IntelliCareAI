@@ -1,0 +1,36 @@
+
+{% extends "prediction/base_prediction.html" %}
+
+{% block page_title %}
+Heart Disease Prediction
+{% endblock %}
+
+{% block page_subtitle %}
+Assess cardiovascular disease risk using AI-powered clinical analysis.
+{% endblock %}
+
+{% block form_title %}
+Heart Disease Assessment
+{% endblock %}
+
+{% block model_description %}
+This machine learning model evaluates cardiovascular risk using patient demographics, symptoms, ECG measurements, blood pressure, cholesterol, and other clinical indicators.
+{% endblock %}
+
+{% block prediction_form %}
+
+<div class="row">
+
+    {% for field in form %}
+
+    <div class="col-md-6 mb-3">
+
+            {% include "prediction/components/prediction_field.html" with field=field %}
+    </div>
+    
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+

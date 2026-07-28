@@ -1,0 +1,37 @@
+
+{% extends "prediction/base_prediction.html" %}
+
+{% block page_title %}
+Kidney Disease Prediction
+{% endblock %}
+
+{% block page_subtitle %}
+AI-powered chronic kidney disease prediction.
+{% endblock %}
+
+{% block form_title %}
+Kidney Disease Assessment
+{% endblock %}
+
+{% block model_description %}
+This model predicts chronic kidney disease using laboratory values, blood chemistry, urine analysis, and patient health history.
+{% endblock %}
+
+{% block prediction_form %}
+
+<div class="row">
+
+    {% for field in form %}
+
+    <div class="col-md-6 mb-3">
+
+        {% include "prediction/components/prediction_field.html" with field=field %}
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+

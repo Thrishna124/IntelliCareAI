@@ -1,0 +1,47 @@
+/* Center the form container and give it some styling */
+.form-container {
+    width: 50%;              /* Adjust width as needed */
+    max-width: 600px;        /* Max width for larger screens */
+    margin: 0 auto;          /* Center the container horizontally */
+    padding: 20px;           /* Add padding inside the container */
+    border: 2px solid #ccc;  /* Border color and width */
+    border-radius: 8px;      /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+/* Style the form elements */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style form inputs and buttons */
+form input, form button {
+    margin-bottom: 10px; /* Space between form elements */
+    padding: 10px;       /* Padding inside inputs and button */
+    border: 1px solid #ddd; /* Border color */
+    border-radius: 4px;  /* Rounded corners for inputs and button */
+}
+
+form button {
+    background-color: #007bff; /* Button background color */
+    color: white;          /* Button text color */
+    border: none;          /* Remove border */
+    cursor: pointer;       /* Pointer cursor on hover */
+}
+
+form button:hover {
+    background-color: #0056b3; /* Darker background color on hover */
+}
+
+/* Conditional text coloring */
+.green {
+    color: #28a745; /* A bright green */
+}
+.yellow-orange {
+    color: orange; /* A orange shade */
+}
+.red {
+    color: #dc3545; /* A bright red */
+}

@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Git
+.git
+.gitignore
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Django
+media/
+staticfiles/
+logs/
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+#training data
+lung_cancer/data/
+heart/data/
+kidney/data/
+liver/data/
+lungs/data/
+pancreas/data/
+fitness/data/

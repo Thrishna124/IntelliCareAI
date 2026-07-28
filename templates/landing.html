@@ -1,0 +1,1121 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+IntelliCareAI | AI-Powered Healthcare Analytics Platform
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/landing/hero.css' %}">
+<link rel="stylesheet" href="{% static 'css/landing/stats.css' %}">
+<link rel="stylesheet" href="{% static 'css/landing/modules.css' %}">
+<link rel="stylesheet" href="{% static 'css/landing/technology.css' %}">
+<link rel="stylesheet" href="{% static 'css/landing/dashboard-preview.css' %}">
+<link rel="stylesheet" href="{% static 'css/landing/analytics.css' %}">
+<link rel="stylesheet" href="{% static 'css/landing/footer.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+Hero Section
+====================================================== -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center gy-5 gx-5">
+
+            <!-- Hero Content -->
+            <div class="col-lg-6 hero-content">
+
+                <span class="hero-badge">
+                    <i class="bi bi-stars"></i>
+                    AI Healthcare Platform
+                </span>
+
+                <h1>
+                    Smarter Healthcare
+                    <br>
+                    <span>Powered by Artificial Intelligence</span>
+                </h1>
+
+                <p>
+                    IntelliCareAI combines Artificial Intelligence,
+                    Machine Learning and Clinical Decision Support
+                    to predict diseases, analyze patient health,
+                    assist healthcare professionals and improve
+                    clinical decision making.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary btn-lg">
+
+                        Get Started
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                    <a href="/api/docs/"
+                       class="btn btn-outline-primary btn-lg">
+
+                        <i class="bi bi-journal-code"></i>
+                        API Docs
+
+                    </a>
+
+                </div>
+
+                <div class="hero-features">
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Heart
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Kidney
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Liver
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Lung
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Diabetes
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Fitness
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Hero Image -->
+            <div class="col-lg-6">
+
+                <div class="hero-image-wrapper">
+
+                    <img
+                        src="{% static 'images/hero/hero.png' %}"
+                        class="img-fluid hero-image"
+                        alt="IntelliCareAI Dashboard">
+
+                    <div class="floating-card health-card">
+
+                        <div class="icon">
+                            <i class="bi bi-heart-pulse-fill"></i>
+                        </div>
+
+                        <div>
+                            <small>Health Score</small>
+                            <h5>92%</h5>
+                        </div>
+
+                    </div>
+
+                    <div class="floating-card ai-card">
+
+                        <div class="icon">
+                            <i class="bi bi-cpu-fill"></i>
+                        </div>
+
+                        <div>
+                            <small>AI Prediction</small>
+                            <h5>Normal</h5>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+Platform Statistics
+====================================================== -->
+
+<section class="stats-section">
+
+    <div class="container">
+
+        <div class="section-heading text-center mb-5">
+
+            <span class="section-badge">
+                <i class="bi bi-graph-up-arrow"></i>
+                Platform Overview
+            </span>
+
+            <h2>Healthcare Analytics at a Glance</h2>
+
+            <p>
+                Built for intelligent patient management,
+                disease prediction and AI-powered
+                clinical decision support.
+            </p>
+
+        </div>
+
+        <div class="row g-4 modules-grid">
+
+            <!-- Card 1 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon bg-primary-soft">
+                        <i class="bi bi-cpu-fill"></i>
+                    </div>
+
+                    <span class="live-badge">
+                        LIVE
+                    </span>
+
+                    <h2>7</h2>
+
+                    <h5>AI Prediction Models</h5>
+
+                    <p>
+                        Intelligent prediction engines
+                        for multiple diseases.
+                    </p>
+
+                    <div class="card-footer">
+
+                        <span>
+                            <i class="bi bi-arrow-up-right"></i>
+                            Active
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon bg-success-soft">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+
+                    <h2>24/7</h2>
+
+                    <h5>Clinical Decision Support</h5>
+
+                    <p>
+                        AI-assisted healthcare analytics
+                        available around the clock.
+                    </p>
+
+                    <div class="card-footer">
+
+                        <span>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Online
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon bg-warning-soft">
+                        <i class="bi bi-file-earmark-medical-fill"></i>
+                    </div>
+
+                    <h2>1000+</h2>
+
+                    <h5>Health Records</h5>
+
+                    <p>
+                        Secure patient information and
+                        prediction history management.
+                    </p>
+
+                    <div class="card-footer">
+
+                        <span>
+                            <i class="bi bi-bar-chart-fill"></i>
+                            Growing
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon bg-info-soft">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+
+                    <h2>100%</h2>
+
+                    <h5>Secure Platform</h5>
+
+                    <p>
+                        Authentication, authorization
+                        and encrypted healthcare data.
+                    </p>
+
+                    <div class="card-footer">
+
+                        <span>
+                            <i class="bi bi-lock-fill"></i>
+                            Protected
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+AI Prediction Modules
+====================================================== -->
+
+<section id="features" class="prediction-modules-section">
+
+    <div class="container">
+
+        <div class="section-heading text-center mb-5">
+
+            <span class="section-badge">
+                <i class="bi bi-cpu-fill"></i>
+                AI Prediction Modules
+            </span>
+
+            <h2>
+                Intelligent Disease Prediction
+            </h2>
+
+            <p>
+                Predict diseases using advanced machine learning models,
+                clinical data analysis and AI-powered decision support.
+            </p>
+
+        </div>
+
+        <div class="row g-4 modules-grid">
+
+            <!-- Heart -->
+            <div class="col-lg-4 col-md-6">
+
+                <div class="prediction-module">
+
+                    <div class="module-icon">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+
+                    <span class="module-badge">AI Powered</span>
+
+                    <h4>Heart Disease</h4>
+
+                    <p>
+                        Early cardiovascular risk assessment using
+                        clinical parameters and machine learning.
+                    </p>
+
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i>Risk Prediction</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Clinical Analysis</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Health Report</li>
+                    </ul>
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary module-btn">
+
+                        Run Prediction
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Diabetes -->
+            <div class="col-lg-4 col-md-6">
+
+                <div class="prediction-module">
+
+                    <div class="module-icon">
+                        <i class="bi bi-droplet-fill"></i>
+                    </div>
+
+                    <span class="module-badge">AI Powered</span>
+
+                    <h4>Diabetes</h4>
+
+                    <p>
+                        Early diabetes prediction using intelligent
+                        machine learning algorithms.
+                    </p>
+
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i>Blood Sugar Analysis</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Risk Assessment</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Health Report</li>
+                    </ul>
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary module-btn">
+
+                        Run Prediction
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Kidney -->
+            <div class="col-lg-4 col-md-6">
+
+                <div class="prediction-module">
+
+                    <div class="module-icon">
+                        <i class="bi bi-capsule"></i>
+                    </div>
+
+                    <span class="module-badge">AI Powered</span>
+
+                    <h4>Kidney Disease</h4>
+
+                    <p>
+                        Intelligent kidney health prediction and
+                        chronic disease risk analysis.
+                    </p>
+
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i>Kidney Health</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Clinical Insights</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Health Report</li>
+                    </ul>
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary module-btn">
+
+                        Run Prediction
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Liver -->
+            <div class="col-lg-4 col-md-6">
+
+                <div class="prediction-module">
+
+                    <div class="module-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+
+                    <span class="module-badge">AI Powered</span>
+
+                    <h4>Liver Disease</h4>
+
+                    <p>
+                        AI-assisted liver disease prediction using
+                        laboratory and clinical parameters.
+                    </p>
+
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i>Liver Function</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Risk Prediction</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Health Report</li>
+                    </ul>
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary module-btn">
+
+                        Run Prediction
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Lung -->
+            <div class="col-lg-4 col-md-6">
+
+                <div class="prediction-module">
+
+                    <div class="module-icon">
+                        <i class="bi bi-lungs-fill"></i>
+                    </div>
+
+                    <span class="module-badge">AI Powered</span>
+
+                    <h4>Lung Disease</h4>
+
+                    <p>
+                        Pulmonary disease assessment using respiratory
+                        health indicators and AI.
+                    </p>
+
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i>Lung Analysis</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Clinical Support</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Health Report</li>
+                    </ul>
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary module-btn">
+
+                        Run Prediction
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Lung Cancer -->
+            <div class="col-lg-4 col-md-6">
+
+                <div class="prediction-module">
+
+                    <div class="module-icon">
+                        <i class="bi bi-virus2"></i>
+                    </div>
+
+                    <span class="module-badge">AI Powered</span>
+
+                    <h4>Lung Cancer</h4>
+
+                    <p>
+                        Deep learning image-based prediction using
+                        CT scan analysis.
+                    </p>
+
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i>Image Analysis</li>
+                        <li><i class="bi bi-check-circle-fill"></i>AI Detection</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Prediction Report</li>
+                    </ul>
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary module-btn">
+
+                        Run Prediction
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Fitness -->
+            <div class="col-lg-4 col-md-6 mx-auto">
+
+                <div class="prediction-module">
+
+                    <div class="module-icon">
+                        <i class="bi bi-activity"></i>
+                    </div>
+
+                    <span class="module-badge">AI Powered</span>
+
+                    <h4>Fitness Assessment</h4>
+
+                    <p>
+                        AI-powered wellness evaluation using BMI,
+                        lifestyle and health indicators.
+                    </p>
+
+                    <ul>
+                        <li><i class="bi bi-check-circle-fill"></i>Fitness Score</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Health Insights</li>
+                        <li><i class="bi bi-check-circle-fill"></i>Recommendations</li>
+                    </ul>
+
+                    <a href="{% url 'main_page:login_view' %}"
+                       class="btn btn-primary module-btn">
+
+                        Run Prediction
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+Technology Stack
+====================================================== -->
+
+<section id="technology" class="technology-section">
+
+    <div class="container">
+
+        <div class="section-title text-center">
+
+            <span class="hero-badge">
+                <i class="bi bi-cpu"></i>
+                Technology Stack
+            </span>
+
+            <h2 class="mt-4">
+                Built With Industry Standard Technologies
+            </h2>
+
+            <p>
+                IntelliCareAI combines Artificial Intelligence,
+                Backend Engineering and Cloud Technologies to
+                deliver a scalable healthcare analytics platform.
+            </p>
+
+        </div>
+
+        <div class="row g-4 modules-grid">
+
+            <!-- Python -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-filetype-py"></i>
+                    </div>
+
+                    <h4>Python</h4>
+
+                    <p>
+                        Core programming language powering AI,
+                        backend services and data processing.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Django -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-box"></i>
+                    </div>
+
+                    <h4>Django</h4>
+
+                    <p>
+                        Secure web framework used for authentication,
+                        APIs and patient management.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- TensorFlow -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-cpu-fill"></i>
+                    </div>
+
+                    <h4>TensorFlow</h4>
+
+                    <p>
+                        Deep learning framework powering
+                        intelligent disease prediction models.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- MySQL -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-database-fill"></i>
+                    </div>
+
+                    <h4>MySQL</h4>
+
+                    <p>
+                        Relational database used for secure
+                        patient records and prediction history.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- REST API -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-diagram-3-fill"></i>
+                    </div>
+
+                    <h4>REST API</h4>
+
+                    <p>
+                        Enables seamless integration with
+                        external healthcare applications.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Docker -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-hdd-network-fill"></i>
+                    </div>
+
+                    <h4>Docker</h4>
+
+                    <p>
+                        Containerized deployment ensuring
+                        consistent environments.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Security -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-shield-lock-fill"></i>
+                    </div>
+
+                    <h4>Security</h4>
+
+                    <p>
+                        Authentication, authorization and
+                        encrypted healthcare data protection.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Cloud -->
+            <div class="col-lg-3 col-md-6">
+
+                <div class="tech-card">
+
+                    <div class="tech-icon">
+                        <i class="bi bi-cloud-check-fill"></i>
+                    </div>
+
+                    <h4>Cloud Ready</h4>
+
+                    <p>
+                        Designed for scalable deployment
+                        across cloud platforms.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+Dashboard Preview
+====================================================== -->
+
+<section id="dashboard-preview" class="dashboard-preview-section">
+
+    <div class="container">
+
+        <div class="section-title text-center">
+
+            <span class="hero-badge">
+
+                <i class="bi bi-speedometer2"></i>
+
+                Dashboard Preview
+
+            </span>
+
+            <h2 class="mt-4">
+
+                Experience IntelliCareAI
+
+            </h2>
+
+            <p class="section-description">
+
+                See how clinicians manage patients,
+                monitor health scores,
+                run AI predictions,
+                and analyze medical insights
+                through a modern enterprise dashboard.
+
+            </p>
+
+        </div>
+
+        <div class="row align-items-center g-5">
+
+            <!-- Dashboard Image -->
+
+            <div class="col-lg-8">
+
+                <div class="dashboard-preview-card">
+
+                    <img
+                        src="{% static 'images/dashboard/dashboard-preview.png' %}"
+                        alt="IntelliCareAI Dashboard"
+                        class="img-fluid dashboard-image">
+
+                </div>
+
+            </div>
+
+            <!-- Feature List -->
+
+            <div class="col-lg-4">
+
+                <div class="preview-features">
+
+                    <div class="preview-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>Patient Management</span>
+
+                    </div>
+
+                    <div class="preview-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>AI Prediction Center</span>
+
+                    </div>
+
+                    <div class="preview-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>Health Analytics</span>
+
+                    </div>
+
+                    <div class="preview-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>Automated Reports</span>
+
+                    </div>
+
+                    <div class="preview-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>Clinical Dashboard</span>
+
+                    </div>
+
+                    <div class="preview-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>Secure Authentication</span>
+
+                    </div>
+
+                    <a
+                        href="{% url 'main_page:login_view' %}"
+                        class="btn btn-primary btn-dashboard mt-4">
+
+                        <i class="bi bi-box-arrow-in-right"></i>
+
+                        Login to Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+Call To Action
+====================================================== -->
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <div class="cta-card text-center">
+
+            <span class="hero-badge">
+
+                <i class="bi bi-stars"></i>
+
+                Ready to Get Started?
+
+            </span>
+
+            <h2 class="mt-4">
+
+                Experience AI-Powered Healthcare
+
+            </h2>
+
+            <p>
+
+                Join IntelliCareAI to explore intelligent
+                disease prediction, patient analytics,
+                and clinical decision support powered
+                by Artificial Intelligence.
+
+            </p>
+
+            <div class="mt-4">
+
+                <a
+                    href="{% url 'main_page:login_view' %}"
+                    class="btn btn-primary btn-lg">
+
+                    <i class="bi bi-box-arrow-in-right"></i>
+
+                    Login
+
+                </a>
+
+                <a
+                    href="/api/docs/"
+                    class="btn btn-outline-primary btn-lg ms-2">
+
+                    <i class="bi bi-journal-code"></i>
+
+                    API Documentation
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-top">
+
+            <div class="row gy-5">
+
+                <div class="col-lg-4">
+
+                    <div class="footer-brand">
+
+                        <div class="footer-logo">
+
+                            <img src="{% static 'images/logo.png' %}" alt="IntelliCareAI">
+
+                            <h3>IntelliCareAI</h3>
+
+                        </div>
+
+                        <p>
+
+                            AI-powered healthcare analytics platform providing intelligent disease prediction,
+                            patient management, and clinical decision support through secure, data-driven insights.
+
+                        </p>
+
+                        <div class="footer-social">
+
+                            <a href="#"><i class="bi bi-github"></i></a>
+
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+
+                            <a href="#"><i class="bi bi-twitter-x"></i></a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-2 col-md-4">
+
+                    <h5>Platform</h5>
+
+                    <ul class="footer-links">
+
+                        <li><a href="#overview">Overview</a></li>
+
+                        <li><a href="#features">Modules</a></li>
+
+                        <li><a href="#technology">Technology</a></li>
+
+                        <li><a href="#dashboard-preview">Dashboard</a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="col-lg-3 col-md-4">
+
+                    <h5>AI Modules</h5>
+
+                    <ul class="footer-links">
+
+                        <li><a href="#">Heart Disease</a></li>
+
+                        <li><a href="#">Diabetes</a></li>
+
+                        <li><a href="#">Kidney Disease</a></li>
+
+                        <li><a href="#">Stroke Risk</a></li>
+
+                        <li><a href="#">Liver Disease</a></li>
+
+                        <li><a href="#">Lung Cancer</a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="col-lg-3 col-md-4">
+
+                    <h5>Contact</h5>
+
+                    <ul class="footer-contact">
+
+                        <li>
+
+                            <i class="bi bi-envelope"></i>
+
+                            <span>support@intellicareai.com</span>
+
+                        </li>
+
+                        <li>
+
+                            <i class="bi bi-cpu"></i>
+
+                            <span>Django • TensorFlow • Bootstrap • MySQL</span>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+
+                © 2026 IntelliCareAI. All rights reserved.
+
+            </p>
+
+            <div class="footer-bottom-links">
+
+                <a href="#">Privacy</a>
+
+                <a href="#">Terms</a>
+
+                <a href="#">Documentation</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+{% endblock %}

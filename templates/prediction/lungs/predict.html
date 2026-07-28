@@ -1,0 +1,37 @@
+
+{% extends "prediction/base_prediction.html" %}
+
+{% block page_title %}
+Lung Disease Prediction
+{% endblock %}
+
+{% block page_subtitle %}
+Analyze respiratory disease risk using AI.
+{% endblock %}
+
+{% block form_title %}
+Lung Disease Assessment
+{% endblock %}
+
+{% block model_description %}
+This model estimates the likelihood of lung disease based on respiratory symptoms, smoking history, and clinical measurements.
+{% endblock %}
+
+{% block prediction_form %}
+
+<div class="row">
+
+    {% for field in form %}
+
+    <div class="col-md-6 mb-3">
+
+        {% include "prediction/components/prediction_field.html" with field=field %}
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+

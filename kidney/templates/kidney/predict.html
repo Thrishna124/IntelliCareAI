@@ -1,0 +1,26 @@
+{%load static%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Disease Prediction</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'kidney_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+</head>
+<body>
+    <h1 align="center">kidney Disease Prediction</h1>
+    <div class="form-container">
+    <form method="post" action="{% url 'kidney:kidney_predict' %}"> <!-- action to render the values to result-->
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Predict</button>
+    </form>
+</div>
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+</body>
+</html>

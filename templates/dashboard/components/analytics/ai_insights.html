@@ -1,0 +1,70 @@
+<section class="analytics-section executive-intelligence" aria-labelledby="executive-intelligence-title">
+
+    <div class="section-heading">
+        <div>
+            <span class="section-eyebrow"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> AI-powered analysis</span>
+            <h2 id="executive-intelligence-title">AI Executive Intelligence</h2>
+            <p>Decision-ready population health signals generated from current platform activity.</p>
+        </div>
+        <span class="ai-status"><span aria-hidden="true"></span> AI engine online</span>
+    </div>
+
+    <div class="intelligence-grid">
+        <article class="intelligence-card intelligence-card--alert">
+            <div class="intelligence-card__icon"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></div>
+            <div>
+                <p class="intelligence-card__label">Risk alerts</p>
+                <h3>{{ positive_predictions|default:"0" }} positive cases</h3>
+                <p>Predictions requiring prioritised clinical review.</p>
+                {% for insight in ai_insights %}
+                    {% if forloop.counter == 3 %}<span class="intelligence-card__signal">{{ insight }}</span>{% endif %}
+                {% empty %}
+                    <span class="intelligence-card__signal">No risk signals have been recorded yet.</span>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="intelligence-card intelligence-card--trend">
+            <div class="intelligence-card__icon"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i></div>
+            <div>
+                <p class="intelligence-card__label">Emerging trends</p>
+                <h3>Model utilisation</h3>
+                <p>Identify the services generating the strongest demand.</p>
+                {% for insight in ai_insights %}
+                    {% if forloop.counter == 4 %}<span class="intelligence-card__signal">{{ insight }}</span>{% endif %}
+                {% empty %}
+                    <span class="intelligence-card__signal">Usage trends will appear as predictions are generated.</span>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="intelligence-card intelligence-card--recommendation">
+            <div class="intelligence-card__icon"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i></div>
+            <div>
+                <p class="intelligence-card__label">Recommendations</p>
+                <h3>Maintain active monitoring</h3>
+                <p>Review high-priority outcomes and model activity during care rounds.</p>
+                {% for insight in ai_insights %}
+                    {% if forloop.counter == 2 %}<span class="intelligence-card__signal">{{ insight }}</span>{% endif %}
+                {% empty %}
+                    <span class="intelligence-card__signal">Generate predictions to unlock operational recommendations.</span>
+                {% endfor %}
+            </div>
+        </article>
+
+        <article class="intelligence-card intelligence-card--summary">
+            <div class="intelligence-card__icon"><i class="fa-solid fa-users-viewfinder" aria-hidden="true"></i></div>
+            <div>
+                <p class="intelligence-card__label">Population health summary</p>
+                <h3>{{ total_patients|default:"0" }} registered patients</h3>
+                <p>A unified view of the population currently represented in IntelliCareAI.</p>
+                {% for insight in ai_insights %}
+                    {% if forloop.first %}<span class="intelligence-card__signal">{{ insight }}</span>{% endif %}
+                {% empty %}
+                    <span class="intelligence-card__signal">Patient population data will appear here as records are added.</span>
+                {% endfor %}
+            </div>
+        </article>
+    </div>
+
+</section>

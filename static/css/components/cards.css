@@ -1,0 +1,717 @@
+.card-modern{
+
+    background:white;
+
+    border:none;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow-sm);
+
+    transition:.3s;
+
+    padding:35px;
+
+}
+
+.card-modern:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ==========================================
+   Enterprise Stat Cards
+========================================== */
+
+.stat-card{
+
+    background:#ffffff;
+
+    border:1px solid #eef2f7;
+
+    border-radius:20px;
+
+    padding:1.6rem;
+
+    transition:.25s ease;
+
+    box-shadow:
+        0 2px 8px rgba(15,23,42,.04),
+        0 12px 28px rgba(15,23,42,.05);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    min-height:170px;
+}
+
+.stat-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 10px 30px rgba(15,23,42,.08);
+}
+
+.stat-card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:1rem;
+}
+
+.stat-title{
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    color:#64748b;
+
+    text-transform:uppercase;
+
+    letter-spacing:.08em;
+}
+
+.stat-icon{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:1rem;
+}
+
+.stat-value{
+
+    font-size:2.2rem;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    line-height:1.2;
+
+    margin-bottom:.75rem;
+}
+
+.stat-footer{
+
+    font-size:.85rem;
+
+    color:#94a3b8;
+}
+/* ===========================================================
+   HEALTH CARD
+=========================================================== */
+
+.health-card{
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:white;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    box-shadow:0 20px 45px rgba(37,99,235,.28);
+
+    height:100%;
+
+}
+
+.health-card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.health-card-header h5{
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+.health-card-header small{
+
+    opacity:.9;
+
+}
+
+.health-icon{
+
+    font-size:2rem;
+
+}
+
+.health-score{
+
+    font-size:4rem;
+
+    font-weight:800;
+
+    line-height:1;
+
+    margin:15px 0;
+
+}
+
+.health-status{
+
+    margin-bottom:25px;
+
+}
+
+.health-status .badge{
+
+    font-size:.95rem;
+
+    padding:10px 18px;
+
+    border-radius:30px;
+
+}
+
+.health-progress{
+
+    margin-bottom:25px;
+
+}
+
+.health-progress .progress{
+
+    height:10px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.2);
+
+}
+
+.health-progress .progress-bar{
+
+    border-radius:30px;
+
+}
+
+.health-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+}
+
+.metric{
+
+    text-align:center;
+
+}
+
+.metric h6{
+
+    font-size:1.5rem;
+
+    font-weight:700;
+
+    margin-bottom:4px;
+
+}
+
+.metric small{
+
+    opacity:.85;
+
+}
+
+
+/* ===========================================================
+   PATIENT CARD
+=========================================================== */
+
+.patient-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    box-shadow:0 12px 30px rgba(15,23,42,.08);
+
+    height:100%;
+
+}
+
+.patient-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:25px;
+
+}
+
+.patient-avatar{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.7rem;
+
+    font-weight:700;
+
+}
+
+.patient-header h4{
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+.patient-body{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
+}
+
+.patient-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    border-bottom:1px solid #eef2f7;
+
+    padding-bottom:12px;
+
+}
+
+.patient-row:last-child{
+
+    border:none;
+
+}
+
+.patient-row span{
+
+    color:#64748b;
+
+}
+
+.patient-row strong{
+
+    color:#0f172a;
+
+}
+
+/* ===========================================================
+   HEALTHCARE MODULES
+=========================================================== */
+
+.modules-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+
+    gap:24px;
+
+}
+
+.module-card{
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    box-shadow:0 12px 30px rgba(15,23,42,.08);
+
+    transition:.35s ease;
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:100%;
+
+    border:1px solid #edf2f7;
+
+}
+
+.module-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(15,23,42,.12);
+
+}
+
+.module-icon{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:2rem;
+
+    margin-bottom:22px;
+
+}
+
+.module-icon.heart{
+
+    background:#ef4444;
+
+}
+
+.module-icon.lungs{
+
+    background:#3b82f6;
+
+}
+
+.module-icon.kidney{
+
+    background:#14b8a6;
+
+}
+
+.module-icon.liver{
+
+    background:#f97316;
+
+}
+
+.module-icon.diabetes{
+
+    background:#8b5cf6;
+
+}
+
+.module-icon.fitness{
+
+    background:#22c55e;
+
+}
+
+.module-icon.cancer{
+
+    background:#ec4899;
+
+}
+
+.module-card h4{
+
+    font-weight:700;
+
+    color:#0f172a;
+
+    margin-bottom:12px;
+
+}
+
+.module-card p{
+
+    color:#64748b;
+
+    line-height:1.6;
+
+    flex:1;
+
+    margin-bottom:22px;
+
+}
+
+.module-card .btn{
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+/* ===========================================================
+   AI RECOMMENDATION
+=========================================================== */
+
+.recommendation-card{
+
+    background:linear-gradient(135deg,#ffffff,#f8fbff);
+
+    border-radius:20px;
+
+    padding:30px;
+
+    border-left:6px solid #2563eb;
+
+    box-shadow:var(--shadow-xl);
+
+}
+
+.recommendation-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+.recommendation-header i{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:16px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:1.8rem;
+
+}
+
+.recommendation-header h3{
+
+    margin:0;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+.recommendation-card ul{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.recommendation-card li{
+
+    position:relative;
+
+    padding:14px 0 14px 34px;
+
+    border-bottom:1px solid #eef2f7;
+
+    color:#334155;
+
+    line-height:1.6;
+
+}
+
+.recommendation-card li:last-child{
+
+    border-bottom:none;
+
+}
+
+.recommendation-card li::before{
+
+    content:"✓";
+
+    position:absolute;
+
+    left:0;
+
+    top:14px;
+
+    width:22px;
+
+    height:22px;
+
+    border-radius:50%;
+
+    background:#22c55e;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:.8rem;
+
+}
+
+
+/* ===========================================================
+   COMMON CARD HOVER
+=========================================================== */
+
+.health-card,
+
+.patient-card,
+
+.stat-card,
+
+.module-card,
+
+.prediction-table,
+
+.quick-actions,
+
+.system-status,
+
+.recommendation-card{
+
+    transition:.35s ease;
+
+}
+
+.health-card:hover,
+
+.patient-card:hover,
+
+.stat-card:hover,
+
+.prediction-table:hover,
+
+.quick-actions:hover,
+
+.system-status:hover,
+
+.recommendation-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow-xl);
+
+}
+
+
+@media (max-width:768px){
+.patient-header{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .health-footer{
+
+        flex-direction:column;
+
+        gap:18px;
+
+    }
+
+    .section-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:10px;
+
+    }
+
+}
+
+@media (max-width:576px){
+
+ .patient-avatar{
+
+        width:60px;
+
+        height:60px;
+
+        font-size:1.3rem;
+
+    }
+
+    .module-icon{
+
+        width:60px;
+
+        height:60px;
+
+        font-size:1.6rem;
+
+    }
+}

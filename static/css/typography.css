@@ -1,0 +1,29 @@
+.dashboard-stat-card h2{
+
+    font-size:3rem;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    margin-bottom:5px;
+
+}
+
+.dashboard-stat-card h5{
+
+    font-weight:700;
+
+    margin-bottom:15px;
+
+}
+
+.dashboard-stat-card p{
+
+    color:#64748b;
+
+    line-height:1.7;
+
+    min-height:55px;
+
+}

@@ -1,0 +1,32 @@
+<div class="topbar">
+
+    <div>
+
+        <h2>
+
+            Welcome back,
+
+            {{ request.user.first_name|default:request.user.username.capitalize }}
+
+            👋
+
+        </h2>
+
+        <p>
+
+            AI-Powered Healthcare Analytics Dashboard
+
+        </p>
+
+    </div>
+
+    <div class="topbar-actions">
+        <span class="topbar-status"><span aria-hidden="true"></span> Platform operational</span>
+        <a class="topbar-action" href="{% url 'main_page:patient_list' %}" aria-label="Open patient directory"><i class="fa-solid fa-users" aria-hidden="true"></i></a>
+        <div class="profile" aria-label="Current user">
+            <div class="profile-avatar">{{ request.user.username|first|upper }}</div>
+            <div class="profile-info"><h6>{{ request.user.get_full_name|default:request.user.username }}</h6><small>Clinical workspace</small></div>
+        </div>
+    </div>
+
+</div>

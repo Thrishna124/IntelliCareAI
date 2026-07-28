@@ -1,0 +1,208 @@
+/* =====================================================
+   Analytics
+===================================================== */
+
+.analytics-section{
+    padding:100px 0;
+    background:var(--bg);
+}
+
+.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,minmax(0,1fr));
+
+    gap:28px;
+
+    margin-top:70px;
+
+}
+
+/* =====================================================
+   Analytics Card
+===================================================== */
+
+.analytics-card{
+
+    position:relative;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:24px;
+
+    padding:34px;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+
+    transition:all .35s ease;
+
+}
+
+.analytics-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+        135deg,
+        rgba(37,99,235,.03),
+        transparent 45%
+    );
+
+    opacity:0;
+
+    transition:opacity .35s ease;
+
+    pointer-events:none;
+
+}
+
+.analytics-card:hover{
+
+    transform:translateY(-6px);
+
+    border-color:rgba(37,99,235,.18);
+
+    box-shadow:0 22px 55px rgba(15,23,42,.10);
+
+}
+
+.analytics-card:hover::before{
+
+    opacity:1;
+
+}
+
+/* =====================================================
+   Summary List
+===================================================== */
+
+.summary-list{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.summary-list li{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:18px 0;
+
+    border-bottom:1px solid rgba(15,23,42,.06);
+
+}
+
+.summary-list li:last-child{
+
+    border-bottom:none;
+
+}
+
+.summary-list span{
+
+    color:var(--muted);
+
+    font-weight:500;
+
+}
+
+.summary-list strong{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    font-size:1rem;
+
+}
+
+/* =====================================================
+   Responsive
+===================================================== */
+
+@media (max-width:991px){
+
+    .analytics-section{
+
+        padding:90px 0;
+
+    }
+
+    .analytics-grid{
+
+        grid-template-columns:1fr;
+
+        gap:24px;
+
+        margin-top:60px;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .analytics-section{
+
+        padding:80px 0;
+
+    }
+
+    .analytics-card{
+
+        padding:28px;
+
+        border-radius:20px;
+
+    }
+
+    .analytics-grid{
+
+        margin-top:50px;
+
+    }
+
+}
+
+@media (max-width:576px){
+
+    .analytics-section{
+
+        padding:70px 0;
+
+    }
+
+    .analytics-card{
+
+        padding:22px;
+
+    }
+
+    .summary-list li{
+
+        padding:16px 0;
+
+        gap:12px;
+
+    }
+
+}

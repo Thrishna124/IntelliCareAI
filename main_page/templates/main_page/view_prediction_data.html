@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results Page</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main_page_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+</head>
+<body>
+    <div class="form-container">        
+        <h3>Latest Prediction Results:</h3>
+        {% if latest_results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Prediction Type</th>    
+                    <th>Timestamp</th>
+                    <th>Prediction</th>
+                    <th>Diagnosis</th>
+                    <th> Missing Features Count </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in latest_results %}
+                <tr>
+                    <td>{{ result.prediction_type|capfirst }}</td>
+                    <td>{{ result.timestamp }}</td>
+                    <td class="{% if result.prediction|lower == 'yes' %}red{% else %}green{% endif %}">
+                        {{ result.prediction|capfirst }}
+                    </td>
+                    <td class="{% if result.diagnosis|lower == 'normal' or result.diagnosis|lower == 'none' %}green{% else %}{% if result.prediction|lower == 'yes' %}red{% else %}yellow-orange{% endif %}{% endif %}">
+                        {{ result.diagnosis|capfirst }}
+                    </td>
+                    <td>{{ result.missing_features_count }}</td>
+                </tr>
+                {% endfor %}
+                <p><em> Please enter all fields for accurate Prediction </em></p>
+            </tbody>
+        </table>
+        {% else %}
+        <p>None</p>
+        {% endif %}
+    
+    <p><a href="{% url 'main_page:home' %}">Home page</a></p>
+    <!-- Logout Button -->
+    <form action="{% url 'main_page:logout_view' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="logout-button">Logout</button>
+    </form>
+<footer>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </footer>
+</body>
+</div>
+</html>

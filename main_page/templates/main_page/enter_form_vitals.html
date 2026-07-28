@@ -1,0 +1,32 @@
+{%load static%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Details</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'main_page_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Update Your Details</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <h3>Vital Details</h3>
+            {{ form.as_p }}
+            <button type="submit">Update</button>
+        </form>
+        <p><a href="{% url 'main_page:login_view' %}">Back to Home</a></p>
+    </div>
+</body>
+{% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</html>

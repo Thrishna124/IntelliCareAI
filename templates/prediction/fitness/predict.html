@@ -1,0 +1,37 @@
+
+{% extends "prediction/base_prediction.html" %}
+
+{% block page_title %}
+Fitness Assessment
+{% endblock %}
+
+{% block page_subtitle %}
+Evaluate your overall fitness level and receive AI-powered health insights.
+{% endblock %}
+
+{% block form_title %}
+Fitness Evaluation
+{% endblock %}
+
+{% block model_description %}
+This AI-powered fitness assessment analyzes patient demographics, body measurements, vital signs, activity levels, and lifestyle factors to evaluate overall fitness and provide personalized wellness recommendations. The assessment is intended to support healthy living and should not replace professional medical or fitness advice.
+{% endblock %}
+
+{% block prediction_form %}
+
+<div class="row">
+
+    {% for field in form %}
+
+    <div class="col-md-6 mb-3">
+
+        {% include "prediction/components/prediction_field.html" with field=field %}
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+

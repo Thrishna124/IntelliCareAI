@@ -1,0 +1,189 @@
+/* ===========================================================
+   SIDEBAR
+=========================================================== */
+
+.sidebar{
+
+    width:270px;
+
+    min-height:100vh;
+
+    background:linear-gradient(180deg,#0f172a 0%,#172554 100%);
+
+    color:#fff;
+
+    position:sticky;
+
+    top:0;
+
+    padding:28px 20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    box-shadow:6px 0 30px rgba(15,23,42,.25);
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:40px;
+
+    font-size:1.45rem;
+
+    font-weight:700;
+
+    color:#fff;
+
+}
+
+.logo i{
+
+    font-size:2rem;
+
+    color:#60a5fa;
+
+}
+
+.logo span{
+
+    letter-spacing:.5px;
+
+}
+
+.sidebar ul{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.sidebar nav{
+
+    display:flex;
+    flex:1;
+    flex-direction:column;
+
+}
+
+.sidebar-label{
+
+    margin:1.35rem .8rem .55rem;
+    color:#64748b;
+    font-size:.68rem;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+
+}
+
+.sidebar-label:first-child{
+
+    margin-top:0;
+
+}
+
+.sidebar-utility{
+
+    margin-top:auto !important;
+
+}
+
+.sidebar li{
+
+    margin:0;
+
+}
+
+.sidebar a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    text-decoration:none;
+
+    color:#cbd5e1;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    transition:.3s;
+
+    font-weight:500;
+
+}
+
+.sidebar a i{
+
+    width:22px;
+
+    min-width:22px;
+
+    text-align:center;
+
+    font-size:1.1rem;
+
+    color:#64748b !important;
+
+    transition:0.3s;
+
+}
+.sidebar a:hover i{
+
+    color:#ffffff !important;
+
+}
+
+.sidebar a.active i{
+
+    color:#ffffff !important;
+
+}
+
+.sidebar a:hover{
+    background:linear-gradient(90deg,#2563eb,#1d4ed8);
+
+    color:#fff;
+
+    transform:translateX(6px);
+
+}
+
+.sidebar a.active{
+    background:linear-gradient(90deg,#2563eb,#1d4ed8);
+
+    color:white;
+
+}
+
+.sidebar-utility li:last-child a{
+
+    background:#1e293b;
+
+}
+
+.sidebar-utility li:last-child a:hover{
+
+    background:#ef4444;
+
+}

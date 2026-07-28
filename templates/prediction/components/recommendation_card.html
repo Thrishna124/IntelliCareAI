@@ -1,0 +1,45 @@
+<div class="prediction-card">
+
+    <div class="card-header-custom">
+
+        <i class="bi bi-lightbulb"></i>
+
+        <h3>AI Recommendations</h3>
+
+    </div>
+
+    <div class="card-body-custom">
+
+        {% if prediction_result.recommendations %}
+
+            <div class="recommendation-list">
+
+                {% for item in prediction_result.recommendations %}
+
+                    <div class="recommendation-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>{{ item }}</span>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="recommendation-item">
+
+                <i class="bi bi-info-circle"></i>
+
+                <span>No recommendations available.</span>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>

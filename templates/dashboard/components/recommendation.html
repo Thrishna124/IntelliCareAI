@@ -1,0 +1,45 @@
+<section class="dashboard-section">
+
+    <div class="recommendation-card">
+
+        <div class="recommendation-header">
+
+            <i class="bi bi-robot"></i>
+
+            <h3>AI Recommendation</h3>
+
+        </div>
+
+        <ul>
+
+            {% if health_percentage >= 90 %}
+
+                <li>Continue maintaining your healthy lifestyle.</li>
+
+                <li>Schedule annual preventive health screening.</li>
+
+                <li>Stay physically active.</li>
+
+            {% elif health_percentage >= 70 %}
+
+                <li>Increase regular exercise.</li>
+
+                <li>Maintain a balanced diet.</li>
+
+                <li>Monitor health parameters periodically.</li>
+
+            {% else %}
+
+                <li>Please consult a healthcare professional.</li>
+
+                <li>Schedule a complete medical examination.</li>
+
+                <li>Follow medical advice carefully.</li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+</section>

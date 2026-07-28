@@ -1,0 +1,71 @@
+.results-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+
+    gap:24px;
+
+    margin-bottom:24px;
+
+}
+
+.results-footer{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+}
+
+.prediction-card{
+
+    height:100%;
+
+}
+
+/* Personal medical record-inspired report treatment. */
+.clinical-report-page .result-header{
+    padding:1.65rem 1.85rem;
+    border:0;
+    border-radius:18px;
+    background:linear-gradient(115deg,#2563eb,#1d4ed8);
+    color:#fff;
+    box-shadow:0 16px 32px rgba(37,99,235,.18);
+}
+.clinical-report-page .result-header h2{color:#fff;font-size:1.6rem;font-weight:800;letter-spacing:-.03em;}
+.clinical-report-page .result-header p{color:rgba(255,255,255,.8);}
+.clinical-report-page .result-icon{background:rgba(255,255,255,.16);box-shadow:none;}
+.clinical-report-page .status-badge{margin-left:.6rem;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.14);color:#fff;}
+.clinical-report-page .result-actions .btn{border-color:rgba(255,255,255,.38);color:#fff;background:transparent;}
+.clinical-report-page .result-actions .btn-primary{background:#fff;color:#1d4ed8;border-color:#fff;}
+.clinical-report-page .results-grid{grid-template-columns:repeat(12,1fr);gap:18px;}
+.clinical-report-page .results-grid > :nth-child(1){grid-column:span 7;}
+.clinical-report-page .results-grid > :nth-child(2){grid-column:span 5;}
+.clinical-report-page .results-grid > :nth-child(n+3){grid-column:span 4;}
+.clinical-report-page .prediction-card{border-radius:12px;border-color:#dce8f1;box-shadow:none;overflow:hidden;}
+.clinical-report-page .card-header-custom,.clinical-report-page .card-header{padding:1rem 1.25rem;background:#edf5fb;border-bottom:1px solid #dce8f1;}
+.clinical-report-page .card-header-custom h3,.clinical-report-page .card-header h4{font-size:.95rem;letter-spacing:.01em;color:#1d4ed8;}
+.clinical-report-page .card-body-custom{padding:1.2rem 1.25rem;}
+.record-person{display:flex;align-items:center;gap:.85rem;margin-bottom:1.15rem;}
+.record-person .patient-avatar{margin:0;width:46px;height:46px;border-radius:10px;background:#2563eb;font-size:1rem;box-shadow:none;}
+.record-person h5{margin:0;color:#0f172a;font-weight:800;}
+.record-person p{margin:.15rem 0 0;color:#64748b;font-size:.82rem;}
+.clinical-report-page .info-grid{gap:1px;background:#dce8f1;border:1px solid #dce8f1;}
+.clinical-report-page .info-item{padding:.75rem .85rem;background:#f8fbfe;}
+.clinical-report-page .info-label{font-size:.64rem;color:#64748b;letter-spacing:.07em;}
+.clinical-report-page .info-value{color:#0f172a;font-size:.92rem;}
+.clinical-report-page .risk-content,.clinical-report-page .diagnosis-content,.clinical-report-page .dq-content{padding:1.25rem;}
+.clinical-report-page .probability-section .progress,.clinical-report-page .dq-content .progress{height:10px;border-radius:0;background:linear-gradient(90deg,#2c9b34 0%,#f2cf36 45%,#e9a14c 67%,#cf4038 100%);}
+.clinical-report-page .probability-section .progress-bar{background:transparent;box-shadow:inset -3px 0 0 #0f172a;}
+.clinical-report-page .prediction-message{background:#eff6ff;border-left:4px solid #2563eb;}
+.clinical-report-page .clinical-note{background:#f3f9f1;border-left-color:#55a630;}
+.clinical-report-page .dq-value,.clinical-report-page .diagnosis-title{color:#2563eb;}
+
+@media(max-width:1050px){
+    .clinical-report-page .results-grid > :nth-child(n){grid-column:span 6;}
+}
+@media(max-width:680px){
+    .clinical-report-page .result-header{align-items:flex-start;padding:1.25rem;}
+    .clinical-report-page .results-grid > :nth-child(n){grid-column:span 12;}
+}

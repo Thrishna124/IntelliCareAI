@@ -1,0 +1,21 @@
+<aside class="sidebar">
+    <div class="logo"><i class="bi bi-heart-pulse-fill"></i><span>IntelliCareAI</span></div>
+    <nav aria-label="Primary navigation">
+        <p class="sidebar-label">Workspace</p>
+        <ul>
+            <li><a href="{% url 'main_page:home' %}"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Clinical Dashboard</a></li>
+            <li><a href="{% url 'main_page:patient_list' %}"><i class="fa-solid fa-users" aria-hidden="true"></i> Patients</a></li>
+        </ul>
+        <p class="sidebar-label">AI prediction suite</p>
+        <ul><li><a href="{% url 'heart:predict_heart_disease' %}"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i> Clinical Predictions</a></li></ul>
+        <p class="sidebar-label">Enterprise analytics</p>
+        <ul>
+            <li><a href="{% url 'main_page:analytics_dashboard' %}"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Analytics Overview</a></li>
+            <li><a href="{% url 'main_page:analytics_export' %}"><i class="fa-solid fa-file-export" aria-hidden="true"></i> Reports</a></li>
+        </ul>
+        <ul class="sidebar-utility">
+            <li><a href="/api/docs/"><i class="fa-solid fa-code" aria-hidden="true"></i> API Docs</a></li>
+            <li><a href="{% url 'main_page:logout_view' %}"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i> Logout</a></li>
+        </ul>
+    </nav>
+</aside>

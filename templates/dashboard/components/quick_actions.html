@@ -1,0 +1,45 @@
+<section class="dashboard-section">
+
+    <div class="quick-actions">
+
+        <h3>Quick Actions</h3>
+
+        <div class="actions-grid">
+
+            <a href="{% url 'heart:predict_heart_disease' %}" class="btn btn-primary">
+
+                <i class="bi bi-heart-pulse-fill"></i>
+
+                New Prediction
+
+            </a>
+
+            <a href="{% url 'main_page:view_prediction_data' %}" class="btn btn-outline-primary">
+
+                <i class="bi bi-clock-history"></i>
+
+                Prediction History
+
+            </a>
+
+            <a href="{% url 'main_page:update_patient_data' %}" class="btn btn-outline-primary">
+
+                <i class="bi bi-person-fill-gear"></i>
+
+                Update Profile
+
+            </a>
+
+            <a href="/api/docs/" class="btn btn-outline-primary">
+
+                <i class="bi bi-file-earmark-code"></i>
+
+                API Docs
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>

@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Prediction Result</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'liver_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/production.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Lung Cancer Prediction Result</h1>
+        {{patient}}        
+        {% if prediction|lower == "do not have any lung disorder" and diagnosis|lower  == 'normal' %}
+        <p >Prediction: <span class="green"><strong>{{ prediction|capfirst }}</strong></span></p>
+        <p >Diagnosis: <span class="green"><strong>{{ diagnosis |capfirst}}</strong></span></p>
+        {% elif prediction|lower  == "do not have any lung disorder" and diagnosis|lower  != 'normal' %}
+        <p >Prediction: <span class="yellow-orange"><strong>{{ prediction|capfirst }}</strong></span></p>
+        <p >Diagnosis: <span class="yellow-orange"><strong>{{ diagnosis|capfirst }}</strong></span></p>
+        {% elif prediction|lower  == "might have lung disorder" and diagnosis|lower  != 'normal' %}
+        <p>Prediction: <span class="red"><strong>{{ prediction |capfirst }}</strong></span></p>
+        <p>Diagnosis: <span class="red"><strong>{{ diagnosis|capfirst }}</strong></span></p>
+        {% else %}
+        <p >Prediction: <span class="yellow-orange"> <strong>{{ prediction|capfirst }}</strong></span></p>
+        <p >Diagnosis: <span class="yellow-orange"><strong>{{ diagnosis|capfirst }}</strong></span></p>
+        {% endif %}
+        <p>Quality of Data: {{ data_quality_report }}%</p>
+
+        <p><em>Features not entered for prediction:</em></p>
+        {% if missing_columns %}
+        <ul>
+            {% for column in missing_columns %}
+                <li>{{ column|capfirst }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p><strong>All fields were entered.</strong></p>
+    {% endif %}
+</div>
+<a href="{% url 'main_page:home' %}">Make another prediction</a>
+<a href="{% url 'main_page:logout_view'%}">Logout</a>
+</body>
+</html>

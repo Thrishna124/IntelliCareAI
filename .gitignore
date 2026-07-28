@@ -1,0 +1,39 @@
+# Virtual Environment
+cenv/
+.venv/
+.env/
+
+# Python
+__pycache__/
+*.pyc
+
+# Django
+db.sqlite3
+media/
+logs/
+
+# Machine Learning Models
+*.h5
+*.keras
+
+# Mac files
+.DS_Store
+
+# Django
+db.sqlite3
+media/
+logs/
+
+# Machine Learning Models
+*.h5
+*.keras
+
+# Training Data
+lung_cancer/data/
+heart/data/
+kidney/data/
+liver/data/
+lungs/data/
+pancreas/data/
+fitness/data/
+

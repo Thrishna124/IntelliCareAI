@@ -1,0 +1,67 @@
+<div class="prediction-card">
+
+    <div class="card-header">
+
+        <h4>
+            <i class="bi bi-shield-check"></i>
+            Data Quality Assessment
+        </h4>
+
+    </div>
+
+    <div class="dq-content">
+
+        <div class="dq-score">
+
+            <span class="dq-value">{{ data_quality.data_quality_value }}%</span>
+
+            <span class="dq-label">Overall Data Quality</span>
+
+        </div>
+
+        <div class="progress">
+
+            <div class="progress-bar bg-{{ data_quality.badge }}"
+                 role="progressbar"
+                 style="width: {{data_quality.data_quality_value }}%;">
+
+            </div>
+
+        </div>
+
+        <span class="badge bg-{{ data_quality.badge }}">
+            {{ data_quality.status }}
+        </span>
+
+        {% if data_quality.missing_features_count %}
+
+        <div class="missing-fields">
+
+            <h6>Missing Information</h6>
+
+            <ul>
+
+                {% for field in data_quality.missing_features_list %}
+
+                <li>{{ field }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        {% else %}
+
+        <div class="missing-fields">
+
+            <i class="bi bi-check-circle-fill text-success"></i>
+            No missing information.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>

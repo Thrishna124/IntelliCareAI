@@ -1,0 +1,70 @@
+<div class="prediction-field">
+
+    <!-- Field Label -->
+    <div class="prediction-label-wrapper">
+
+        <label
+            for="{{ field.id_for_label }}"
+            class="prediction-label">
+
+            {{ field.label }}
+
+            {% if field.field.required %}
+                <span class="required-badge">*</span>
+            {% endif %}
+
+        </label>
+
+    </div>
+
+   <!-- Field Control -->
+<div class="prediction-input-wrapper">
+
+    {% if field.field.widget.input_type == "radio" %}
+
+        <div class="prediction-radio-group">
+    {% for radio in field %}
+        <label class="prediction-radio">
+            {{ radio.tag }}
+            <span>{{ radio.choice_label }}</span>
+        </label>
+    {% endfor %}
+</div>
+    {% else %}
+
+        {{ field }}
+
+    {% endif %}
+
+</div>
+    <!-- Help Text -->
+    {% if field.help_text %}
+
+        <div class="prediction-help-text">
+
+            <i class="bi bi-info-circle"></i>
+
+            {{ field.help_text }}
+
+        </div>
+
+    {% endif %}
+
+    <!-- Validation Errors -->
+    {% if field.errors %}
+
+        <div class="prediction-error">
+
+            <i class="bi bi-exclamation-circle-fill"></i>
+
+            {% for error in field.errors %}
+
+                <div>{{ error }}</div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+</div>
