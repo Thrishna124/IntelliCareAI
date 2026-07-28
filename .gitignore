@@ -1,5 +1,5 @@
 # Virtual Environment
-cenv/
+venv/
 .venv/
 .env/
 
@@ -19,10 +19,15 @@ logs/
 # Mac files
 .DS_Store
 
+# Environment variables
+.env
+.env.*
+
 # Django
 db.sqlite3
 media/
 logs/
+staticfiles/
 
 # Machine Learning Models
 *.h5
@@ -36,4 +41,32 @@ liver/data/
 lungs/data/
 pancreas/data/
 fitness/data/
+
+# VS Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Docker
+docker-compose.override.yml
+
+# Coverage
+.coverage
+htmlcov/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# OS
+Thumbs.db
 
