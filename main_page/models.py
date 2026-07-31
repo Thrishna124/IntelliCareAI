@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from .choices import (
     GenderChoices,
@@ -10,44 +11,144 @@ from .choices import (
     PredictionTypeChoices,
 )
 
-# Model for Patient Data
+# ==========================================================
+# Patient Information
+# ==========================================================
+
 class PatientData(models.Model):
+
     ACTIVITY_LEVEL_CHOICES = [
-        ('sedentary', 'Sedentary (little or no exercise)'),
-        ('light', 'Lightly active (light exercise 1-3 days/week)'),
-        ('moderate', 'Moderately active (moderate exercise 3-5 days/week)'),
-        ('active', 'Very active (hard exercise 6-7 days/week)'),
-        ('super_active', 'Super active (very hard exercise/physical job)'),
+        ("sedentary", "Sedentary (little or no exercise)"),
+        ("light", "Lightly active (light exercise 1-3 days/week)"),
+        ("moderate", "Moderately active (moderate exercise 3-5 days/week)"),
+        ("active", "Very active (hard exercise 6-7 days/week)"),
+        ("super_active", "Super active (very hard exercise/physical job)"),
     ]
 
-    pid = models.BigIntegerField(null=True, blank=True, unique=True)  # Patient ID
-    fname = models.CharField(max_length=100, blank=True)
-    mname = models.CharField(max_length=100, blank=True, null=True)
-    lname = models.CharField(max_length=100, blank=True, null=True)
-    age = models.IntegerField()
-    DOB = models.DateField("Date of Birth")
-    sex = models.CharField(max_length=10, choices=GenderChoices.choices)
-    from django.core.validators import RegexValidator
-    phone_cell = models.CharField(max_length=10, blank=True,validators=[
-        RegexValidator(
-            regex=r'^\d{10}$',
-            message='Phone number must be exactly 10 digits.'
-        )
-    ])
-    address = models.TextField(null=True, blank=True)
-    city = models.CharField(max_length=100, blank=True)
-    state = models.CharField(max_length=100, blank=True)
-    country_code = models.CharField(max_length=5, null=True, blank=True)
-    pincode = models.CharField(max_length=6, null=True, blank=True)
-    date = models.DateField(auto_now_add=True)  # Today's date
-    lifestyle = models.CharField(max_length=100, choices=ActivityLevelChoices.choices)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # ------------------------------------------------------
+    # Patient Identification
+    # ------------------------------------------------------
+
+    pid = models.BigIntegerField(
+        unique=True,
+        null=True,
+        blank=True,
+        verbose_name="Patient ID",
+    )
+
+    fname = models.CharField(max_length=100)
+
+    mname = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    lname = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    # ------------------------------------------------------
+    # Personal Information
+    # ------------------------------------------------------
+
+    age = models.PositiveIntegerField()
+
+    DOB = models.DateField(
+        "Date of Birth"
+    )
+
+    sex = models.CharField(
+        max_length=10,
+        choices=GenderChoices.choices,
+    )
+
+    phone_cell = models.CharField(
+        max_length=10,
+        blank=True,
+        validators=[
+            RegexValidator(
+                regex=r"^\d{10}$",
+                message="Phone number must be exactly 10 digits.",
+            )
+        ],
+    )
+
+    address = models.TextField(
+        blank=True,
+        null=True,
+    )
+
+    city = models.CharField(
+        max_length=100,
+        blank=True,
+    )
+
+    state = models.CharField(
+        max_length=100,
+        blank=True,
+    )
+
+    country_code = models.CharField(
+        max_length=5,
+        blank=True,
+        null=True,
+        default="IN",
+    )
+
+    pincode = models.CharField(
+        max_length=6,
+        blank=True,
+        null=True,
+    )
+
+    lifestyle = models.CharField(
+        max_length=20,
+        choices=ActivityLevelChoices.choices,
+    )
+
+    # ------------------------------------------------------
+    # Enterprise Relationships
+    # ------------------------------------------------------
+
+    clinic = models.ForeignKey(
+        "Clinic",
+        on_delete=models.CASCADE,
+        related_name="patients",
+        null=True,
+        blank=True,
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="registered_patients",
+    )
+
+    # ------------------------------------------------------
+    # Audit
+    # ------------------------------------------------------
+
+    date = models.DateField(
+        auto_now_add=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
 
     class Meta:
-        db_table = 'patient_data'
+        db_table = "patient_data"
+        ordering = ["-created_at"]
 
     def __str__(self):
-        return f"Patient {self.pid or 'N/A'} - {self.fname} {self.lname}"
+        return f"{self.pid} - {self.fname} {self.lname}"
 
 # Model for Vitals
 class FormVitals(models.Model):    
@@ -213,6 +314,7 @@ class DQScore(models.Model):
 
 class Clinic(models.Model):
     name = models.CharField(max_length=200)
+
     registration_number = models.CharField(
         max_length=100,
         unique=True
@@ -227,11 +329,38 @@ class Clinic(models.Model):
     country = models.CharField(max_length=100)
 
     website = models.URLField(blank=True, null=True)
+
     logo = models.ImageField(
         upload_to="clinic_logos/",
         blank=True,
         null=True
     )
+
+    # ----------------------------
+    # Enterprise Metadata
+    # ----------------------------
+
+    clinic_type = models.CharField(
+        max_length=30,
+        choices=[
+            ("hospital", "Hospital"),
+            ("clinic", "Clinic"),
+            ("diagnostic", "Diagnostic Center"),
+        ],
+        default="clinic",
+    )
+
+    established_year = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+    )
+
+    license_expiry = models.DateField(
+        blank=True,
+        null=True,
+    )
+
+    # ----------------------------
 
     is_active = models.BooleanField(default=True)
 
@@ -251,11 +380,12 @@ class Clinic(models.Model):
 class UserProfile(models.Model):
 
     ROLE_CHOICES = [
-        ("individual", "Individual"),
-        ("doctor", "Doctor"),
-        ("clinic_admin", "Clinic Admin"),
-        ("system_admin", "System Admin"),
-    ]
+    ("individual", "Individual"),
+    ("doctor", "Doctor"),
+    ("receptionist", "Receptionist"),
+    ("clinic_admin", "Clinic Admin"),
+    ("system_admin", "System Admin"),
+]
 
     user = models.OneToOneField(
         User,
@@ -264,12 +394,20 @@ class UserProfile(models.Model):
     )
 
     clinic = models.ForeignKey(
-        Clinic,
+        "Clinic",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="users"
     )
+
+    #patient = models.OneToOneField(
+    #    "PatientData",
+    #    on_delete=models.SET_NULL,
+    #    null=True,
+    #    blank=True,
+    #    related_name="portal_profile",
+    #)
 
     role = models.CharField(
         max_length=20,
@@ -292,6 +430,15 @@ class UserProfile(models.Model):
         blank=True,
         null=True
     )
+
+    employee_id = models.CharField(
+    max_length=50,
+    blank=True,
+)
+
+    is_active_staff = models.BooleanField(
+    default=True,
+)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
