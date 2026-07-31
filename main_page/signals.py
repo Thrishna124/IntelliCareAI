@@ -19,5 +19,7 @@ def save_user_profile(sender, instance, **kwargs):
     """
     Save the associated UserProfile whenever the User is saved.
     """
-    if hasattr(instance, "profile"):
+    try:
         instance.profile.save()
+    except UserProfile.DoesNotExist:
+        pass
