@@ -11,6 +11,8 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('workspace/patients/', views.patient_list, name='patient_list'),
     path('workspace/patients/<int:patient_id>/select/', views.select_patient, name='select_patient'),
+    path("workspace/predictions/",views.prediction_history,name="prediction_history"),
+
     
     path('update_patient_data/', views.update_patient_data, name='update_patient_data'),
     path('update_form_vitals/', views.update_form_vitals, name='update_form_vitals'),
@@ -20,4 +22,5 @@ urlpatterns = [
     path('view_prediction_data/', views.view_prediction_data, name='view_prediction_data'),
     path('analytics/', views.analytics_dashboard, name='analytics_dashboard'),
     path('analytics/export/', views.analytics_export, name='analytics_export'),
+
 ]

@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}AI Prediction History | IntelliCareAI{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/pages/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages/prediction.css' %}">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="dashboard-layout prediction-history-page">
+
+    {% include "dashboard/components/sidebar.html" %}
+
+    <main class="dashboard-main">
+
+        {% include "dashboard/components/topbar.html" %}
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <section class="prediction-history-header">
+
+            <div>
+
+                <span class="prediction-history-eyebrow">
+                    Clinical Workspace
+                </span>
+
+                <h1>
+                    AI Prediction History
+                </h1>
+
+                <p>
+                    Review the complete AI prediction history
+                    for {{ patient.fname }} {{ patient.lname }}.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SUMMARY CARDS
+        ====================================================== -->
+
+        <section class="prediction-history-stats">
+
+            <article class="prediction-history-stat">
+
+                <div class="prediction-history-stat__icon">
+                    <i
+                        class="fa-solid fa-microchip"
+                        aria-hidden="true"
+                    ></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Predictions
+                    </span>
+
+                    <strong>
+                        {{ total_predictions }}
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+            <article class="prediction-history-stat">
+
+                <div class="prediction-history-stat__icon">
+                    <i
+                        class="fa-solid fa-triangle-exclamation"
+                        aria-hidden="true"
+                    ></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Positive Predictions
+                    </span>
+
+                    <strong>
+                        {{ high_risk_count }}
+                    </strong>
+
+                </div>
+
+            </article>
+
+
+            <article class="prediction-history-stat">
+
+                <div class="prediction-history-stat__icon">
+                    <i
+                        class="fa-solid fa-brain"
+                        aria-hidden="true"
+                    ></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        AI Modules Used
+                    </span>
+
+                    <strong>
+                        {{ module_count }}
+                    </strong>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================================
+             MODULE FILTER
+        ====================================================== -->
+
+        <section class="prediction-history-section">
+
+            <div class="prediction-history-section__header">
+
+                <div>
+
+                    <span class="prediction-history-eyebrow">
+                        Filter
+                    </span>
+
+                    <h2>
+                        Prediction Modules
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="prediction-history-filters">
+
+                <a
+                    href="{% url 'main_page:prediction_history' %}"
+                    class="
+                        prediction-history-filter
+                        {% if not selected_type %}
+                            prediction-history-filter--active
+                        {% endif %}
+                    "
+                >
+                    All
+                </a>
+
+
+                {% for module in available_modules %}
+
+                    <a
+                        href="?type={{ module }}"
+                        class="
+                            prediction-history-filter
+                            {% if selected_type == module %}
+                                prediction-history-filter--active
+                            {% endif %}
+                        "
+                    >
+
+                        {% if module == "lung_cancer" %}
+                            Lung Cancer
+                        {% elif module == "pancreas" %}
+                            Diabetes
+                        {% elif module == "lungs" %}
+                            Lungs
+                        {% else %}
+                            {{ module|title }}
+                        {% endif %}
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PREDICTION TIMELINE
+        ====================================================== -->
+
+        <section class="prediction-history-section">
+
+            <div class="prediction-history-section__header">
+
+                <div>
+
+                    <span class="prediction-history-eyebrow">
+                        Clinical Record
+                    </span>
+
+                    <h2>
+                        Prediction Timeline
+                    </h2>
+
+                </div>
+
+                <span class="prediction-history-count">
+                    {{ predictions|length }} records
+                </span>
+
+            </div>
+
+
+            <div class="prediction-history-timeline">
+
+                {% for prediction in predictions %}
+
+                    <article class="prediction-history-card">
+
+
+                        <!-- Timeline marker -->
+
+                        <div class="prediction-history-card__marker">
+
+                            <i
+                                class="fa-solid fa-microchip"
+                                aria-hidden="true"
+                            ></i>
+
+                        </div>
+
+
+                        <!-- Card -->
+
+                        <div class="prediction-history-card__body">
+
+
+                            <!-- Header -->
+
+                            <div class="prediction-history-card__header">
+
+                                <div>
+
+                                    <span class="prediction-history-card__module">
+
+                                        {% if prediction.prediction_type == "lung_cancer" %}
+                                            Lung Cancer
+
+                                        {% elif prediction.prediction_type == "pancreas" %}
+                                            Diabetes
+
+                                        {% elif prediction.prediction_type == "lungs" %}
+                                            Lungs
+
+                                        {% else %}
+                                            {{ prediction.prediction_type|title }}
+
+                                        {% endif %}
+
+                                    </span>
+
+
+                                    <h3>
+
+                                        {% if prediction.diagnosis %}
+
+                                            {{ prediction.diagnosis }}
+
+                                        {% else %}
+
+                                            Prediction Completed
+
+                                        {% endif %}
+
+                                    </h3>
+
+                                </div>
+
+
+                                <time class="prediction-history-card__time">
+
+                                    {{ prediction.timestamp|date:"d M Y, h:i A" }}
+
+                                </time>
+
+                            </div>
+
+
+                            <!-- Details -->
+
+                            <div class="prediction-history-card__details">
+
+
+                                <div class="prediction-history-card__detail">
+
+                                    <span>
+                                        Prediction
+                                    </span>
+
+                                    {% if prediction.prediction == "Yes" %}
+
+                                        <strong class="prediction-status prediction-status--positive">
+                                            Positive
+                                        </strong>
+
+                                    {% else %}
+
+                                        <strong class="prediction-status prediction-status--negative">
+                                            Negative
+                                        </strong>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                {% if prediction.diagnosis %}
+
+                                    <div class="prediction-history-card__detail">
+
+                                        <span>
+                                            Diagnosis
+                                        </span>
+
+                                        <strong>
+                                            {{ prediction.diagnosis }}
+                                        </strong>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% empty %}
+
+
+                    <!-- Empty State -->
+
+                    <div class="prediction-history-empty">
+
+                        <div class="prediction-history-empty__icon">
+
+                            <i
+                                class="fa-solid fa-microscope"
+                                aria-hidden="true"
+                            ></i>
+
+                        </div>
+
+                        <h3>
+                            No prediction history
+                        </h3>
+
+                        <p>
+                            No AI predictions have been recorded
+                            for this patient yet.
+                        </p>
+
+                    </div>
+
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

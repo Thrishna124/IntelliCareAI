@@ -1,0 +1,38 @@
+<div class="result-card fitness-assessment-card">
+
+    <div class="card-header">
+        <h3>
+            <i class="bi bi-person-walking"></i>
+            Fitness Assessment
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        <div class="fitness-score">
+            <span class="fitness-score__label">
+                Fitness Score
+            </span>
+
+            <strong>
+                {{ prediction_result.risk_percentage }}%
+            </strong>
+        </div>
+
+        <div class="fitness-status">
+            <span class="fitness-status__label">
+                Fitness Level
+            </span>
+
+            <h4>
+                {{ prediction_result.risk_level }}
+            </h4>
+        </div>
+
+        <p class="fitness-message">
+            {{ prediction_result.status }}
+        </p>
+
+    </div>
+
+</div>

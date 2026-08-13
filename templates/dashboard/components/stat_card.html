@@ -2,29 +2,32 @@
 
     <div class="stat-card-header">
 
-        <div class="stat-title">
+        <div>
+            <div class="stat-title">
+                {{ title }}
+            </div>
 
-            {{ title }}
-
+            <div class="stat-subtitle">
+                Updated in real time
+            </div>
         </div>
 
         <div class="stat-icon">
-
             <i class="fas fa-chart-line"></i>
-
         </div>
 
     </div>
 
     <div class="stat-value">
-
         {{ value|default:"0" }}
-
     </div>
 
     <div class="stat-footer">
 
-        Updated in real time
+        <span class="stat-status">
+            <i class="fas fa-circle"></i>
+            Live Data
+        </span>
 
     </div>
 

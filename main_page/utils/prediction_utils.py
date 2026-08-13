@@ -88,45 +88,78 @@ def save_dq_score(
 
 
 def build_prediction_result(probability, disease_name, recommendation_map):
-    """
-    Returns:
-        prediction
-        risk_level
-        risk_percentage
-        recommendations
-    """
 
     risk_percentage = round(probability * 100, 1)
 
-    RISK_THRESHOLDS = (
-    (20, "Very Low"),
-    (40, "Low"),
-    (60, "Borderline"),
-    (80, "Moderate"),
-)
+    thresholds = (
+        (20, "Very Low"),
+        (40, "Low"),
+        (60, "Borderline"),
+        (80, "Moderate"),
+    )
+
     risk_level = "High"
 
-    for limit, level in RISK_THRESHOLDS:
+    for limit, level in thresholds:
         if risk_percentage < limit:
             risk_level = level
-        break
+            break
 
-    prediction = f"{risk_level} likelihood of {disease_name.lower()}."
-
-    recommendations = recommendation_map.get(risk_level, [])
+    recommendation = recommendation_map.get(
+        risk_level,
+        {},
+    )
 
     return {
-    "prediction": prediction,
-    "risk_level": risk_level,
-    "risk_percentage": risk_percentage,
-    "recommendations": recommendations,
-    # Future additions
+        "prediction": f"{risk_level} likelihood of {disease_name.lower()}.",
+        "risk_level": risk_level,
+        "risk_percentage": risk_percentage,
+        "status": recommendation.get("status", ""),
+        "recommendations": recommendation.get("recommendations", []),
+        "clinical_priority": risk_level,
+        "confidence_score": risk_percentage,
+        "follow_up": None,
+        "follow_up_days": None,
+    }
 
-    "clinical_priority": risk_level,
+def build_fitness_result(probability, recommendation_map):
+    """
+    Build a standardized result for the Fitness module.
 
-    "confidence_score": risk_percentage,
+    Fitness uses fitness-performance categories rather than
+    disease-risk categories.
+    """
 
-    "follow_up": None,
+    score_percentage = round(probability * 100, 1)
 
-    "follow_up_days": None,
-}
+    if score_percentage >= 80:
+        fitness_level = "Excellent"
+
+    elif score_percentage >= 60:
+        fitness_level = "Good"
+
+    elif score_percentage >= 40:
+        fitness_level = "Average"
+
+    elif score_percentage >= 20:
+        fitness_level = "Below Average"
+
+    else:
+        fitness_level = "Poor"
+
+    recommendation = recommendation_map.get(
+        fitness_level,
+        {},
+    )
+
+    return {
+        "prediction": f"{fitness_level} fitness level.",
+        "risk_level": fitness_level,
+        "risk_percentage": score_percentage,
+        "status": recommendation.get("status", ""),
+        "recommendations": recommendation.get("recommendations", []),
+        "clinical_priority": fitness_level,
+        "confidence_score": score_percentage,
+        "follow_up": None,
+        "follow_up_days": None,
+    }

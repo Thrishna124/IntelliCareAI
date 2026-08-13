@@ -601,6 +601,17 @@ outline:none;
 
 }
 
+.data-quality-note {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-left: 3px solid #f59e0b;
+    background: rgba(245, 158, 11, 0.08);
+    color: #475569;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
 /* ===============================
    MODEL INFORMATION
 ================================ */
@@ -679,4 +690,565 @@ outline:none;
     font-weight: 600;
     color: var(--text-primary);
     word-break: break-word;
+}
+
+/* =========================================================
+   AI PREDICTION HISTORY
+   ========================================================= */
+
+.prediction-history-page {
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.prediction-history-header {
+    margin-bottom: 1.75rem;
+}
+
+.prediction-history-eyebrow {
+    display: block;
+
+    margin-bottom: 0.4rem;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    color: var(--primary);
+}
+
+.prediction-history-header h1 {
+    margin: 0;
+
+    font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+    font-weight: 700;
+
+    color: var(--text);
+}
+
+.prediction-history-header p {
+    margin: 0.5rem 0 0;
+
+    max-width: 650px;
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.prediction-history-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 1rem;
+
+    margin-bottom: 2rem;
+}
+
+.prediction-history-stat {
+    display: flex;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    min-height: 100px;
+
+    padding: 1.25rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.prediction-history-stat:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.07);
+}
+
+.prediction-history-stat__icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+
+    font-size: 1rem;
+}
+
+.prediction-history-stat span {
+    display: block;
+
+    margin-bottom: 0.25rem;
+
+    font-size: 0.78rem;
+    font-weight: 500;
+
+    color: var(--muted);
+}
+
+.prediction-history-stat strong {
+    display: block;
+
+    font-size: 1.7rem;
+    line-height: 1;
+
+    font-weight: 700;
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.prediction-history-section {
+    margin-bottom: 2rem;
+
+    padding: 1.5rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+}
+
+.prediction-history-section__header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-bottom: 1.25rem;
+}
+
+.prediction-history-section__header h2 {
+    margin: 0.25rem 0 0;
+
+    font-size: 1.1rem;
+    font-weight: 650;
+
+    color: var(--text);
+}
+
+.prediction-history-count {
+    flex-shrink: 0;
+
+    font-size: 0.78rem;
+
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+.prediction-history-filters {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.5rem;
+}
+
+.prediction-history-filter {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 34px;
+
+    padding: 0.45rem 0.8rem;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: var(--surface);
+
+    color: var(--muted);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.prediction-history-filter:hover {
+    border-color: var(--primary);
+
+    color: var(--primary);
+
+    text-decoration: none;
+}
+
+.prediction-history-filter--active {
+    border-color: var(--primary);
+
+    background: var(--primary);
+
+    color: #ffffff;
+}
+
+.prediction-history-filter--active:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   TIMELINE
+   ========================================================= */
+
+.prediction-history-timeline {
+    position: relative;
+
+    padding-left: 2rem;
+}
+
+
+/* Vertical connector */
+
+.prediction-history-timeline::before {
+    content: "";
+
+    position: absolute;
+
+    top: 1rem;
+    bottom: 1rem;
+
+    left: 0.42rem;
+
+    width: 2px;
+
+    background: var(--border);
+}
+
+
+/* =========================================================
+   TIMELINE CARD
+   ========================================================= */
+
+.prediction-history-card {
+    position: relative;
+
+    margin-bottom: 0.85rem;
+}
+
+.prediction-history-card:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   MARKER
+   ========================================================= */
+
+.prediction-history-card__marker {
+    position: absolute;
+
+    left: -2rem;
+    top: 1rem;
+
+    width: 1.9rem;
+    height: 1.9rem;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid var(--surface);
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 0 0 1px var(--border);
+
+    z-index: 2;
+
+    font-size: 0.7rem;
+}
+
+
+/* =========================================================
+   CARD BODY
+   ========================================================= */
+
+.prediction-history-card__body {
+    padding: 1.1rem 1.25rem;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.prediction-history-card__body:hover {
+    transform: translateY(-1px);
+
+    border-color: rgba(99, 102, 241, 0.35);
+
+    box-shadow:
+        0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
+
+.prediction-history-card__header {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 1rem;
+}
+
+.prediction-history-card__module {
+    display: inline-block;
+
+    margin-bottom: 0.35rem;
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    color: var(--primary);
+}
+
+.prediction-history-card__header h3 {
+    margin: 0;
+
+    font-size: 1rem;
+    font-weight: 650;
+
+    color: var(--text);
+}
+
+.prediction-history-card__time {
+    flex-shrink: 0;
+
+    padding-top: 0.15rem;
+
+    font-size: 0.75rem;
+
+    color: var(--muted);
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CARD DETAILS
+   ========================================================= */
+
+.prediction-history-card__details {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 0.6rem;
+
+    margin-top: 0.9rem;
+    padding-top: 0.85rem;
+
+    border-top: 1px solid var(--border);
+}
+
+.prediction-history-card__detail {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.4rem;
+
+    padding: 0.35rem 0.65rem;
+
+    border-radius: 7px;
+
+    background: var(--background);
+
+    font-size: 0.75rem;
+}
+
+.prediction-history-card__detail > span {
+    color: var(--muted);
+}
+
+.prediction-history-card__detail > strong {
+    color: var(--text);
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.prediction-status {
+    font-weight: 700;
+}
+
+.prediction-status--positive {
+    color: #dc2626 !important;
+}
+
+.prediction-status--negative {
+    color: #16a34a !important;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.prediction-history-empty {
+    padding: 3rem 1.5rem;
+
+    text-align: center;
+
+    border: 1px dashed var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--background);
+}
+
+.prediction-history-empty__icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 1rem;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: var(--primary-soft);
+
+    color: var(--primary);
+}
+
+.prediction-history-empty h3 {
+    margin: 0 0 0.4rem;
+
+    font-size: 1rem;
+
+    color: var(--text);
+}
+
+.prediction-history-empty p {
+    margin: 0;
+
+    font-size: 0.85rem;
+
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .prediction-history-stats {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    .prediction-history-section {
+        padding: 1rem;
+    }
+
+    .prediction-history-card__header {
+        flex-direction: column;
+    }
+
+    .prediction-history-card__time {
+        white-space: normal;
+    }
+
+    .prediction-history-timeline {
+        padding-left: 1.5rem;
+    }
+
+    .prediction-history-card__marker {
+        left: -1.5rem;
+
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+
+    .prediction-history-timeline::before {
+        left: 0.35rem;
+    }
+
 }

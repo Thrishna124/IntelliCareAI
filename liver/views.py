@@ -1,5 +1,3 @@
-########## Import Statements ##########
-
 import logging
 from functools import lru_cache
 from pathlib import Path
@@ -8,38 +6,48 @@ import joblib
 import pandas as pd
 
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
 from django.shortcuts import render
 
 from liver.forms import LiverPredictionForm
 
-from main_page.models import PredictionData
+from main_page.services.prediction_service import (
+    execute_standard_prediction,
+)
 from main_page.utils.clinical_workspace import get_active_patient
-from main_page.utils.prediction_utils import save_dq_score
-from main_page.utils.prediction_utils import build_prediction_result
 from main_page.utils.model_info import MODEL_INFO
-from main_page.utils.prediction_metadata import generate_prediction_metadata
 
 
 logger = logging.getLogger(__name__)
 
 
-############ Model Paths ############
+# ============================================================
+# Model Paths
+# ============================================================
 
 MODEL_DIR = Path(__file__).resolve().parent / "models"
 
 
+# ============================================================
+# Model Loading
+# ============================================================
+
 @lru_cache(maxsize=1)
 def get_prediction_model():
-    return joblib.load(MODEL_DIR / "liver_prediction_model.pkl")
+    return joblib.load(
+        MODEL_DIR / "liver_prediction_model.pkl"
+    )
 
 
 @lru_cache(maxsize=1)
 def get_preprocessor():
-    return joblib.load(MODEL_DIR / "liver_preprocessor.pkl")
+    return joblib.load(
+        MODEL_DIR / "liver_preprocessor.pkl"
+    )
 
 
-############ Feature Order ############
+# ============================================================
+# Feature Order
+# ============================================================
 
 NUMERIC_FEATURES = [
     "age",
@@ -53,12 +61,15 @@ NUMERIC_FEATURES = [
     "albumin_globulin_ratio",
 ]
 
+
 CATEGORICAL_FEATURES = [
     "sex",
 ]
 
 
-############ Clinical Interpretation ############
+# ============================================================
+# Clinical Interpretation
+# ============================================================
 
 def get_liver_diagnosis(data):
     """
@@ -90,7 +101,9 @@ def get_liver_diagnosis(data):
     return "Normal"
 
 
-############ Data Processing ############
+# ============================================================
+# Data Processing
+# ============================================================
 
 def process_liver_data(data):
     """
@@ -99,7 +112,10 @@ def process_liver_data(data):
 
     df = pd.DataFrame([data])
 
-    expected_columns = NUMERIC_FEATURES + CATEGORICAL_FEATURES
+    expected_columns = (
+        NUMERIC_FEATURES
+        + CATEGORICAL_FEATURES
+    )
 
     for column in expected_columns:
         if column not in df.columns:
@@ -108,195 +124,373 @@ def process_liver_data(data):
     df = df[expected_columns]
     df = df.fillna(0)
 
-    logger.debug("Liver prediction input:\n%s", df)
+    logger.debug(
+        "Liver prediction input:\n%s",
+        df,
+    )
 
     preprocessor = get_preprocessor()
 
     return preprocessor.transform(df)
 
-########## Recommendation list #################
+
+# ============================================================
+# Recommendations
+# ============================================================
 
 LIVER_RECOMMENDATIONS = {
 
-    "Very Low": [
-        "Maintain a healthy lifestyle.",
-        "Continue regular health check-ups.",
-        "Avoid excessive alcohol consumption."
-    ],
+    "Very Low": {
+        "status": (
+            "Liver health appears to be within normal limits "
+            "with minimal risk indicators."
+        ),
+        "recommendations": [
+            "Maintain a healthy and balanced diet.",
+            "Continue regular preventive health check-ups.",
+            "Avoid excessive alcohol consumption.",
+            "Maintain regular physical activity.",
+            "Stay hydrated and maintain a healthy body weight.",
+            "Avoid unnecessary use of medications that may affect liver function.",
+        ],
+    },
 
-    "Low": [
-        "Monitor liver health periodically.",
-        "Maintain a balanced diet.",
-        "Exercise regularly."
-    ],
+    "Low": {
+        "status": (
+            "Minor liver-related risk factors are present "
+            "but no significant abnormalities are indicated."
+        ),
+        "recommendations": [
+            "Monitor liver health during routine medical examinations.",
+            "Maintain a balanced diet rich in fruits and vegetables.",
+            "Exercise regularly to support overall metabolic health.",
+            "Limit alcohol intake.",
+            "Maintain a healthy body weight.",
+            "Discuss any persistent symptoms with your healthcare provider.",
+        ],
+    },
 
-    "Borderline": [
-        "Consult a physician for evaluation.",
-        "Schedule Liver Function Tests (LFT).",
-        "Reduce alcohol intake.",
-        "Maintain a healthy weight."
-    ],
+    "Borderline": {
+        "status": (
+            "Borderline liver abnormalities have been identified "
+            "and further evaluation is recommended."
+        ),
+        "recommendations": [
+            "Consult a physician for clinical evaluation.",
+            "Schedule Liver Function Tests (LFTs).",
+            "Reduce or avoid alcohol consumption.",
+            "Maintain a healthy weight through diet and exercise.",
+            "Review current medications with your healthcare provider.",
+            "Repeat laboratory investigations if recommended.",
+        ],
+    },
 
-    "Moderate": [
-        "Consult a hepatologist.",
-        "Complete Liver Function Tests.",
-        "Consider abdominal ultrasound if advised.",
-        "Avoid alcohol completely.",
-        "Review current medications with your physician."
-    ],
+    "Moderate": {
+        "status": (
+            "Several liver-related abnormalities suggest a "
+            "moderate likelihood of liver disease."
+        ),
+        "recommendations": [
+            "Consult a hepatologist or gastroenterologist.",
+            "Complete comprehensive Liver Function Tests.",
+            "Consider abdominal ultrasound or additional imaging if advised.",
+            "Avoid alcohol completely.",
+            "Review prescription and over-the-counter medications with your physician.",
+            "Follow up promptly for further clinical assessment.",
+        ],
+    },
 
-    "High": [
-        "Seek immediate medical evaluation.",
-        "Consult a hepatologist promptly.",
-        "Complete all recommended investigations.",
-        "Avoid alcohol and hepatotoxic medications.",
-        "Follow up as advised by your healthcare provider."
-    ]
+    "High": {
+        "status": (
+            "The AI model indicates a high likelihood of liver "
+            "disease requiring prompt medical evaluation."
+        ),
+        "recommendations": [
+            "Seek immediate medical evaluation.",
+            "Consult a hepatologist as soon as possible.",
+            "Complete all recommended laboratory and imaging investigations.",
+            "Avoid alcohol and medications that may cause liver injury unless prescribed.",
+            "Follow all treatment recommendations provided by your healthcare professional.",
+            "Seek urgent medical attention if you develop jaundice, severe abdominal pain, confusion, vomiting blood, or significant swelling.",
+        ],
+    },
 }
 
-########### Prediction View ############
+
+# ============================================================
+# Prediction View
+# ============================================================
 
 @login_required
 def predict_liver_disease(request):
 
     patient_data = get_active_patient(request)
 
+    # --------------------------------------------------------
+    # No active patient
+    # --------------------------------------------------------
+
     if patient_data is None:
+
         return render(
             request,
             "prediction/liver/predict.html",
             {
                 "form": LiverPredictionForm(),
-                "error": "Select a patient from the Clinical Workspace before starting a prediction.",
+                "error": (
+                    "Select a patient from the Clinical Workspace "
+                    "before starting a prediction."
+                ),
             },
         )
+
+    # --------------------------------------------------------
+    # POST
+    # --------------------------------------------------------
 
     if request.method == "POST":
 
         form = LiverPredictionForm(request.POST)
 
-        print("=== POST RECEIVED ===")
-
         if form.is_valid():
 
-            print("=== FORM VALID ===")
-
             data = form.cleaned_data
+
+            # ------------------------------------------------
+            # Build prediction input
+            # ------------------------------------------------
 
             data_for_prediction = {
                 "age": patient_data.age,
                 "sex": patient_data.sex,
-                "total_bilirubin": data["total_bilirubin"],
-                "direct_bilirubin": data["direct_bilirubin"],
-                "alkaline_phosphotase_ALP": data["alkaline_phosphotase_ALP"],
-                "alamine_aminotransferase_ALT": data["alamine_aminotransferase_ALT"],
-                "aspartate_aminotransferase_AST": data["aspartate_aminotransferase_AST"],
-                "total_proteins": data["total_proteins"],
+                "total_bilirubin": (
+                    data["total_bilirubin"]
+                ),
+                "direct_bilirubin": (
+                    data["direct_bilirubin"]
+                ),
+                "alkaline_phosphotase_ALP": (
+                    data["alkaline_phosphotase_ALP"]
+                ),
+                "alamine_aminotransferase_ALT": (
+                    data["alamine_aminotransferase_ALT"]
+                ),
+                "aspartate_aminotransferase_AST": (
+                    data["aspartate_aminotransferase_AST"]
+                ),
+                "total_proteins": (
+                    data["total_proteins"]
+                ),
                 "albumin": data["albumin"],
-                "albumin_globulin_ratio": data["albumin_globulin_ratio"],
+                "albumin_globulin_ratio": (
+                    data["albumin_globulin_ratio"]
+                ),
             }
 
             try:
-                
-                print("=== ENTERED TRY BLOCK ===")
 
-                input_data = process_liver_data(data_for_prediction)
+                # ------------------------------------------------
+                # Preprocess
+                # ------------------------------------------------
+
+                input_data = process_liver_data(
+                    data_for_prediction
+                )
+
+                # ------------------------------------------------
+                # Load model
+                # ------------------------------------------------
 
                 prediction_model = get_prediction_model()
 
-                prediction = prediction_model.predict(input_data)
+                # ------------------------------------------------
+                # Liver prediction
+                # ------------------------------------------------
 
-                probability = prediction_model.predict_proba(input_data)[0][1]
-
-
-                diagnosis = get_liver_diagnosis(data_for_prediction)
-
-                prediction_record = PredictionData(
-                    total_bilirubin=data["total_bilirubin"],
-                    direct_bilirubin=data["direct_bilirubin"],
-                    alkaline_phosphotase_ALP=data["alkaline_phosphotase_ALP"],
-                    alamine_aminotransferase_ALT=data["alamine_aminotransferase_ALT"],
-                    aspartate_aminotransferase_AST=data["aspartate_aminotransferase_AST"],
-                    total_proteins=data["total_proteins"],
-                    albumin=data["albumin"],
-                    albumin_globulin_ratio=data["albumin_globulin_ratio"],
-                    prediction="Yes" if prediction[0] == 1 else "No",
-                    prediction_type="liver",
-                    diagnosis=diagnosis,
-                    pid=patient_data,
+                prediction = prediction_model.predict(
+                    input_data
                 )
 
-                with transaction.atomic():
+                probability = (
+                    prediction_model
+                    .predict_proba(input_data)[0][1]
+                )
 
-                    prediction_record.save()
+                # ------------------------------------------------
+                # Rule-based clinical diagnosis
+                # ------------------------------------------------
 
-                    data_quality = save_dq_score(
-                        prediction_type="liver",
+                diagnosis = get_liver_diagnosis(
+                    data_for_prediction
+                )
+
+                logger.info(
+                    "Liver diagnosis=%s",
+                    diagnosis,
+                )
+
+                # ------------------------------------------------
+                # Centralized prediction service
+                # ------------------------------------------------
+
+                prediction_workflow = (
+                    execute_standard_prediction(
                         patient=patient_data,
-                        prediction_data=data_for_prediction,
+
+                        prediction_type="liver",
+
+                        probability=probability,
+
+                        disease_name="Liver Disease",
+
+                        recommendation_map=(
+                            LIVER_RECOMMENDATIONS
+                        ),
+
+                        prediction_data=(
+                            data_for_prediction
+                        ),
+
+                        prediction=(
+                            "Yes"
+                            if prediction[0] == 1
+                            else "No"
+                        ),
+
+                        model_info=MODEL_INFO["liver"],
+
+                        disease_code="LIV",
+
+                        prediction_fields={
+                            "total_bilirubin": (
+                                data["total_bilirubin"]
+                            ),
+                            "direct_bilirubin": (
+                                data["direct_bilirubin"]
+                            ),
+                            "alkaline_phosphotase_ALP": (
+                                data[
+                                    "alkaline_phosphotase_ALP"
+                                ]
+                            ),
+                            "alamine_aminotransferase_ALT": (
+                                data[
+                                    "alamine_aminotransferase_ALT"
+                                ]
+                            ),
+                            "aspartate_aminotransferase_AST": (
+                                data[
+                                    "aspartate_aminotransferase_AST"
+                                ]
+                            ),
+                            "total_proteins": (
+                                data["total_proteins"]
+                            ),
+                            "albumin": (
+                                data["albumin"]
+                            ),
+                            "albumin_globulin_ratio": (
+                                data[
+                                    "albumin_globulin_ratio"
+                                ]
+                            ),
+                        },
+
+                        diagnosis=diagnosis,
                     )
+                )
 
-                print("=== ABOUT TO RENDER RESULT ===")
+                # ------------------------------------------------
+                # Render result
+                # ------------------------------------------------
 
-                prediction_result = build_prediction_result(
-                                probability,
-                                "Liver Disease",
-                                LIVER_RECOMMENDATIONS,
-)
-
-                prediction_metadata = generate_prediction_metadata(
-                    model_info=MODEL_INFO["liver"],
-                    disease_code="LIV",
-                    )
-
-                print( prediction_metadata)
-                
                 return render(
                     request,
                     "prediction/liver/result.html",
                     {
                         "patient": patient_data,
-                        "prediction_result": prediction_result,
-                        "prediction_metadata": prediction_metadata,
+
+                        "prediction_result": (
+                            prediction_workflow[
+                                "prediction_result"
+                            ]
+                        ),
+
+                        "prediction_metadata": (
+                            prediction_workflow[
+                                "prediction_metadata"
+                            ]
+                        ),
+
                         "diagnosis": diagnosis,
-                        "data_quality": data_quality,
+
+                        "diagnosis_confidence": round(
+                            probability * 100,
+                                1,
+                        ),
+
+                        "data_quality": (
+                            prediction_workflow[
+                                "data_quality"
+                            ]
+                        ),
                     },
                 )
 
             except Exception as e:
-                import traceback
-                print("=== EXCEPTION ===")
 
-                logger.exception("Error during liver prediction: %s", e)
-
-                traceback.print_exc()
+                logger.exception(
+                    "Error during liver prediction: %s",
+                    e,
+                )
 
                 return render(
                     request,
                     "prediction/liver/predict.html",
                     {
                         "form": form,
-                        "error": "An error occurred during prediction. Please try again.",
+                        "error": (
+                            "An error occurred during "
+                            "prediction. Please try again."
+                        ),
                     },
                 )
 
-        else:
-            print("=== FORM INVALID ===")
-            print(form.errors)
-
-    else:
-        form = LiverPredictionForm()
-        print("=== RENDERING PREDICTION FORM ===")
+        # --------------------------------------------------------
+        # Invalid form
+        # --------------------------------------------------------
 
         return render(
             request,
             "prediction/liver/predict.html",
             {
-            "form": form,
+                "form": form,
             },
+        )
+
+    # ------------------------------------------------------------
+    # GET
+    # ------------------------------------------------------------
+
+    form = LiverPredictionForm()
+
+    return render(
+        request,
+        "prediction/liver/predict.html",
+        {
+            "form": form,
+        },
     )
 
 
+# ============================================================
+# Result View
+# ============================================================
+
+@login_required
 def result(request):
-    print("=== RENDERING RESULT PAGE ===")
-    return render(request, "prediction/liver/result.html")
+
+    return render(
+        request,
+        "prediction/liver/result.html",
+    )

@@ -1,12 +1,10 @@
 from multiprocessing import context
-
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import csv
-from urllib3 import request
 from .forms import RegisterForm, PatientDataForm, VitalDetailsForm,PatientDataUpdateForm,VitalDetailsUpdateForm
 from .models import PatientData, FormVitals,PredictionData,DQScore
 from django.contrib.auth.forms import AuthenticationForm
@@ -16,6 +14,7 @@ from django.db.models.functions import TruncSecond
 from django.utils import timezone
 from .analytics.services import AnalyticsService
 from .utils.clinical_workspace import get_active_patient, set_active_patient
+from main_page.dashboard.services import get_dashboard_context
 import logging
 
 logger = logging.getLogger('main_page')
@@ -24,7 +23,8 @@ from django.core.cache import cache
 cache.clear()
 
 
-# Registration View
+################## Registration View. ####################
+
 def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -38,7 +38,8 @@ def register_view(request):
     
     return render(request, 'main_page/register.html', {'form': form})
 
-# Login View
+############# Login View  #########################
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -53,19 +54,15 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'main_page/login.html', {'form': form})
 
-# Logout View
+############### Logout View ####################
+
 def logout_view(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect('main_page:login_view')  # Redirect to login page after logout
 
-#@login_required
-# Home View
-#def home(request):
-#    patient_data = PatientData.objects.get(user=request.user)
-#    return render(request, 'main_page/home.html', {'patient': patient_data})
+# view Vital Info
 
-# View Vital Info
 def view_vital_info(request):
     if request.user.is_authenticated:
         patient_data = get_active_patient(request)
@@ -78,6 +75,7 @@ def view_vital_info(request):
 
 
 # update Vital Info
+
 @login_required
 def update_form_vitals(request):
         patient_data = get_active_patient(request)
@@ -117,6 +115,7 @@ def update_form_vitals(request):
         return render(request, 'main_page/update_form_vitals.html', {'form': form})
 
 #update patient data
+
 @login_required
 def update_patient_data(request):
     patient_data = get_active_patient(request)
@@ -136,6 +135,8 @@ def update_patient_data(request):
         form = PatientDataUpdateForm(instance=patient_data)  # Populate the form with existing data
     return render(request, 'main_page/update_patient_data.html', {'form': form})
 
+# enter patient data view
+
 @login_required
 def enter_patient_data(request):
     if request.method == 'POST':
@@ -151,6 +152,8 @@ def enter_patient_data(request):
         form = PatientDataForm()
     
     return render(request, 'main_page/enter_patient_data.html', {'form': form})
+
+# enter vitals data view
 
 @login_required
 def enter_form_vitals(request):
@@ -173,28 +176,7 @@ def enter_form_vitals(request):
 
     return render(request, 'main_page/enter_form_vitals.html', {'form': form})
 
-
-@login_required
-def view_prediction_data(request):
-    # Get the first patient data for the logged-in user
-    patient_data = get_active_patient(request)
-
-    # If no patient data is found, show a warning
-    if not patient_data:
-        messages.warning(request, "No patient data found.")
-        return render(request, 'main_page/view_prediction_data.html', {
-            'latest_results': [],
-        })
-
-    # Get all prediction data for the patient
-    prediction_data = PredictionData.objects.filter(pid=patient_data)
-
-    # If no prediction data is found, show a warning
-    if not prediction_data.exists():
-        messages.warning(request, "No prediction results found.")
-        return render(request, 'main_page/view_prediction_data.html', {
-            'latest_results': [],
-        })
+########### prediction data view ##############
 
 @login_required
 def view_prediction_data(request):
@@ -262,6 +244,88 @@ def view_prediction_data(request):
     return render(request, 'main_page/view_prediction_data.html', {
         'latest_results': final_results,
     })
+
+############# prediction history view ##################
+
+@login_required
+def prediction_history(request):
+
+    patient_data = get_active_patient(request)
+
+    if not patient_data:
+        messages.info(
+            request,
+            "Select a patient before viewing prediction history."
+        )
+
+        return redirect("main_page:patient_list")
+
+    predictions = (
+        PredictionData.objects
+        .filter(pid=patient_data)
+        .order_by("-timestamp")
+    )
+
+    # ---------------------------------------------------------
+    # Filter by prediction type
+    # ---------------------------------------------------------
+
+    prediction_type = request.GET.get("type", "").strip()
+
+    if prediction_type:
+        predictions = predictions.filter(
+            prediction_type=prediction_type
+        )
+
+    # ---------------------------------------------------------
+    # Summary metrics
+    # ---------------------------------------------------------
+
+    all_predictions = PredictionData.objects.filter(
+        pid=patient_data
+    )
+
+    total_predictions = all_predictions.count()
+
+    high_risk_count = all_predictions.filter(
+        prediction="Yes"
+    ).count()
+
+    module_count = (
+        all_predictions
+        .values("prediction_type")
+        .distinct()
+        .count()
+    )
+
+    # ---------------------------------------------------------
+    # Available modules
+    # ---------------------------------------------------------
+
+    available_modules = (
+        all_predictions
+        .values_list("prediction_type", flat=True)
+        .distinct()
+        .order_by("prediction_type")
+    )
+
+    context = {
+        "patient": patient_data,
+        "predictions": predictions,
+        "total_predictions": total_predictions,
+        "high_risk_count": high_risk_count,
+        "module_count": module_count,
+        "available_modules": available_modules,
+        "selected_type": prediction_type,
+    }
+
+    return render(
+        request,
+        "prediction/components/prediction_history.html",
+        context,
+    )
+
+############### Home View ####################
 
 @login_required
 def home(request):
@@ -389,32 +453,11 @@ def home(request):
     return render(
         request,
         "dashboard/home.html",
-        {
-            "patient": patient_data,
+        get_dashboard_context(request),)
 
-            "latest_results": [results],
 
-            "prediction_count": results["total_predictions"],
+# patient list view
 
-            "health_score": results["health_score"],
-
-            "health_percentage": results["health_percentage"],
-
-            "green_count": results["count_green"],
-
-            "yellow_count": results["count_yellow"],
-
-            "red_count": results["count_red"],
-
-            "recent_predictions": PredictionData.objects.filter(
-                pid=patient_data
-            ).order_by("-timestamp")[:5],
-            "health_status": results["health_status"],
-
-            "status_color": results["status_color"],
-        },
-
-    )
 @login_required
 def patient_list(request):
     """List records managed by the signed-in healthcare professional."""
@@ -426,6 +469,7 @@ def patient_list(request):
         {"patients": patients, "active_patient": get_active_patient(request)},
     )
 
+# select patient view
 
 @login_required
 def select_patient(request, patient_id):
@@ -461,6 +505,8 @@ def select_patient(request, patient_id):
 #            context,
 #    )
 
+################### Analytics Views ####################
+
 @login_required
 def analytics_dashboard(request):
     service = AnalyticsService()
@@ -473,6 +519,7 @@ def analytics_dashboard(request):
         context,
     )
 
+#################### Analytics Export View ####################
 
 @login_required
 def analytics_export(request):

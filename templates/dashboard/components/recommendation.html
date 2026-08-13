@@ -10,35 +10,39 @@
 
         </div>
 
-        <ul>
+        {% if patient %}
 
-            {% if health_percentage >= 90 %}
+            <ul>
 
-                <li>Continue maintaining your healthy lifestyle.</li>
+                {% if health_percentage >= 90 %}
 
-                <li>Schedule annual preventive health screening.</li>
+                    <li>Continue maintaining your healthy lifestyle.</li>
+                    <li>Schedule annual preventive health screening.</li>
+                    <li>Stay physically active.</li>
 
-                <li>Stay physically active.</li>
+                {% elif health_percentage >= 70 %}
 
-            {% elif health_percentage >= 70 %}
+                    <li>Increase regular exercise.</li>
+                    <li>Maintain a balanced diet.</li>
+                    <li>Monitor health parameters periodically.</li>
 
-                <li>Increase regular exercise.</li>
+                {% else %}
 
-                <li>Maintain a balanced diet.</li>
+                    <li>Please consult a healthcare professional.</li>
+                    <li>Schedule a complete medical examination.</li>
+                    <li>Follow medical advice carefully.</li>
 
-                <li>Monitor health parameters periodically.</li>
+                {% endif %}
 
-            {% else %}
+            </ul>
 
-                <li>Please consult a healthcare professional.</li>
+        {% else %}
 
-                <li>Schedule a complete medical examination.</li>
+            <p class="text-muted mb-0">
+                Select a patient to receive AI-generated clinical recommendations.
+            </p>
 
-                <li>Follow medical advice carefully.</li>
-
-            {% endif %}
-
-        </ul>
+        {% endif %}
 
     </div>
 
