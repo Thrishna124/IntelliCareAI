@@ -88,6 +88,27 @@ def save_dq_score(
 
 
 def build_prediction_result(probability, disease_name, recommendation_map):
+    """
+    Build a standardized clinical prediction result.
+
+    Standardized risk levels:
+
+        Very Low
+        Low
+        Borderline
+        Moderate
+        High
+
+    Recommendation maps may use either the standardized levels
+    or legacy module-specific levels such as:
+
+        Low Risk
+        Moderate Risk
+        High Risk
+
+    The standardized risk level is always preserved in the
+    returned result.
+    """
 
     risk_percentage = round(probability * 100, 1)
 
@@ -105,22 +126,70 @@ def build_prediction_result(probability, disease_name, recommendation_map):
             risk_level = level
             break
 
+    # --------------------------------------------------------
+    # Recommendation lookup
+    # --------------------------------------------------------
+
     recommendation = recommendation_map.get(
-        risk_level,
-        {},
+        risk_level
     )
 
+    # --------------------------------------------------------
+    # Legacy recommendation compatibility
+    # --------------------------------------------------------
+
+    if recommendation is None:
+
+        legacy_mapping = {
+            "Very Low": "Low Risk",
+            "Low": "Low Risk",
+            "Borderline": "Moderate Risk",
+            "Moderate": "Moderate Risk",
+            "High": "High Risk",
+        }
+
+        legacy_key = legacy_mapping.get(
+            risk_level
+        )
+
+        if legacy_key:
+            recommendation = recommendation_map.get(
+                legacy_key,
+                {},
+            )
+
+    if recommendation is None:
+        recommendation = {}
+
     return {
-        "prediction": f"{risk_level} likelihood of {disease_name.lower()}.",
+        "prediction": (
+            f"{risk_level} likelihood of "
+            f"{disease_name.lower()}."
+        ),
+
         "risk_level": risk_level,
+
         "risk_percentage": risk_percentage,
-        "status": recommendation.get("status", ""),
-        "recommendations": recommendation.get("recommendations", []),
+
+        "status": recommendation.get(
+            "status",
+            "",
+        ),
+
+        "recommendations": recommendation.get(
+            "recommendations",
+            [],
+        ),
+
         "clinical_priority": risk_level,
+
         "confidence_score": risk_percentage,
+
         "follow_up": None,
+
         "follow_up_days": None,
     }
+
 
 def build_fitness_result(probability, recommendation_map):
     """

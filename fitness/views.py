@@ -414,41 +414,6 @@ def fitness_calculator(request):
                 )
 
                 # ------------------------------------------------
-                # Save through centralized service
-                # ------------------------------------------------
-
-                prediction_record, data_quality = (
-                    save_prediction_record(
-                        patient=patient_data,
-
-                        prediction_type="fitness",
-
-                        prediction=(
-                            "Yes"
-                            if prediction[0] == 1
-                            else "No"
-                        ),
-
-                        prediction_data=(
-                            data_for_prediction
-                        ),
-
-                        prediction_fields={
-                            "BMR": BMR,
-                            "daily_calories_needed": (
-                                daily_calories
-                            ),
-                            "total_steps": (
-                                data["total_steps"]
-                            ),
-                            "calories_burned": (
-                                data["calories_burned"]
-                            ),
-                        },
-                    )
-                )
-
-                # ------------------------------------------------
                 # Specialized fitness result
                 # ------------------------------------------------
 
@@ -456,8 +421,9 @@ def fitness_calculator(request):
                     build_fitness_result(
                         probability,
                         FITNESS_RECOMMENDATIONS,
+                            )
                     )
-                )
+
 
                 # ------------------------------------------------
                 # Standardized metadata
@@ -465,10 +431,53 @@ def fitness_calculator(request):
 
                 prediction_metadata = (
                     generate_prediction_metadata(
-                        model_info=MODEL_INFO["fitness"],
-                        disease_code="FIT",
+                    model_info=MODEL_INFO["fitness"],
+                    disease_code="FIT",
+                        )
                     )
-                )
+
+
+                # ------------------------------------------------
+                # Save through centralized service
+                # ------------------------------------------------
+
+                prediction_record, data_quality = (
+                    save_prediction_record(
+                    patient=patient_data,
+
+                    prediction_type="fitness",
+
+                    prediction=(
+                            "Yes"
+                            if prediction[0] == 1
+                            else "No"
+                    ),
+
+                    prediction_data=data_for_prediction,
+
+                    prediction_fields={
+                            "BMR": BMR,
+
+                            "daily_calories_needed": (
+                                daily_calories
+                            ),
+
+                            "total_steps": (
+                                data["total_steps"]
+                            ),
+
+                            "calories_burned": (
+                                data["calories_burned"]
+                            ),
+                        },
+
+                    standardized_result=prediction_result,
+
+                    prediction_metadata=prediction_metadata,
+                            )
+                    )
+                
+
 
                 # ------------------------------------------------
                 # Render result

@@ -461,3 +461,100 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} ({self.get_role_display()})"
+
+# ==========================================================
+# Standardized AI Prediction Result
+# ==========================================================
+
+class PredictionResult(models.Model):
+
+    prediction = models.OneToOneField(
+        PredictionData,
+        on_delete=models.CASCADE,
+        related_name="result",
+    )
+
+    # Standardized prediction output
+    prediction_text = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+
+    risk_level = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+
+    risk_percentage = models.FloatField(
+        null=True,
+        blank=True,
+    )
+
+    confidence_score = models.FloatField(
+        null=True,
+        blank=True,
+    )
+
+    clinical_priority = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+
+    status = models.TextField(
+        blank=True,
+    )
+
+    recommendations = models.JSONField(
+        default=list,
+        blank=True,
+    )
+
+    follow_up = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+
+    follow_up_days = models.IntegerField(
+        null=True,
+        blank=True,
+    )
+
+    # Report metadata
+    report_id = models.CharField(
+        max_length=100,
+        unique=True,
+    )
+
+    generated_on = models.DateTimeField()
+
+    generated_at = models.CharField(
+        max_length=100,
+        blank=True,
+    )
+
+    processing_time = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+
+    # AI model / audit metadata
+    model_metadata = models.JSONField(
+        default=dict,
+        blank=True,
+    )
+
+    audit_metadata = models.JSONField(
+        default=dict,
+        blank=True,
+    )
+
+    class Meta:
+        db_table = "prediction_results"
+        ordering = ["-generated_on"]
+
+    def __str__(self):
+        return (
+            f"Prediction Result for "
+            f"{self.prediction.pid.pid if self.prediction and self.prediction.pid else 'N/A'}"
+        )
