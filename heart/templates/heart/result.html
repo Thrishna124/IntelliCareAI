@@ -26,7 +26,7 @@
         <p >Prediction: <span class="yellow-orange"><strong> {{ prediction }}</strong></span></p>
         <p >Diagnosis: <span class="yellow-orange"> <strong> {{ diagnosis }}</strong></span></p>
         {% endif %}
-        <p>Quality of Data: {{ data_quality_report }}%</p>
+        <p>Quality of Data: {{ prediction.data_quality_report }}%</p>
 
         <p><em>Features not entered for prediction:</em></p>
         {% if missing_columns %}

@@ -32,7 +32,7 @@ MODEL_INFO = {
         "version": "1.7",
     },
 
-    "diabetes": {
+    "pancreas": {
         "algorithm": "Gradient Boosting",
         "accuracy": "95.4%",
         "dataset": "PIMA Indians Dataset",

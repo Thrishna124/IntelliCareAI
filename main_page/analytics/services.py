@@ -1,36 +1,50 @@
 from datetime import timedelta
-from multiprocessing import context
 
-from django.db.models import Avg, Count
-from django.db.models.functions import TruncDate
+from django.db.models import Avg
 from django.utils import timezone
 
-from main_page.analytics import insights
-from main_page.models import PatientData, PredictionData
+from main_page.analytics import insights, queries
+from main_page.models import PatientData
 
 
 class AnalyticsService:
     """
-    Central service responsible for aggregating analytics data
-    for the IntelliCareAI dashboard.
+    Enterprise Analytics Service.
+
+    This service coordinates the analytics layer and exposes
+    a clean API to views.py.
+
+    All database-heavy analytics queries are delegated to
+    analytics/queries.py.
     """
 
     @staticmethod
-    def patient_summary():
-        """Patient overview statistics."""
+    def patient_summary(clinic=None):
+        """
+        Basic patient statistics.
+        """
 
         today = timezone.now().date()
         last_30_days = today - timedelta(days=30)
 
-        return {
-            "total_patients": PatientData.objects.count(),
+        patients = PatientData.objects.filter(
+            clinic__isnull=False
+        )
 
-            "new_patients": PatientData.objects.filter(
+        if clinic is not None:
+            patients = patients.filter(
+                clinic=clinic
+            )
+
+        return {
+            "total_patients": patients.count(),
+
+            "new_patients": patients.filter(
                 date__gte=last_30_days
             ).count(),
 
             "average_age": round(
-                PatientData.objects.aggregate(
+                patients.aggregate(
                     Avg("age")
                 )["age__avg"] or 0,
                 1,
@@ -38,227 +52,181 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def prediction_summary():
-        """Prediction overview statistics."""
-
-        total_predictions = PredictionData.objects.count()
-
-        positive_predictions = PredictionData.objects.filter(
-            prediction="Yes"
-        ).count()
-
-        negative_predictions = PredictionData.objects.filter(
-            prediction="No"
-        ).count()
-
-        return {
-            "total_predictions": total_predictions,
-            "positive_predictions": positive_predictions,
-            "negative_predictions": negative_predictions,
-        }
-
-    @staticmethod
-    def module_distribution():
-        """Predictions grouped by module."""
-
-        return list(
-            PredictionData.objects
-            .values("prediction_type")
-            .annotate(total=Count("id"))
-            .order_by("prediction_type")
-        )
-
-    @staticmethod
-    def disease_distribution():
-        """Yes / No prediction distribution."""
-
-        return list(
-            PredictionData.objects
-            .values("prediction")
-            .annotate(total=Count("id"))
-        )
-
-    @staticmethod
-    def demographics():
-        """Gender distribution."""
-
-        return list(
-            PatientData.objects
-            .values("sex")
-            .annotate(total=Count("id"))
-        )
-
-    @staticmethod
-    def prediction_trend():
-        """Daily prediction counts."""
-
-        return list(
-            PredictionData.objects
-            .annotate(day=TruncDate("timestamp"))
-            .values("day")
-            .annotate(total=Count("id"))
-            .order_by("day")
-        )
-
-    @staticmethod
-    def dashboard_context():
-        """Return the complete analytics context."""
+    def dashboard_context(clinic=None):
+        """
+        Complete Enterprise Analytics dashboard context.
+        """
 
         context = {}
 
-        context.update(AnalyticsService.patient_summary())
-        context.update(AnalyticsService.prediction_summary())
+        # --------------------------------------------
+        # Patient Summary
+        # --------------------------------------------
 
-        context["module_distribution"] = AnalyticsService.module_distribution()
-        context["disease_distribution"] = AnalyticsService.disease_distribution()
-        context["gender_distribution"] = AnalyticsService.demographics()
-        context["prediction_trend"] = AnalyticsService.prediction_trend()
+        context.update(
+            AnalyticsService.patient_summary(clinic)
+        )
+
+        # --------------------------------------------
+        # KPI Summary
+        # --------------------------------------------
+
+        context.update(
+            queries.get_kpi_summary(clinic)
+        )
+
+        # --------------------------------------------
+        # Charts
+        # --------------------------------------------
+
+        context["prediction_trend"] = (
+            queries.get_monthly_prediction_trend(clinic)
+        )
+
+        context["positive_prediction_trend"] = (
+            queries.get_monthly_positive_trend(clinic)
+        )
+
+        context["disease_distribution"] = (
+            queries.get_disease_distribution(clinic)
+        )
+
+        context["module_distribution"] = (
+            queries.get_prediction_volume_by_type(clinic)
+        )
+
+        context["gender_distribution"] = (
+            queries.get_gender_distribution(clinic)
+        )
+
+        context["age_distribution"] = (
+            queries.get_age_distribution(clinic)
+        )
+
+        context["lifestyle_distribution"] = (
+            queries.get_lifestyle_distribution(clinic)
+        )
+
+        # --------------------------------------------
+        # Enterprise Analytics
+        # --------------------------------------------
+
+        context["clinic_comparison"] = (
+            queries.get_clinic_comparison()
+        )
+
+        context["high_risk_patient_list"] = (
+            queries.get_high_risk_patients(clinic)
+        )
+
+        # --------------------------------------------
+        # AI Insights
+        # --------------------------------------------
+
+        context["ai_insights"] = (
+            insights.generate(context)
+            if hasattr(insights, "generate")
+            else []
+        )
 
         return context
-    
-    @staticmethod
-    def age_distribution():
-        """
-        Patient distribution by age group.
-        """
-
-        groups = {
-            "0-18": 0,
-            "19-35": 0,
-            "36-50": 0,
-            "51-65": 0,
-            "65+": 0,
-        }
-
-        for patient in PatientData.objects.only("age"):
-
-            age = patient.age or 0
-
-            if age <= 18:
-                groups["0-18"] += 1
-
-            elif age <= 35:
-                groups["19-35"] += 1
-
-            elif age <= 50:
-                groups["36-50"] += 1
-
-            elif age <= 65:
-                groups["51-65"] += 1
-
-            else:
-                groups["65+"] += 1
-
-        return [
-        {
-            "group": key,
-            "total": value,
-        }
-        for key, value in groups.items()
-    ]
-
-    @staticmethod
-    def lifestyle_distribution():
-        """
-        Distribution of patient lifestyles.
-        """
-
-        return list(
-            PatientData.objects
-            .values("lifestyle")
-            .annotate(total=Count("id"))
-            .order_by("lifestyle")
-    )
-    @staticmethod
-    def ai_insights():  
-        """
-        Generate dashboard insights.
-        """
-
-        insights = []
-
-        total_patients = PatientData.objects.count()
-
-        total_predictions = PredictionData.objects.count()
-
-        positives = PredictionData.objects.filter(
-            prediction="Yes"
-        ).count()
-
-        if total_patients:
-            insights.append(
-            f"{total_patients} patients are registered in IntelliCareAI."
-        )
-
-        if total_predictions:
-            insights.append(
-            f"{total_predictions} AI predictions have been generated."
-        )
-
-        if positives:
-            insights.append(
-            f"{positives} predictions indicate a positive diagnosis."
-        )
-
-        most_used = (
-            PredictionData.objects
-            .values("prediction_type")
-            .annotate(total=Count("id"))
-            .order_by("-total")
-            .first()
-         )
-
-        if most_used:
-            insights.append(
-            f"{most_used['prediction_type']} is the most frequently used prediction module."
-        )
-
-        return insights
 
     @staticmethod
     def export_report():
-        """Return a privacy-conscious, aggregated analytics report for CSV export."""
+        """
+        Privacy-safe analytics export.
+        """
 
         context = AnalyticsService.dashboard_context()
+
         rows = [
-            ("Population health", "Total patients", context["total_patients"]),
-            ("Population health", "New patients (30 days)", context["new_patients"]),
-            ("Population health", "Average age", context["average_age"]),
-            ("Predictions", "Total predictions", context["total_predictions"]),
-            ("Predictions", "Positive cases", context["positive_predictions"]),
-            ("Predictions", "Negative cases", context["negative_predictions"]),
+
+            ("Population Health", "Total Patients",
+             context["total_patients"]),
+
+            ("Population Health", "New Patients (30 Days)",
+             context["new_patients"]),
+
+            ("Population Health", "Average Age",
+             context["average_age"]),
+
+            ("Predictions", "Total Predictions",
+             context["total_predictions"]),
+
+            ("Predictions", "Positive Predictions",
+             context["positive_predictions"]),
+
+            ("Predictions", "Negative Predictions",
+             context["negative_predictions"]),
+
+            ("Predictions", "Positive Rate (%)",
+             context["positive_rate"]),
         ]
 
+        # --------------------------------------------
+        # Prediction Modules
+        # --------------------------------------------
+
         for item in context["module_distribution"]:
-            rows.append(("Prediction module", item["prediction_type"] or "Unspecified", item["total"]))
+
+            rows.append(
+
+                (
+                    "Prediction Module",
+                    item["label"],
+                    item["count"],
+                )
+
+            )
+
+        # --------------------------------------------
+        # Disease Distribution
+        # --------------------------------------------
 
         for item in context["disease_distribution"]:
-            rows.append(("Prediction outcome", item["prediction"] or "Unspecified", item["total"]))
 
-        for insight in context["ai_insights"]:
-            rows.append(("AI insight", "Executive intelligence", insight))
+            rows.append(
 
-        return rows
-    
-    ########## Contextual Insights ##########
+                (
+                    "Disease Distribution",
+                    item["label"],
+                    item["count"],
+                )
 
-    @staticmethod
-    def dashboard_context():
-        """Return the complete analytics context."""
+            )
 
-        context = {}
+        # --------------------------------------------
+        # Clinic Comparison
+        # --------------------------------------------
 
-        context.update(AnalyticsService.patient_summary())
-        context.update(AnalyticsService.prediction_summary())
+        for clinic in context["clinic_comparison"]:
 
-        context["module_distribution"] = AnalyticsService.module_distribution()
-        context["disease_distribution"] = AnalyticsService.disease_distribution()
-        context["gender_distribution"] = AnalyticsService.demographics()
-        context["prediction_trend"] = AnalyticsService.prediction_trend()
+            rows.append(
 
-    # New analytics
-        context["age_distribution"] = AnalyticsService.age_distribution()
-        context["lifestyle_distribution"] = AnalyticsService.lifestyle_distribution()
-        context["ai_insights"] = AnalyticsService.ai_insights()
+                (
+                    "Clinic",
+                    clinic["clinic"],
+                    clinic["positive_rate"],
+                )
 
-        return context
+            )
+
+        # --------------------------------------------
+        # AI Insights
+        # --------------------------------------------
+
+        #for insight in context["ai_insights"]:
+
+        #    rows.append(
+
+        #        (
+        #            "AI Insight",
+        #            "Executive Intelligence",
+        #            insight,
+        #        )
+
+        #    )
+
+        #return rows
+
+        context["ai_insights"] = []

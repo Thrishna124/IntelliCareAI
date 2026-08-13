@@ -22,7 +22,7 @@ Dashboard | IntelliCareAI
 
         <!-- Top Navigation -->
         {% include "dashboard/components/topbar.html" %}
-
+        {% if patient %}
         <section class="record-banner" aria-label="Personal medical record">
             <div class="record-banner__title">
                 <div><span class="record-banner__eyebrow">Clinical summary</span><h1>Personal Medical Record</h1><p>Current patient profile and AI-assisted health overview.</p></div>
@@ -36,6 +36,22 @@ Dashboard | IntelliCareAI
                 <div><span>Lifestyle</span><strong>{{ patient.get_lifestyle_display|default:patient.lifestyle|default:"Not recorded" }}</strong></div>
             </div>
         </section>
+        {% else %}
+        <div class="record-banner record-banner--empty">
+
+            <h1>Welcome to IntelliCareAI</h1>
+
+            <p>
+                No patient is currently selected.
+            </p>
+
+            <p>
+                Select a patient from the Clinical Workspace to begin using the AI-powered healthcare platform.
+            </p>
+
+        </div>
+
+        {% endif %}
 
         <!-- ==========================================
              Top Row
@@ -43,10 +59,11 @@ Dashboard | IntelliCareAI
 
         <div class="dashboard-grid">
 
-            {% include "dashboard/components/health_card.html" %}
+                {% include "dashboard/components/health_card.html" %}
+            {% if patient %}
+                {% include "dashboard/components/patient_card.html" %}
 
-            {% include "dashboard/components/patient_card.html" %}
-
+            {% endif %}
         </div>
 
         <!-- ==========================================
@@ -98,9 +115,11 @@ Dashboard | IntelliCareAI
         <!-- ==========================================
              Recommendation
         =========================================== -->
+        {% if patient %}
 
         {% include "dashboard/components/recommendation.html" %}
 
+        {% endif %}
         <!-- ==========================================
              Quick Actions
         =========================================== -->

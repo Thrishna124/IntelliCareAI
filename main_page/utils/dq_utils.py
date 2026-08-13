@@ -69,7 +69,7 @@ def create_dq_score(
         dq.badge = "danger"
 
     # Presentation helper (not stored in DB)
-    dq.missing_features_list = missing_features
+    #dq.missing_features_list = missing_features
 
     return dq
 
