@@ -84,6 +84,17 @@ def generate_prediction_metadata(
         # actual model inference timing.
         "processing_time": "N/A",
 
+        # Module information
+        "module_name": model_info.get(
+            "module_name",
+            "AI Prediction",
+        ),
+
+        "module_icon": model_info.get(
+            "icon",
+            "bi-heart-pulse",
+        ),
+
         # Model details
         "model_info": {
             "model_name": model_name,

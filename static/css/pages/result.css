@@ -1,71 +1,652 @@
-.results-grid{
+/* =========================================================
+   INTELLICAREAI — CLINICAL RESULT REPORT
+   Phase 4 Result UI
+   ========================================================= */
 
-    display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+/* =========================================================
+   RESULT GRID
+   ========================================================= */
 
-    gap:24px;
+.clinical-report-page .results-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+    align-items: stretch;
+}
 
-    margin-bottom:24px;
+
+/* Patient Summary */
+.clinical-report-page .results-grid > :nth-child(1) {
+    grid-column: span 6;
+}
+
+
+/* Clinical Finding */
+.clinical-report-page .results-grid > :nth-child(2) {
+    grid-column: span 6;
+}
+
+
+/* AI Risk Assessment */
+.clinical-report-page .results-grid > :nth-child(3) {
+    grid-column: span 12;
+}
+
+
+/* Recommendations */
+.clinical-report-page .results-grid > :nth-child(4) {
+    grid-column: span 7;
+}
+
+
+/* Model Information */
+.clinical-report-page .results-grid > :nth-child(5) {
+    grid-column: span 5;
+}
+
+
+/* Data Quality */
+.clinical-report-page .results-grid > :nth-child(6) {
+    grid-column: span 12;
+}
+
+
+/* Prediction Metadata */
+.clinical-report-page .results-grid > :nth-child(7) {
+    grid-column: span 12;
+}
+
+
+/* =========================================================
+   REPORT HEADER
+   ========================================================= */
+
+.clinical-report-page .result-header {
+    padding: 1.5rem 1.75rem;
+    border: 0;
+    border-radius: 18px;
+    background: linear-gradient(115deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    box-shadow: 0 12px 28px rgba(37, 99, 235, 0.16);
+}
+
+.clinical-report-page .result-header h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.clinical-report-page .result-header p {
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.clinical-report-page .result-icon {
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: none;
+}
+
+.clinical-report-page .status-badge {
+    margin-left: 0.5rem;
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+}
+
+.clinical-report-page .result-actions .btn {
+    border-color: rgba(255, 255, 255, 0.38);
+    color: #ffffff;
+    background: transparent;
+}
+
+.clinical-report-page .result-actions .btn-primary {
+    background: #ffffff;
+    color: #1d4ed8;
+    border-color: #ffffff;
+}
+
+
+/* =========================================================
+   COMMON RESULT CARDS
+   ========================================================= */
+
+.clinical-report-page .prediction-card {
+    height: auto;
+    min-width: 0;
+    border-radius: 12px;
+    border: 1px solid #dce8f1;
+    background: #ffffff;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.clinical-report-page .card-header,
+.clinical-report-page .card-header-custom {
+    padding: 0.9rem 1.15rem;
+    background: #edf5fb;
+    border-bottom: 1px solid #dce8f1;
+}
+
+.clinical-report-page .card-header h4,
+.clinical-report-page .card-header-custom h3 {
+    margin: 0;
+    color: #1d4ed8;
+    font-size: 0.92rem;
+    font-weight: 750;
+    letter-spacing: 0.01em;
+}
+
+.clinical-report-page .card-body-custom {
+    padding: 1rem 1.15rem;
+}
+
+
+/* =========================================================
+   PATIENT SUMMARY
+   ========================================================= */
+
+.clinical-report-page .record-person {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 0.9rem;
+}
+
+.clinical-report-page .record-person .patient-avatar {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 0.95rem;
+    box-shadow: none;
+}
+
+.clinical-report-page .record-person h5 {
+    margin: 0;
+    color: #0f172a;
+    font-weight: 800;
+}
+
+.clinical-report-page .record-person p {
+    margin: 0.15rem 0 0;
+    color: #64748b;
+    font-size: 0.8rem;
+}
+
+.clinical-report-page .section-divider {
+    margin: 0.75rem 0;
+}
+
+.clinical-report-page .info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: #dce8f1;
+    border: 1px solid #dce8f1;
+}
+
+.clinical-report-page .info-item {
+    min-width: 0;
+    padding: 0.65rem 0.75rem;
+    background: #f8fbfe;
+}
+
+.clinical-report-page .info-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #64748b;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.clinical-report-page .info-value {
+    color: #0f172a;
+    font-size: 0.88rem;
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   CLINICAL DIAGNOSIS
+   ========================================================= */
+
+.clinical-report-page .diagnosis-content {
+    padding: 1.1rem 1.15rem;
+}
+
+.clinical-report-page .diagnosis-title {
+    margin-bottom: 0.7rem;
+    color: #2563eb;
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.clinical-report-page .diagnosis-confidence {
+    margin-bottom: 0.75rem;
+    color: #334155;
+}
+
+.clinical-report-page .diagnosis-text {
+    color: #475569;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.clinical-report-page .clinical-note {
+    margin-top: 0.9rem;
+    padding: 0.8rem 0.9rem;
+    border-left: 4px solid #55a630;
+    border-radius: 8px;
+    background: #f3f9f1;
+    color: #475569;
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   RISK ASSESSMENT
+   ========================================================= */
+
+.clinical-report-page .risk-content {
+    padding: 1.1rem 1.15rem;
+}
+
+.clinical-report-page .risk-level {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.clinical-report-page .risk-level .label {
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.clinical-report-page .risk-level .badge {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.78rem;
+}
+
+
+/* Probability */
+.clinical-report-page .probability-section {
+    margin-bottom: 1rem;
+}
+
+.clinical-report-page .probability-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.clinical-report-page .probability-header span {
+    color: #64748b;
+    font-size: 0.78rem;
+    font-weight: 650;
+}
+
+.clinical-report-page .probability-header strong {
+    color: #2563eb;
+    font-size: 1.45rem;
+    font-weight: 800;
+}
+
+.clinical-report-page .probability-section .progress {
+    height: 9px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e8eef4;
+}
+
+.clinical-report-page .probability-section .progress-bar {
+    background: #2563eb;
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+
+/* Risk metrics */
+.clinical-report-page .risk-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.clinical-report-page .risk-metric {
+    padding: 0.8rem 0.9rem;
+    border: 1px solid #dce8f1;
+    border-radius: 10px;
+    background: #f8fbfe;
+}
+
+.clinical-report-page .risk-metric__label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #64748b;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.clinical-report-page .risk-metric strong {
+    color: #0f172a;
+    font-size: 0.95rem;
+    font-weight: 750;
+}
+
+
+/* Prediction message */
+.clinical-report-page .prediction-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem;
+    padding: 0.8rem 0.9rem;
+    border-left: 4px solid #2563eb;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #334155;
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+
+.clinical-report-page .prediction-message i {
+    flex: 0 0 auto;
+    margin-top: 0.15rem;
+    color: #2563eb;
+}
+
+
+/* Assessment status */
+.clinical-report-page .prediction-status-message {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid #dce8f1;
+    border-radius: 8px;
+    background: #f8fbfe;
+}
+
+.clinical-report-page .prediction-status-message__label {
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.clinical-report-page .prediction-status-message__value {
+    color: #334155;
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   RECOMMENDATIONS
+   ========================================================= */
+
+.clinical-report-page .recommendation-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.clinical-report-page .recommendation-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.65rem 0.7rem;
+    border: 1px solid #e1eaf1;
+    border-radius: 8px;
+    background: #f8fbfe;
+    color: #334155;
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+.clinical-report-page .recommendation-item i {
+    flex: 0 0 auto;
+    margin-top: 0.12rem;
+    color: #22c55e;
+}
+
+
+/* =========================================================
+   AI MODEL INFORMATION
+   ========================================================= */
+
+.clinical-report-page .model-info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.clinical-report-page .model-info-grid .info-row {
+    display: grid;
+    grid-template-columns: 135px 1fr;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid #e5edf3;
+}
+
+.clinical-report-page .model-info-grid .info-row:last-child {
+    border-bottom: 0;
+}
+
+.clinical-report-page .model-info-grid .label {
+    color: #64748b;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.clinical-report-page .model-info-grid .value {
+    min-width: 0;
+    color: #0f172a;
+    font-size: 0.84rem;
+    font-weight: 650;
+    text-align: right;
+}
+
+
+/* =========================================================
+   DATA QUALITY
+   ========================================================= */
+
+.clinical-report-page .dq-content {
+    padding: 1rem 1.15rem;
+}
+
+.clinical-report-page .dq-score {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-bottom: 0.7rem;
+}
+
+.clinical-report-page .dq-value {
+    color: #2563eb;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.clinical-report-page .dq-label {
+    color: #64748b;
+    font-size: 0.78rem;
+}
+
+.clinical-report-page .dq-content .progress {
+    height: 8px;
+    margin-bottom: 0.8rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e8eef4;
+}
+
+.clinical-report-page .dq-content .progress-bar {
+    border-radius: 999px;
+}
+
+.clinical-report-page .missing-fields {
+    margin-top: 0.85rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: 8px;
+    background: #f8fbfe;
+}
+
+.clinical-report-page .missing-fields h6 {
+    margin-bottom: 0.45rem;
+    color: #334155;
+    font-size: 0.78rem;
+    font-weight: 750;
+}
+
+.clinical-report-page .missing-fields ul {
+    margin: 0 0 0.6rem;
+    padding-left: 1.1rem;
+}
+
+.clinical-report-page .missing-fields li {
+    color: #475569;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.clinical-report-page .data-quality-note {
+    margin: 0.6rem 0 0;
+    padding: 0.7rem 0.8rem;
+    border-left: 3px solid #f59e0b;
+    border-radius: 6px;
+    background: #fffaf0;
+    color: #64748b;
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   PREDICTION METADATA
+   ========================================================= */
+
+.clinical-report-page .prediction-metadata-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.clinical-report-page .prediction-metadata-grid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+
+/* =========================================================
+   PRINT / PDF
+   ========================================================= */
+
+@media print {
+
+    .clinical-report-page .results-grid {
+        display: block;
+    }
+
+    .clinical-report-page .prediction-card {
+        margin-bottom: 14px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .clinical-report-page .result-header {
+        box-shadow: none;
+    }
 
 }
 
-.results-footer{
 
-    display:grid;
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
-    grid-template-columns:1fr;
+@media (max-width: 1050px) {
+
+    .clinical-report-page .results-grid > :nth-child(1),
+    .clinical-report-page .results-grid > :nth-child(2) {
+        grid-column: span 6;
+    }
+
+    .clinical-report-page .results-grid > :nth-child(4) {
+        grid-column: span 7;
+    }
+
+    .clinical-report-page .results-grid > :nth-child(5) {
+        grid-column: span 5;
+    }
+
+    .clinical-report-page .info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
 }
 
-.prediction-card{
 
-    height:100%;
+@media (max-width: 720px) {
+
+    .clinical-report-page .results-grid > :nth-child(n) {
+        grid-column: span 12;
+    }
+
+    .clinical-report-page .recommendation-list {
+        grid-template-columns: 1fr;
+    }
+
+    .clinical-report-page .risk-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .clinical-report-page .prediction-status-message {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+
+    .clinical-report-page .model-info-grid .info-row {
+        grid-template-columns: 1fr;
+        gap: 0.2rem;
+    }
+
+    .clinical-report-page .model-info-grid .value {
+        text-align: left;
+    }
 
 }
 
-/* Personal medical record-inspired report treatment. */
-.clinical-report-page .result-header{
-    padding:1.65rem 1.85rem;
-    border:0;
-    border-radius:18px;
-    background:linear-gradient(115deg,#2563eb,#1d4ed8);
-    color:#fff;
-    box-shadow:0 16px 32px rgba(37,99,235,.18);
-}
-.clinical-report-page .result-header h2{color:#fff;font-size:1.6rem;font-weight:800;letter-spacing:-.03em;}
-.clinical-report-page .result-header p{color:rgba(255,255,255,.8);}
-.clinical-report-page .result-icon{background:rgba(255,255,255,.16);box-shadow:none;}
-.clinical-report-page .status-badge{margin-left:.6rem;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.14);color:#fff;}
-.clinical-report-page .result-actions .btn{border-color:rgba(255,255,255,.38);color:#fff;background:transparent;}
-.clinical-report-page .result-actions .btn-primary{background:#fff;color:#1d4ed8;border-color:#fff;}
-.clinical-report-page .results-grid{grid-template-columns:repeat(12,1fr);gap:18px;}
-.clinical-report-page .results-grid > :nth-child(1){grid-column:span 7;}
-.clinical-report-page .results-grid > :nth-child(2){grid-column:span 5;}
-.clinical-report-page .results-grid > :nth-child(n+3){grid-column:span 4;}
-.clinical-report-page .prediction-card{border-radius:12px;border-color:#dce8f1;box-shadow:none;overflow:hidden;}
-.clinical-report-page .card-header-custom,.clinical-report-page .card-header{padding:1rem 1.25rem;background:#edf5fb;border-bottom:1px solid #dce8f1;}
-.clinical-report-page .card-header-custom h3,.clinical-report-page .card-header h4{font-size:.95rem;letter-spacing:.01em;color:#1d4ed8;}
-.clinical-report-page .card-body-custom{padding:1.2rem 1.25rem;}
-.record-person{display:flex;align-items:center;gap:.85rem;margin-bottom:1.15rem;}
-.record-person .patient-avatar{margin:0;width:46px;height:46px;border-radius:10px;background:#2563eb;font-size:1rem;box-shadow:none;}
-.record-person h5{margin:0;color:#0f172a;font-weight:800;}
-.record-person p{margin:.15rem 0 0;color:#64748b;font-size:.82rem;}
-.clinical-report-page .info-grid{gap:1px;background:#dce8f1;border:1px solid #dce8f1;}
-.clinical-report-page .info-item{padding:.75rem .85rem;background:#f8fbfe;}
-.clinical-report-page .info-label{font-size:.64rem;color:#64748b;letter-spacing:.07em;}
-.clinical-report-page .info-value{color:#0f172a;font-size:.92rem;}
-.clinical-report-page .risk-content,.clinical-report-page .diagnosis-content,.clinical-report-page .dq-content{padding:1.25rem;}
-.clinical-report-page .probability-section .progress,.clinical-report-page .dq-content .progress{height:10px;border-radius:0;background:linear-gradient(90deg,#2c9b34 0%,#f2cf36 45%,#e9a14c 67%,#cf4038 100%);}
-.clinical-report-page .probability-section .progress-bar{background:transparent;box-shadow:inset -3px 0 0 #0f172a;}
-.clinical-report-page .prediction-message{background:#eff6ff;border-left:4px solid #2563eb;}
-.clinical-report-page .clinical-note{background:#f3f9f1;border-left-color:#55a630;}
-.clinical-report-page .dq-value,.clinical-report-page .diagnosis-title{color:#2563eb;}
 
-@media(max-width:1050px){
-    .clinical-report-page .results-grid > :nth-child(n){grid-column:span 6;}
-}
-@media(max-width:680px){
-    .clinical-report-page .result-header{align-items:flex-start;padding:1.25rem;}
-    .clinical-report-page .results-grid > :nth-child(n){grid-column:span 12;}
+@media (max-width: 520px) {
+
+    .clinical-report-page .info-grid {
+        grid-template-columns: 1fr;
+    }
+
 }

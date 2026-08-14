@@ -9,77 +9,162 @@
 
     </div>
 
+
     <div class="risk-content">
+
+        <!-- Risk Level -->
 
         <div class="risk-level">
 
-            <span class="label">Risk Level</span>
+            <span class="label">
+                Risk Level
+            </span>
 
             {% if prediction_result.risk_level == "Very Low" %}
-            <span class="badge bg-success">
-                {{ prediction_result.risk_level }}
-            </span>
+
+                <span class="badge bg-success">
+                    {{ prediction_result.risk_level }}
+                </span>
 
             {% elif prediction_result.risk_level == "Low" %}
-            <span class="badge bg-success">
-                {{ prediction_result.risk_level }}
-            </span>
+
+                <span class="badge bg-success">
+                    {{ prediction_result.risk_level }}
+                </span>
 
             {% elif prediction_result.risk_level == "Borderline" %}
-            <span class="badge bg-warning text-dark">
-                {{ prediction_result.risk_level }}
-            </span>
+
+                <span class="badge bg-warning text-dark">
+                    {{ prediction_result.risk_level }}
+                </span>
 
             {% elif prediction_result.risk_level == "Moderate" %}
-            <span class="badge bg-warning">
-                {{ prediction_result.risk_level }}
-            </span>
+
+                <span class="badge bg-warning">
+                    {{ prediction_result.risk_level }}
+                </span>
 
             {% else %}
-            <span class="badge bg-danger">
-                {{ prediction_result.risk_level }}
-            </span>
-        {% endif %}
+
+                <span class="badge bg-danger">
+                    {{ prediction_result.risk_level }}
+                </span>
+
+            {% endif %}
 
         </div>
+
+
+        <!-- Probability -->
+
+        {% if prediction_result.risk_percentage != None %}
 
         <div class="probability-section">
 
             <div class="probability-header">
 
-                <span>Disease Probability</span>
+                <span>
+                    Risk Probability
+                </span>
 
-                <strong>{{ prediction_result.risk_percentage }}%</strong>
+                <strong>
+                    {{ prediction_result.risk_percentage }}%
+                </strong>
 
             </div>
 
             <div class="progress">
 
-                <div class="progress-bar"
-
-                     role="progressbar"
-
-                     style="width: {{ prediction_result.risk_percentage }}%;"
-
-                     aria-valuenow="{{ prediction_result.risk_percentage }}"
-
-                     aria-valuemin="0"
-
-                     aria-valuemax="100">
-
+                <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: {{ prediction_result.risk_percentage }}%;"
+                    aria-valuenow="{{ prediction_result.risk_percentage }}"
+                    aria-valuemin="0"
+                    aria-valuemax="100">
                 </div>
 
             </div>
 
         </div>
 
+        {% endif %}
+
+
+        <!-- Clinical Metrics -->
+
+        <div class="risk-metrics">
+
+            {% if prediction_result.confidence_score != None %}
+
+            <div class="risk-metric">
+
+                <span class="risk-metric__label">
+                    Risk Model Confidence
+                </span>
+
+                <strong>
+                    {{ prediction_result.confidence_score }}%
+                </strong>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if prediction_result.clinical_priority %}
+
+            <div class="risk-metric">
+
+                <span class="risk-metric__label">
+                    Clinical Priority
+                </span>
+
+                <strong>
+                    {{ prediction_result.clinical_priority }}
+                </strong>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Prediction Result -->
+
+        {% if prediction_result.prediction_text %}
+
         <div class="prediction-message">
 
             <i class="bi bi-info-circle-fill"></i>
 
-            {{ prediction_result.prediction }}
+            <span>
+                {{ prediction_result.prediction_text }}
+            </span>
 
         </div>
+
+        {% endif %}
+
+
+        <!-- Status -->
+
+        {% if prediction_result.status %}
+
+        <div class="prediction-status-message">
+
+            <span class="prediction-status-message__label">
+                Assessment Status
+            </span>
+
+            <span class="prediction-status-message__value">
+                {{ prediction_result.status }}
+            </span>
+
+        </div>
+
+        {% endif %}
 
     </div>
 

@@ -3,12 +3,14 @@
     <div class="result-header-left">
 
         <div class="result-icon">
-            <i class="bi bi-heart-pulse-fill"></i>
+            <i class="bi {{ prediction_metadata.module_icon }}"></i>
         </div>
 
         <div>
 
-            <h2>{{ prediction_metadata.module_name }}</h2>
+            <h2>
+                {{ prediction_metadata.module_name }}
+            </h2>
 
             <p>
 
@@ -25,6 +27,7 @@
 
     </div>
 
+
     <div class="result-actions">
 
         <a href="{% url 'main_page:home' %}"
@@ -35,6 +38,7 @@
             Dashboard
 
         </a>
+
 
         <a href="javascript:history.back()"
            class="btn btn-primary">

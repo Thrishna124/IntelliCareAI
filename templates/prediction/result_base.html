@@ -13,13 +13,21 @@
 
     <div class="clinical-shell">
 
+        <!-- =====================================================
+             Clinical Report Header
+        ====================================================== -->
+
         <header class="clinical-nav">
+
             <a href="{% url 'main_page:home' %}" class="clinical-brand">
-                <span><i class="bi bi-heart-pulse-fill"></i></span>
+                <span>
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </span>
                 IntelliCareAI
             </a>
 
             <div class="clinical-nav__meta">
+
                 <span>
                     <i class="bi bi-shield-check"></i>
                     Secure clinical workspace
@@ -29,31 +37,58 @@
                     <i class="bi bi-grid-1x2"></i>
                     Dashboard
                 </a>
+
             </div>
+
         </header>
+
+
+        <!-- =====================================================
+             Result Header
+        ====================================================== -->
 
         {% include "prediction/components/result_header.html" %}
 
+
+        <!-- =====================================================
+             Result Content
+        ====================================================== -->
+
         <div class="results-grid">
 
+            <!-- Patient -->
             {% include "prediction/components/patient_summary.html" %}
 
-            {% if is_fitness %}
-                {% include "prediction/components/fitness_assessment_card.html" %}
 
-            {% else %}
+            <!-- Primary Clinical Assessment -->
+            {% block diagnosis_section %}
+
                 {% include "prediction/components/diagnosis_card.html" %}
+
+            {% endblock %}
+
+
+            <!-- Risk Assessment -->
+            {% if not is_fitness %}
 
                 {% include "prediction/components/risk_card.html" %}
 
             {% endif %}
 
+
+            <!-- Recommendations -->
             {% include "prediction/components/recommendation_card.html" %}
 
+
+            <!-- AI Model -->
             {% include "prediction/components/model_information.html" %}
 
+
+            <!-- Data Quality -->
             {% include "prediction/components/data_quality_card.html" %}
 
+
+            <!-- Report Metadata -->
             {% include "prediction/components/prediction_metadata.html" %}
 
         </div>
