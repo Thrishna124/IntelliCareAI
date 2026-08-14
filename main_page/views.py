@@ -339,6 +339,97 @@ def prediction_history(request):
         context,
     )
 
+############### Prediction History details view ####################
+
+@login_required
+def prediction_history_detail(request, prediction_id):
+    """Display a standardized historical AI prediction result."""
+
+    patient_data = get_active_patient(request)
+
+    if not patient_data:
+        messages.info(
+            request,
+            "Select a patient before viewing prediction results."
+        )
+        return redirect("main_page:patient_list")
+
+    prediction = (
+        PredictionData.objects
+        .filter(
+            pk=prediction_id,
+            pid=patient_data,
+        )
+        .select_related("result")
+        .first()
+    )
+
+    if not prediction:
+        messages.error(
+            request,
+            "Prediction record not found."
+        )
+        return redirect("main_page:prediction_history")
+
+    if not hasattr(prediction, "result"):
+        messages.warning(
+            request,
+            "This historical prediction does not have a standardized result."
+        )
+        return redirect("main_page:prediction_history")
+
+    module_names = {
+        "heart": "Heart Disease",
+        "kidney": "Kidney Disease",
+        "liver": "Liver Disease",
+        "lungs": "Lung Disease",
+        "lung_cancer": "Lung Cancer",
+        "fitness": "Physical Fitness",
+        "pancreas": "Diabetes",
+    }
+
+    module_icons = {
+        "heart": "bi-heart-pulse",
+        "kidney": "bi-droplet-half",
+        "liver": "bi-activity",
+        "lungs": "bi-lungs",
+        "lung_cancer": "bi-lungs",
+        "fitness": "bi-person-walking",
+        "pancreas": "bi-droplet",
+    }
+
+    prediction_type = prediction.prediction_type
+
+    context = {
+        "patient": patient_data,
+        "prediction": prediction,
+        "prediction_result": prediction.result,
+
+        "prediction_metadata": {
+            "module_name": module_names.get(
+                prediction_type,
+                prediction_type.replace("_", " ").title(),
+            ),
+            "module_icon": module_icons.get(
+                prediction_type,
+                "bi-cpu",
+            ),
+            "model_name": (
+                prediction.result.model_metadata.get("model_name")
+                if prediction.result.model_metadata
+                else "AI Prediction Model"
+            ),
+        },
+
+        "is_fitness": prediction_type == "fitness",
+    }
+
+    return render(
+        request,
+        "prediction/history_result.html",
+        context,
+    )
+
 ############### Home View ####################
 
 @login_required

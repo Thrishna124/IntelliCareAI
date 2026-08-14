@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Prediction Result | IntelliCareAI
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/pages/prediction.css' %}">
+<link rel="stylesheet" href="{% static 'css/pages/result.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="prediction-page clinical-report-page">
+
+    <div class="clinical-shell">
+
+        <!-- Clinical Navigation -->
+        <header class="clinical-nav">
+
+            <a href="{% url 'main_page:home' %}" class="clinical-brand">
+                <span>
+                    <i class="bi bi-heart-pulse-fill"></i>
+                </span>
+                IntelliCareAI
+            </a>
+
+            <div class="clinical-nav__meta">
+
+                <span>
+                    <i class="bi bi-shield-check"></i>
+                    Secure clinical workspace
+                </span>
+
+                <a href="{% url 'main_page:prediction_history' %}">
+                    <i class="bi bi-clock-history"></i>
+                    Prediction History
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- Result Header -->
+        {% include "prediction/components/result_header.html" %}
+
+
+        <div class="results-grid">
+
+            <!-- Patient -->
+            {% include "prediction/components/patient_summary.html" %}
+
+
+            <!-- Standardized Risk Assessment -->
+            {% if not is_fitness %}
+                {% include "prediction/components/risk_card.html" %}
+            {% else %}
+                <div class="prediction-card risk-card">
+
+                    <div class="card-header">
+                        <h4>
+                            <i class="bi bi-activity"></i>
+                            AI Fitness Assessment
+                        </h4>
+                    </div>
+
+                    <div class="risk-content">
+
+                        {% if prediction_result.risk_level %}
+                            <div class="risk-level">
+                                <span class="label">
+                                    Assessment Level
+                                </span>
+
+                                <strong>
+                                    {{ prediction_result.risk_level }}
+                                </strong>
+                            </div>
+                        {% endif %}
+
+                        {% if prediction_result.risk_percentage != None %}
+                            <div class="probability-section">
+
+                                <div class="probability-header">
+                                    <span>
+                                        Assessment Score
+                                    </span>
+
+                                    <strong>
+                                        {{ prediction_result.risk_percentage }}%
+                                    </strong>
+                                </div>
+
+                                <div class="progress">
+                                    <div
+                                        class="progress-bar"
+                                        role="progressbar"
+                                        style="width: {{ prediction_result.risk_percentage }}%;"
+                                        aria-valuenow="{{ prediction_result.risk_percentage }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div>
+
+                            </div>
+                        {% endif %}
+
+                        {% if prediction_result.confidence_score != None %}
+                            <div class="risk-metrics">
+
+                                <div class="risk-metric">
+
+                                    <span class="risk-metric__label">
+                                        Model Confidence
+                                    </span>
+
+                                    <strong>
+                                        {{ prediction_result.confidence_score }}%
+                                    </strong>
+
+                                </div>
+
+                            </div>
+                        {% endif %}
+
+                        {% if prediction_result.prediction_text %}
+                            <div class="prediction-message">
+                                <i class="bi bi-info-circle-fill"></i>
+
+                                <span>
+                                    {{ prediction_result.prediction_text }}
+                                </span>
+                            </div>
+                        {% endif %}
+
+                        {% if prediction_result.status %}
+                            <div class="prediction-status-message">
+
+                                <span class="prediction-status-message__label">
+                                    Assessment Status
+                                </span>
+
+                                <span class="prediction-status-message__value">
+                                    {{ prediction_result.status }}
+                                </span>
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            {% endif %}
+
+
+            <!-- Recommendations -->
+            {% include "prediction/components/recommendation_card.html" %}
+
+
+            <!-- Historical Report Information -->
+            <div class="prediction-card">
+
+                <div class="card-header-custom">
+
+                    <i class="bi bi-file-earmark-medical"></i>
+
+                    <h3>
+                        Historical Prediction Record
+                    </h3>
+
+                </div>
+
+                <div class="card-body-custom">
+
+                    <div class="risk-metrics">
+
+                        {% if prediction.result.report_id %}
+                            <div class="risk-metric">
+
+                                <span class="risk-metric__label">
+                                    Report ID
+                                </span>
+
+                                <strong>
+                                    {{ prediction.result.report_id }}
+                                </strong>
+
+                            </div>
+                        {% endif %}
+
+                        <div class="risk-metric">
+
+                            <span class="risk-metric__label">
+                                Prediction Date
+                            </span>
+
+                            <strong>
+                                {{ prediction.timestamp|date:"d M Y, h:i A" }}
+                            </strong>
+
+                        </div>
+
+                        {% if prediction.result.clinical_priority %}
+                            <div class="risk-metric">
+
+                                <span class="risk-metric__label">
+                                    Clinical Priority
+                                </span>
+
+                                <strong>
+                                    {{ prediction.result.clinical_priority }}
+                                </strong>
+
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -12,7 +12,7 @@ urlpatterns = [
     path('workspace/patients/', views.patient_list, name='patient_list'),
     path('workspace/patients/<int:patient_id>/select/', views.select_patient, name='select_patient'),
     path("workspace/predictions/",views.prediction_history,name="prediction_history"),
-
+    path("workspace/predictions/<int:prediction_id>/",views.prediction_history_detail,name="prediction_history_detail"),
     
     path('update_patient_data/', views.update_patient_data, name='update_patient_data'),
     path('update_form_vitals/', views.update_form_vitals, name='update_form_vitals'),
