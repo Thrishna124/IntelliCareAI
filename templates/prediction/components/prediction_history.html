@@ -4,12 +4,9 @@
 {% block title %}AI Prediction History | IntelliCareAI{% endblock %}
 
 {% block css %}
-
 <link rel="stylesheet" href="{% static 'css/pages/dashboard.css' %}">
 <link rel="stylesheet" href="{% static 'css/pages/prediction.css' %}">
-
 {% endblock %}
-
 
 {% block content %}
 
@@ -180,12 +177,16 @@
 
                         {% if module == "lung_cancer" %}
                             Lung Cancer
+
                         {% elif module == "pancreas" %}
                             Diabetes
+
                         {% elif module == "lungs" %}
                             Lungs
+
                         {% else %}
                             {{ module|title }}
+
                         {% endif %}
 
                     </a>
@@ -248,136 +249,70 @@
                         <div class="prediction-history-card__body">
 
 
-                        <!-- Header -->
-<div class="prediction-history-card__header">
+                            <!-- Header -->
 
-    <div>
+                            <div class="prediction-history-card__header">
 
-        <span class="prediction-history-card__module">
+                                <div>
 
-            {% if prediction.prediction_type == "lung_cancer" %}
-                Lung Cancer
+                                    <span class="prediction-history-card__module">
 
-            {% elif prediction.prediction_type == "pancreas" %}
-                Diabetes
+                                        {% if prediction.prediction_type == "lung_cancer" %}
+                                            Lung Cancer
 
-            {% elif prediction.prediction_type == "lungs" %}
-                Lungs
+                                        {% elif prediction.prediction_type == "pancreas" %}
+                                            Diabetes
 
-            {% else %}
-                {{ prediction.prediction_type|title }}
+                                        {% elif prediction.prediction_type == "lungs" %}
+                                            Lungs
 
-            {% endif %}
+                                        {% else %}
+                                            {{ prediction.prediction_type|title }}
 
-        </span>
+                                        {% endif %}
 
-        <h3>
-
-            {% if prediction.result.prediction_text %}
-                {{ prediction.result.prediction_text }}
-
-            {% elif prediction.result.status %}
-                {{ prediction.result.status }}
-
-            {% else %}
-                Prediction Completed
-
-            {% endif %}
-
-        </h3>
-
-    </div>
-
-    <time class="prediction-history-card__time">
-        {{ prediction.timestamp|date:"d M Y, h:i A" }}
-    </time>
-
-</div>
+                                    </span>
 
 
-<!-- Standardized Result Details -->
-<div class="prediction-history-card__details">
+                                    <h3>
 
-    {% if prediction.result.risk_level %}
+                                        {% if prediction.result.prediction_text %}
+                                            {{ prediction.result.prediction_text }}
 
-        <div class="prediction-history-card__detail">
+                                        {% elif prediction.result.status %}
+                                            {{ prediction.result.status }}
 
-            <span>
-                Risk Level
-            </span>
+                                        {% else %}
+                                            Prediction Completed
 
-            <strong>
-                {{ prediction.result.risk_level }}
-            </strong>
+                                        {% endif %}
 
-        </div>
+                                    </h3>
 
-    {% endif %}
+                                </div>
 
 
-    {% if prediction.result.risk_percentage != None %}
+                                <time class="prediction-history-card__time">
+                                    {{ prediction.timestamp|date:"d M Y, h:i A" }}
+                                </time>
 
-        <div class="prediction-history-card__detail">
-
-            <span>
-                Risk
-            </span>
-
-            <strong>
-                {{ prediction.result.risk_percentage|floatformat:1 }}%
-            </strong>
-
-        </div>
-
-    {% endif %}
+                            </div>
 
 
-    {% if prediction.result.confidence_score != None %}
+                            <!-- Standardized Result Details -->
 
-        <div class="prediction-history-card__detail">
+                            <div class="prediction-history-card__details">
 
-            <span>
-                Confidence
-            </span>
-
-            <strong>
-                {{ prediction.result.confidence_score|floatformat:1 }}%
-            </strong>
-
-        </div>
-
-    {% endif %}
-
-
-    {% if prediction.result.status %}
-
-        <div class="prediction-history-card__detail">
-
-            <span>
-                Status
-            </span>
-
-            <strong>
-                {{ prediction.result.status }}
-            </strong>
-
-        </div>
-
-    {% endif %}
-
-</div>  
-
-
-                                {% if prediction.diagnosis %}
+                                {% if prediction.result.risk_level %}
 
                                     <div class="prediction-history-card__detail">
 
                                         <span>
-                                            Diagnosis
+                                            Risk Level
                                         </span>
 
                                         <strong>
-                                            {{ prediction.diagnosis }}
+                                            {{ prediction.result.risk_level }}
                                         </strong>
 
                                     </div>
@@ -385,11 +320,107 @@
                                 {% endif %}
 
 
+                                {% if prediction.result.risk_percentage != None %}
+
+                                    <div class="prediction-history-card__detail">
+
+                                        <span>
+                                            Risk
+                                        </span>
+
+                                        <strong>
+                                            {{ prediction.result.risk_percentage|floatformat:1 }}%
+                                        </strong>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if prediction.result.confidence_score != None %}
+
+                                    <div class="prediction-history-card__detail">
+
+                                        <span>
+                                            Confidence
+                                        </span>
+
+                                        <strong>
+                                            {{ prediction.result.confidence_score|floatformat:1 }}%
+                                        </strong>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if prediction.result.status %}
+
+                                    <div class="prediction-history-card__detail">
+
+                                        <span>
+                                            Status
+                                        </span>
+
+                                        <strong>
+                                            {{ prediction.result.status }}
+                                        </strong>
+
+                                    </div>
+
+                                {% endif %}
+
                             </div>
+
+
+                            <!-- Legacy Diagnosis -->
+
+                            {% if prediction.diagnosis %}
+
+                                <div class="prediction-history-card__detail">
+
+                                    <span>
+                                        Diagnosis
+                                    </span>
+
+                                    <strong>
+                                        {{ prediction.diagnosis }}
+                                    </strong>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- Result Action -->
+
+                            <div class="prediction-history-card__actions">
+
+                                {% if prediction.result %}
+
+                                    <a
+                                        href="{% url 'main_page:prediction_history_detail' prediction.id %}"
+                                        class="prediction-history-card__result-action"
+                                    >
+                                        <i class="bi bi-eye"></i>
+                                        View Result
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="text-muted">
+                                        Historical result unavailable
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
 
                         </div>
 
                     </article>
+
 
                 {% empty %}
 

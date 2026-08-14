@@ -1252,3 +1252,57 @@ outline:none;
     }
 
 }
+/* ==========================================================
+   Prediction History — Result Action
+   ========================================================== */
+
+.prediction-history-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.prediction-history-card__result-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--surface);
+    color: var(--primary);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.prediction-history-card__result-action:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.prediction-history-card__result-action i {
+    font-size: 13px;
+}
+
+.prediction-history-card__actions .text-muted {
+    font-size: 13px;
+}
