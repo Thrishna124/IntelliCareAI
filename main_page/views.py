@@ -245,7 +245,7 @@ def view_prediction_data(request):
         'latest_results': final_results,
     })
 
-############# prediction history view ##################
+###################### Prediction History View ####################
 
 @login_required
 def prediction_history(request):
@@ -260,9 +260,14 @@ def prediction_history(request):
 
         return redirect("main_page:patient_list")
 
+    # ---------------------------------------------------------
+    # Prediction history
+    # ---------------------------------------------------------
+
     predictions = (
         PredictionData.objects
         .filter(pid=patient_data)
+        .select_related("result")
         .order_by("-timestamp")
     )
 
@@ -279,10 +284,15 @@ def prediction_history(request):
 
     # ---------------------------------------------------------
     # Summary metrics
+    #
+    # Keep these based on PredictionData for now.
+    # We will migrate the risk KPI after validating the
+    # standardized risk-level values across all modules.
     # ---------------------------------------------------------
 
-    all_predictions = PredictionData.objects.filter(
-        pid=patient_data
+    all_predictions = (
+        PredictionData.objects
+        .filter(pid=patient_data)
     )
 
     total_predictions = all_predictions.count()
@@ -308,6 +318,10 @@ def prediction_history(request):
         .distinct()
         .order_by("prediction_type")
     )
+
+    # ---------------------------------------------------------
+    # Context
+    # ---------------------------------------------------------
 
     context = {
         "patient": patient_data,
