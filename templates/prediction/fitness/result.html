@@ -2,14 +2,6 @@
 
 {% block diagnosis_section %}
 
-    {% if prediction_metadata.disease_code == "FIT" %}
-
-        {% include "prediction/components/fitness_assessment_card.html" %}
-
-    {% else %}
-
-        {% include "prediction/components/diagnosis_card.html" %}
-
-    {% endif %}
+    {% include "prediction/components/fitness_assessment_card.html" %}
 
 {% endblock %}
