@@ -53,24 +53,64 @@ logger = logging.getLogger(__name__)
 
 MODEL_DIR = Path(__file__).resolve().parent / "models"
 
-
 # ============================================================
-# Load TensorFlow Models
+# Lazy TensorFlow Model Loading
 # ============================================================
 
-lung_cancer_prediction_model = (
-    tf.keras.models.load_model(
-        MODEL_DIR / "lung_cancer_normal_model.keras"
-    )
-)
+lung_cancer_prediction_model = None
+lung_cancer_diagnosis_model = None
 
 
-lung_cancer_diagnosis_model = (
-    tf.keras.models.load_model(
-        MODEL_DIR / "lung_cancer_model.h5"
-    )
-)
+def get_lung_cancer_prediction_model():
+    """
+    Load the lung cancer prediction model only when required.
+    """
 
+    global lung_cancer_prediction_model
+
+    if lung_cancer_prediction_model is None:
+
+        logger.info(
+            "Loading lung cancer prediction model..."
+        )
+
+        lung_cancer_prediction_model = (
+            tf.keras.models.load_model(
+                MODEL_DIR / "lung_cancer_normal_model.keras"
+            )
+        )
+
+        logger.info(
+            "Lung cancer prediction model loaded successfully."
+        )
+
+    return lung_cancer_prediction_model
+
+
+def get_lung_cancer_diagnosis_model():
+    """
+    Load the lung cancer diagnosis model only when required.
+    """
+
+    global lung_cancer_diagnosis_model
+
+    if lung_cancer_diagnosis_model is None:
+
+        logger.info(
+            "Loading lung cancer diagnosis model..."
+        )
+
+        lung_cancer_diagnosis_model = (
+            tf.keras.models.load_model(
+                MODEL_DIR / "lung_cancer_model.h5"
+            )
+        )
+
+        logger.info(
+            "Lung cancer diagnosis model loaded successfully."
+        )
+
+    return lung_cancer_diagnosis_model
 
 # ============================================================
 # Media Directory
@@ -147,7 +187,7 @@ def predict_lung_cancer_fct(img_path):
         )
 
         predictions = (
-            lung_cancer_prediction_model.predict(
+            get_lung_cancer_prediction_model().predict(
                 input_data,
                 verbose=0,
             )
@@ -198,7 +238,7 @@ def diagnose_lung_cancer_fct(img_path):
         )
 
         diagnosis_predictions = (
-            lung_cancer_diagnosis_model.predict(
+            get_lung_cancer_diagnosis_model().predict(
                 input_data,
                 verbose=0,
             )
