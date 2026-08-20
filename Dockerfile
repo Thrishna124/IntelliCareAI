@@ -21,6 +21,9 @@ COPY . .
 # Create directory required by Django file-based logging
 RUN mkdir -p /app/logs
 
+# Collect Django static files for production
+RUN python manage.py collectstatic --noinput
+
 EXPOSE 8000
 
 CMD ["sh", "-c", "gunicorn docspot.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
