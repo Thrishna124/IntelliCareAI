@@ -92,8 +92,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-from dotenv import load_dotenv
-
 load_dotenv()
 
 DATABASES = {
@@ -155,11 +153,24 @@ USE_I18N = True
 
 USE_TZ = True
 
+# CSRF trusted origins for production
+CSRF_TRUSTED_ORIGINS = [
+    "https://intellicareai.onrender.com",
+]
+
 #Login URL
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/home/"
 LOGOUT_REDIRECT_URL = "/"
+
+# Production HTTPS session settings
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
+# Production HTTPS session settings
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
