@@ -50,6 +50,8 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('main_page:home') #get_dashboard_redirect(user)
+            else:
+                messages.error(request, "Authentication failed. Django could not authenticate this user.")
     else:
         form = AuthenticationForm()
     return render(request, 'main_page/login.html', {'form': form})
