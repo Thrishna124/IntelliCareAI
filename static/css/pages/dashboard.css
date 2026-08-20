@@ -520,3 +520,60 @@
 }
 
 
+
+/* =========================================================
+   Empty Dashboard - Patient Selection
+   ========================================================= */
+
+.record-banner__empty-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.record-banner__empty-icon {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.record-banner--empty .button {
+    margin-top: 1rem;
+}
+
+
+/* =========================================================
+   Empty Dashboard - Improve Text Visibility
+   ========================================================= */
+
+.record-banner--empty .record-banner__empty-content {
+    color: var(--text-primary, #0f172a);
+}
+
+.record-banner--empty .record-banner__eyebrow {
+    display: block;
+    color: var(--primary, #2563eb);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.record-banner--empty h1 {
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.record-banner--empty p {
+    color: #475569;
+    opacity: 1;
+    max-width: 650px;
+    line-height: 1.6;
+}
+
+.record-banner--empty .button {
+    color: #ffffff;
+    opacity: 1;
+}

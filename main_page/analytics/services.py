@@ -229,4 +229,6 @@ class AnalyticsService:
 
         #return rows
 
-        context["ai_insights"] = []
+        #context["ai_insights"] = []
+
+        return rows

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load static %}
 
 {% block title %}
@@ -22,188 +23,273 @@ Dashboard | IntelliCareAI
 
         <!-- Top Navigation -->
         {% include "dashboard/components/topbar.html" %}
+
+
+        <!-- ==========================================
+             Clinical Summary
+        =========================================== -->
+
         {% if patient %}
-        <section class="record-banner" aria-label="Personal medical record">
+
+        <section class="record-banner" aria-label="Clinical summary">
+
             <div class="record-banner__title">
-                <div><span class="record-banner__eyebrow">Clinical summary</span><h1>Personal Medical Record</h1><p>Current patient profile and AI-assisted health overview.</p></div>
-                <span class="record-banner__date"><i class="bi bi-calendar3"></i> Updated today</span>
+
+                <div>
+                    <span class="record-banner__eyebrow">
+                        Clinical summary
+                    </span>
+
+                    <h1>Clinical Dashboard</h1>
+
+                    <p>
+                        AI-assisted health overview for the active patient.
+                    </p>
+                </div>
+
+                <span class="record-banner__date">
+                    <i class="bi bi-calendar3"></i>
+                    Updated today
+                </span>
+
             </div>
+
+
             <div class="record-banner__grid">
-                <div class="record-banner__person"><div class="record-banner__avatar">{{ patient.fname|first }}{{ patient.lname|first }}</div><div><span>Patient</span><strong>{{ patient.fname }} {{ patient.lname }}</strong><small>ID #{{ patient.pid|default:"Not assigned" }}</small></div></div>
-                <div><span>Age</span><strong>{{ patient.age|default:"-" }}</strong></div>
-                <div><span>Gender</span><strong>{{ patient.sex|default:"-" }}</strong></div>
-                <div><span>Location</span><strong>{{ patient.city|default:"Not recorded" }}</strong></div>
-                <div><span>Lifestyle</span><strong>{{ patient.get_lifestyle_display|default:patient.lifestyle|default:"Not recorded" }}</strong></div>
+
+                <div class="record-banner__person">
+
+                    <div class="record-banner__avatar">
+                        {{ patient.fname|first }}{{ patient.lname|first }}
+                    </div>
+
+                    <div>
+                        <span>Patient</span>
+
+                        <strong>
+                            {{ patient.fname }} {{ patient.lname }}
+                        </strong>
+
+                        <small>
+                            ID #{{ patient.pid|default:"Not assigned" }}
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div>
+                    <span>Age</span>
+                    <strong>
+                        {{ patient.age|default:"-" }}
+                    </strong>
+                </div>
+
+
+                <div>
+                    <span>Gender</span>
+                    <strong>
+                        {{ patient.sex|default:"-" }}
+                    </strong>
+                </div>
+
+
+                <div>
+                    <span>Location</span>
+                    <strong>
+                        {{ patient.city|default:"Not recorded" }}
+                    </strong>
+                </div>
+
+
+                <div>
+                    <span>Lifestyle</span>
+                    <strong>
+                        {{ patient.get_lifestyle_display|default:patient.lifestyle|default:"Not recorded" }}
+                    </strong>
+                </div>
+
             </div>
+
         </section>
+
         {% else %}
-        <div class="record-banner record-banner--empty">
 
-            <h1>Welcome to IntelliCareAI</h1>
 
-            <p>
-                No patient is currently selected.
-            </p>
+        <section class="record-banner record-banner--empty">
 
-            <p>
-                Select a patient from the Clinical Workspace to begin using the AI-powered healthcare platform.
-            </p>
+            <div class="record-banner__empty-content">
 
-        </div>
+                <div class="record-banner__empty-icon">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+
+                <div>
+
+                    <span class="record-banner__eyebrow">
+                        Clinical Workspace
+                    </span>
+
+                    <h1>Welcome to IntelliCareAI</h1>
+
+                    <p>
+                        No patient is currently selected.
+                    </p>
+
+                    <p>
+                        Select a patient from your clinical workspace to
+                        begin viewing their health dashboard, prediction
+                        history and AI-assisted insights.
+                    </p>
+
+                    <a
+                        href="{% url 'main_page:patient_list' %}"
+                        class="button button--primary"
+                    >
+                        <i class="fa-solid fa-user-plus"></i>
+                        Select Patient
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
 
         {% endif %}
 
+
         <!-- ==========================================
-             Top Row
+             Dashboard Overview
         =========================================== -->
 
-        <div class="dashboard-grid">
+        {% if patient %}
+
+        <section class="dashboard-overview">
+
+            <!-- ======================================
+                 Health Overview
+            ======================================= -->
+
+            <div class="dashboard-grid">
 
                 {% include "dashboard/components/health_card.html" %}
-            {% if patient %}
-                {% include "dashboard/components/patient_card.html" %}
 
-            {% endif %}
-        </div>
+            </div>
 
-        <!-- ==========================================
-             KPI Cards
-        =========================================== -->
 
-        <div class="stats-grid">
+            <!-- ======================================
+                 KPI Summary
+            ======================================= -->
 
-    <div class="stat-card">
-        <div class="stat-title">Predictions</div>
-        <div class="stat-value">{{ prediction_count }}</div>
-    </div>
+            <section class="dashboard-section">
 
-    <div class="stat-card">
-        <div class="stat-title">Healthy</div>
-        <div class="stat-value">{{ green_count }}</div>
-    </div>
+                <div class="section-header">
 
-    <div class="stat-card">
-        <div class="stat-title">Warning</div>
-        <div class="stat-value">{{ yellow_count }}</div>
-    </div>
+                    <div>
+                        <h3>Clinical Overview</h3>
 
-    <div class="stat-card">
-        <div class="stat-title">High Risk</div>
-        <div class="stat-value">{{ red_count }}</div>
-    </div>
+                        <p>
+                            Summary of the patient's latest AI assessments.
+                        </p>
+                    </div>
 
-</div>
+                </div>
 
-        <!-- ==========================================
-             Prediction Modules
-        =========================================== -->
 
-        {% include "dashboard/components/prediction_modules.html" %}
+                <div class="stats-grid">
 
-        <!-- ==========================================
-             Analytics
-        =========================================== -->
+                    <div class="stat-card">
 
-        {% include "dashboard/components/analytics.html" %}
+                        <div class="stat-title">
+                            Predictions
+                        </div>
 
-        <!-- ==========================================
-             Recent Predictions
-        =========================================== -->
+                        <div class="stat-value">
+                            {{ prediction_count }}
+                        </div>
 
-        {% include "dashboard/components/recent_predictions.html" %}
+                    </div>
 
-        <!-- ==========================================
-             Recommendation
-        =========================================== -->
-        {% if patient %}
 
-        {% include "dashboard/components/recommendation.html" %}
+                    <div class="stat-card">
+
+                        <div class="stat-title">
+                            Healthy
+                        </div>
+
+                        <div class="stat-value">
+                            {{ green_count }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-title">
+                            Warning
+                        </div>
+
+                        <div class="stat-value">
+                            {{ yellow_count }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-title">
+                            High Risk
+                        </div>
+
+                        <div class="stat-value">
+                            {{ red_count }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================================
+                 Recent Predictions
+            ======================================= -->
+
+            {% include "dashboard/components/recent_predictions.html" %}
+
+
+            <!-- ======================================
+                 Dashboard Navigation Hint
+            ======================================= -->
+
+            <section class="dashboard-section dashboard-navigation-hint">
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Clinical Workspace</h3>
+
+                        <p>
+                            Use the navigation panel to access detailed
+                            patient management, AI predictions and
+                            enterprise analytics.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
 
         {% endif %}
-        <!-- ==========================================
-             Quick Actions
-        =========================================== -->
-
-        {% include "dashboard/components/quick_actions.html" %}
-
-        <!-- ==========================================
-             System Status
-        =========================================== -->
-
-        {% include "dashboard/components/system_status.html" %}
 
     </main>
 
 </div>
-
-{% endblock %}
-
-{% block js %}
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-
-const ctx = document.getElementById('healthChart');
-
-if(ctx){
-
-new Chart(ctx,{
-
-type:'doughnut',
-
-data:{
-
-labels:['Healthy','Warning','High Risk'],
-
-datasets:[{
-
-data:[
-
-{{ green_count }},
-
-{{ yellow_count }},
-
-{{ red_count }}
-
-],
-
-backgroundColor:[
-
-'#22C55E',
-
-'#F59E0B',
-
-'#EF4444'
-
-],
-
-borderWidth:0
-
-}]
-
-},
-
-options:{
-
-responsive:true,
-
-plugins:{
-
-legend:{
-
-position:'bottom'
-
-}
-
-}
-
-}
-
-});
-
-}
-
-</script>
 
 {% endblock %}

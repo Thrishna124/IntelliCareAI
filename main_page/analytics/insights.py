@@ -28,11 +28,14 @@ def generate(context):
     # High-risk patients
     # ----------------------------------------
 
-    high_risk = context.get("high_risk_patients", [])
+    high_risk = context.get(
+        "high_risk_patient_list",
+        [],
+        )
 
     if len(high_risk) >= 10:
         insights.append(
-            f"{len(high_risk)} high-risk patients are currently prioritized for clinical review."
+        f"{len(high_risk)} high-risk patients are currently prioritized for clinical review."
         )
 
     # ----------------------------------------
